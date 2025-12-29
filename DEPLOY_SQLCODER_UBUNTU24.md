@@ -55,8 +55,9 @@ sudo apt-get install -y \
 ### 2. Create Virtual Environment
 
 ```bash
-python3.12 -m venv venv
-source venv/bin/activate
+cd /llamaSFT/askGuru-SQL
+python3.12 -m venv .venv
+source .venv/bin/activate
 ```
 
 ### 3. Install PyTorch with CUDA 12.8

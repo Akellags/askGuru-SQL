@@ -92,8 +92,9 @@ git clone <repo-url> . || echo "Copy project files manually"
 ### 4. Create Python Virtual Environment
 
 ```bash
-python3.12 -m venv venv
-source venv/bin/activate
+cd /llamaSFT/askGuru-SQL
+python3.12 -m venv .venv
+source .venv/bin/activate
 
 # Upgrade pip
 pip install --upgrade pip setuptools wheel
@@ -149,7 +150,7 @@ EOF
 ### 1. Install PyTorch with CUDA 12.8
 
 ```bash
-source venv/bin/activate
+source /llamaSFT/askGuru-SQL/.venv/bin/activate
 
 # PyTorch 2.5+ with CUDA 12.4 wheels (backward compatible with CUDA 12.8)
 pip install torch torchvision torchaudio \
@@ -216,7 +217,7 @@ rsync -avz user@training-server:training_workspace/outputs/oracle_llama70b_lora 
 ### 2. Merge LoRA Adapter into Base Model
 
 ```bash
-source venv/bin/activate
+source /llamaSFT/askGuru-SQL/.venv/bin/activate
 cd /llamaSFT
 
 # Step 1: Download base model (if not already present)
@@ -352,7 +353,7 @@ log_info "vLLM configuration created"
 For development/testing:
 
 ```bash
-source venv/bin/activate
+source /llamaSFT/askGuru-SQL/.venv/bin/activate
 cd /llamaSFT
 
 python -m vllm.entrypoints.openai.api_server \
@@ -385,7 +386,7 @@ Using tmux:
 tmux new-session -d -s vllm -x 200 -y 50
 
 # Start server
-tmux send-keys -t vllm "cd /llamaSFT && source venv/bin/activate" Enter
+tmux send-keys -t vllm "cd /llamaSFT && source /llamaSFT/askGuru-SQL/.venv/bin/activate" Enter
 tmux send-keys -t vllm "python -m vllm.entrypoints.openai.api_server ..." Enter
 
 # Monitor

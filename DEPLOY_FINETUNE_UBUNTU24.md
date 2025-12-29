@@ -98,11 +98,11 @@ source ~/.bashrc
 ### 4. Create Python Virtual Environment
 
 ```bash
-cd /llamaSFT
+cd /llamaSFT/askGuru-SQL
 
 # Create virtual environment using Python 3.12
-python3.12 -m venv venv
-source venv/bin/activate
+python3.12 -m venv .venv
+source .venv/bin/activate
 
 # Upgrade pip, setuptools, wheel
 pip install --upgrade pip setuptools wheel
@@ -169,7 +169,7 @@ EOF
 
 ```bash
 # Ensure venv is activated
-source venv/bin/activate
+source /llamaSFT/askGuru-SQL/.venv/bin/activate
 
 # Install PyTorch 2.5+ with CUDA 12.4 wheels (backward compatible with CUDA 12.8)
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
@@ -189,17 +189,22 @@ EOF
 ```bash
 # Create requirements file or install directly
 pip install \
-  transformers==4.42.3 \
-  datasets==2.18.0 \
-  accelerate==0.31.0 \
-  deepspeed==0.12.0 \
-  peft==0.11.1 \
-  flash-attn==2.5.9.post1 \
-  bitsandbytes==0.43.1 \
-  numpy==1.26.4 \
-  pandas==2.2.3 \
-  protobuf==5.27.2 \
-  sentencepiece==0.2.0
+  transformers \
+  datasets \
+  accelerate \
+  peft \
+  bitsandbytes \
+  numpy \
+  pandas \
+  protobuf \
+  sentencepiece \
+  swanlab \
+  wandb \
+  tensorboard \
+  huggingface-hub \
+  deepspeed==0.14.4 \
+  flash-attn
+
 ```
 
 ### 3. Install Optional Monitoring & Logging
@@ -222,7 +227,7 @@ pip install tensorboard
 pip install autoawq
 
 # GPTQ alternative
-pip install auto-gptq
+did
 ```
 
 ### 5. Verify All Dependencies
@@ -312,11 +317,13 @@ ls -lh data/oracle_sft_conversations/
 ### 2. Validate Dataset Format
 
 ```bash
+source /llamaSFT/askGuru-SQL/.venv/bin/activate
+
 python3 << 'EOF'
 import json
 import os
 
-data_dir = "data/oracle_sft_conversations"
+data_dir = "/llamaSFT/data/oracle_sft_conversations"
 
 for split in ["train", "val"]:
     path = f"{data_dir}/oracle_sft_conversations_{split}.json"

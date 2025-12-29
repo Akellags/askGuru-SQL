@@ -31,9 +31,9 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-PROJECT_ROOT="/llamaSFT"
+PROJECT_ROOT="/llamaSFT/askGuru-SQL"
 WORKSPACE="/llamaSFT"
-VENV_PATH="/llamaSFT/venv"
+VENV_PATH="/llamaSFT/askGuru-SQL/.venv"
 MODELS_DIR="/llamaSFT/models"
 OUTPUTS_DIR="/llamaSFT/outputs"
 LOGS_DIR="/llamaSFT/logs"

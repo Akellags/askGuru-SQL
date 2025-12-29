@@ -350,7 +350,7 @@ git push
 
 ```bash
 # Clone repository (first time)
-git clone https://github.com/YOUR-USERNAME/askGuru-SQL.git
+git clone https://github.com/Akellags/askGuru-SQL.git
 cd askGuru-SQL
 
 # Verify remote

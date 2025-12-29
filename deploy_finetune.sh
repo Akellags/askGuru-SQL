@@ -28,9 +28,9 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-PROJECT_ROOT="/llamaSFT"
+PROJECT_ROOT="/llamaSFT/askGuru-SQL"
 WORKSPACE="/llamaSFT"
-VENV_PATH="/llamaSFT/venv"
+VENV_PATH="/llamaSFT/askGuru-SQL/.venv"
 MODELS_DIR="/llamaSFT/models"
 DATA_DIR="/llamaSFT/data"
 OUTPUTS_DIR="/llamaSFT/outputs"
@@ -222,9 +222,9 @@ install_dependencies() {
     
     source "${VENV_PATH}/bin/activate"
     
-    log_info "Installing PyTorch with CUDA 12.1 support..."
-    pip install torch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1 \
-        --index-url https://download.pytorch.org/whl/cu121
+    log_info "Installing PyTorch with CUDA 12.4 support (compatible with CUDA 12.8)..."
+    pip install torch torchvision torchaudio \
+        --index-url https://download.pytorch.org/whl/cu124
     
     log_info "Installing core dependencies..."
     pip install \
