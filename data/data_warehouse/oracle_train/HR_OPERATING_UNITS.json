@@ -1,0 +1,102 @@
+{
+  "table": "HR_OPERATING_UNITS",
+  "purpose": "Business-use subset of HR_OPERATING_UNITS.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "SET_OF_BOOKS_ID",
+      "ref_table": "GL_LEDGERS",
+      "ref_column": "LEDGER_ID"
+    }
+  ],
+  "columns": [
+    {
+      "name": "BUSINESS_GROUP_ID",
+      "type": "NUMBER(15)",
+      "desc": "Business group ID to which the operating unit is associated."
+    },
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER(15)",
+      "desc": "Primary key; the operating unit identifier (commonly referred to as org_id)."
+    },
+    {
+      "name": "NAME",
+      "type": "VARCHAR2(240)",
+      "desc": "Name of the operating unit."
+    },
+    {
+      "name": "DATE_FROM",
+      "type": "DATE",
+      "desc": "Date from which the operating unit is effective."
+    },
+    {
+      "name": "SHORT_CODE",
+      "type": "VARCHAR2(150)",
+      "desc": "Short code for the operating unit."
+    },
+    {
+      "name": "SET_OF_BOOKS_ID",
+      "type": "VARCHAR2(150)",
+      "desc": "Ledger ID to which the org_id is associated."
+    },
+    {
+      "name": "DEFAULT_LEGAL_CONTEXT_ID",
+      "type": "VARCHAR2(150)",
+      "desc": "Default legal context ID."
+    },
+    {
+      "name": "USABLE_FLAG",
+      "type": "VARCHAR2(150)",
+      "desc": "Indicates whether the operating unit is usable."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER(15)",
+      "desc": "Primary key; the operating unit identifier (commonly referred to as org_id)."
+    },
+    {
+      "name": "SET_OF_BOOKS_ID",
+      "type": "VARCHAR2(150)",
+      "desc": "Ledger ID to which the org_id is associated."
+    },
+    {
+      "name": "BUSINESS_GROUP_ID",
+      "type": "NUMBER(15)",
+      "desc": "Business group ID to which the operating unit is associated."
+    },
+    {
+      "name": "NAME",
+      "type": "VARCHAR2(240)",
+      "desc": "Name of the operating unit."
+    },
+    {
+      "name": "DATE_FROM",
+      "type": "DATE",
+      "desc": "Date from which the operating unit is effective."
+    },
+    {
+      "name": "SHORT_CODE",
+      "type": "VARCHAR2(150)",
+      "desc": "Short code for the operating unit."
+    },
+    {
+      "name": "DEFAULT_LEGAL_CONTEXT_ID",
+      "type": "VARCHAR2(150)",
+      "desc": "Default legal context ID."
+    },
+    {
+      "name": "USABLE_FLAG",
+      "type": "VARCHAR2(150)",
+      "desc": "Indicates whether the operating unit is usable."
+    }
+  ],
+  "notes": "The HR_OPERATING_UNITS table stores the primary data for operating units (also known as business units) within Oracle E-Business Suite. Each record maps an operating unit to its corresponding ledger (set of books) and business group, enabling multi-org support and legal entity structuring. It represents one level of organizational hierarchy. This table is critical for financial segregation across business units and drives security and access control in multi-org environments. Key columns include: ORGANIZATION_ID (primary key, org_id), BUSINESS_GROUP_ID, NAME, SHORT_CODE, SET_OF_BOOKS_ID (ledger link). The table is essential for mapping operating units to ledgers and business structures within a multi-org setup.",
+  "join_hints": [
+    "HR_OPERATING_UNITS.ORGANIZATION_ID = AP_INVOICES_ALL.ORG_ID",
+    "HR_OPERATING_UNITS.SET_OF_BOOKS_ID = GL_LEDGERS.SET_OF_BOOKS_ID",
+    "HR_OPERATING_UNITS.ORGANIZATION_ID = PO_HEADERS_ALL.ORG_ID"
+  ]
+}

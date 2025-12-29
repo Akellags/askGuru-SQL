@@ -1,0 +1,81 @@
+{
+  "table": "GL_JE_LINES",
+  "pk": [
+    "JE_HEADER_ID",
+    "JE_LINE_NUM"
+  ],
+  "columns": [
+    {
+      "name": "JE_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Header identifier (FK to GL_JE_HEADERS)."
+    },
+    {
+      "name": "JE_LINE_NUM",
+      "type": "NUMBER",
+      "desc": "Line number within the journal entry."
+    },
+    {
+      "name": "CODE_COMBINATION_ID",
+      "type": "NUMBER",
+      "desc": "GL code combination identifier (account)."
+    },
+    {
+      "name": "EFFECTIVE_DATE",
+      "type": "DATE",
+      "desc": "Effective date for the line."
+    },
+    {
+      "name": "ENTERED_DR",
+      "type": "NUMBER",
+      "desc": "Entered debit amount."
+    },
+    {
+      "name": "ENTERED_CR",
+      "type": "NUMBER",
+      "desc": "Entered credit amount."
+    },
+    {
+      "name": "ACCOUNTED_DR",
+      "type": "NUMBER",
+      "desc": "Accounted debit amount."
+    },
+    {
+      "name": "ACCOUNTED_CR",
+      "type": "NUMBER",
+      "desc": "Accounted credit amount."
+    },
+    {
+      "name": "DESCRIPTION",
+      "type": "VARCHAR2",
+      "desc": "Line description."
+    },
+    {
+      "name": "GL_SL_LINK_ID",
+      "type": "NUMBER",
+      "desc": "Source ledger link identifier."
+    },
+    {
+      "name": "GL_SL_LINK_TABLE",
+      "type": "VARCHAR2",
+      "desc": "Source ledger link table name."
+    }
+  ],
+  "fks": [
+    {
+      "column": "JE_HEADER_ID",
+      "ref_table": "GL_JE_HEADERS",
+      "ref_column": "JE_HEADER_ID"
+    },
+    {
+      "column": "CODE_COMBINATION_ID",
+      "ref_table": "GL_CODE_COMBINATIONS",
+      "ref_column": "CODE_COMBINATION_ID"
+    }
+  ],
+  "join_hints": [
+    "GL_JE_LINES.JE_HEADER_ID = GL_JE_HEADERS.JE_HEADER_ID",
+    "GL_JE_LINES.CODE_COMBINATION_ID = GL_CODE_COMBINATIONS.CODE_COMBINATION_ID"
+  ],
+  "notes": "Line details for GL journal entries."
+}

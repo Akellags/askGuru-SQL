@@ -1,0 +1,319 @@
+{
+  "table": "PO_DISTRIBUTIONS_ALL",
+  "purpose": "Business-use subset of PO_DISTRIBUTIONS_ALL.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "PO_HEADER_ID",
+      "ref_table": "PO_HEADERS_ALL",
+      "ref_column": "PO_HEADER_ID"
+    },
+    {
+      "column": "PO_LINE_ID",
+      "ref_table": "PO_LINES_ALL",
+      "ref_column": "PO_LINE_ID"
+    },
+    {
+      "column": "LINE_LOCATION_ID",
+      "ref_table": "PO_LINE_LOCATIONS_ALL",
+      "ref_column": "LINE_LOCATION_ID"
+    },
+    {
+      "column": "CODE_COMBINATION_ID",
+      "ref_table": "GL_CODE_COMBINATIONS",
+      "ref_column": "CODE_COMBINATION_ID"
+    },
+    {
+      "column": "DESTINATION_ORGANIZATION_ID",
+      "ref_table": "ORG_ORGANIZATION_DEFINITIONS",
+      "ref_column": "ORGANIZATION_ID"
+    }
+  ],
+  "essential_columns": [
+    {
+      "name": "DESTINATION_ORGANIZATION_ID",
+      "reason": "mandatory for joining with mtl_system_items or org_organization_definitions "
+    }
+  ],
+  "columns": [
+    {
+      "name": "ACCRUAL_ACCOUNT_ID",
+      "type": "NUMBER",
+      "desc": "Unique identifier for the General Ledger accrual account."
+    },
+    {
+      "name": "ACCRUE_ON_RECEIPT_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether items are accrued upon receipt (Y/N)."
+    },
+    {
+      "name": "ACCRUED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the distribution is accrued (received but not yet billed)."
+    },
+    {
+      "name": "AMOUNT_BILLED",
+      "type": "NUMBER",
+      "desc": "Amount invoiced by Oracle Payables against the distribution."
+    },
+    {
+      "name": "AMOUNT_CANCELLED",
+      "type": "NUMBER",
+      "desc": "Amount cancelled for service lines."
+    },
+    {
+      "name": "AMOUNT_DELIVERED",
+      "type": "NUMBER",
+      "desc": "Amount delivered for service lines."
+    },
+    {
+      "name": "AMOUNT_FINANCED",
+      "type": "NUMBER",
+      "desc": "For advance/financing distributions, amount pre-paid."
+    },
+    {
+      "name": "AMOUNT_ORDERED",
+      "type": "NUMBER",
+      "desc": "Amount ordered for service lines."
+    },
+    {
+      "name": "AWARD_ID",
+      "type": "NUMBER",
+      "desc": "Award identifier for grants or funded projects."
+    },
+    {
+      "name": "BUDGET_ACCOUNT_ID",
+      "type": "NUMBER",
+      "desc": "Unique identifier for the General Ledger budget account."
+    },
+    {
+      "name": "CODE_COMBINATION_ID",
+      "type": "NUMBER",
+      "desc": "Expense account (joins with GL_CODE_COMBINATIONS for account code)."
+    },
+    {
+      "name": "DELIVER_TO_LOCATION_ID",
+      "type": "NUMBER",
+      "desc": "Delivery location identifier."
+    },
+    {
+      "name": "DELIVER_TO_PERSON_ID",
+      "type": "NUMBER",
+      "desc": "Requester identifier."
+    },
+    {
+      "name": "DESTINATION_CONTEXT",
+      "type": "VARCHAR2",
+      "desc": "Protected descriptive flexfield context for destination details."
+    },
+    {
+      "name": "DESTINATION_ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "This is inventory organization that must be joined with organization id of mtl_system_items or org_organization_definitions"
+    },
+    {
+      "name": "DESTINATION_SUBINVENTORY",
+      "type": "VARCHAR2",
+      "desc": "Subinventory identifier for inventory purchases."
+    },
+    {
+      "name": "DESTINATION_TYPE_CODE",
+      "type": "VARCHAR2",
+      "desc": "Final destination type (e.g., INVENTORY, EXPENSE, SHOP FLOOR)."
+    },
+    {
+      "name": "DISTRIBUTION_NUM",
+      "type": "NUMBER",
+      "desc": "Distribution number (sequence within PO line)."
+    },
+    {
+      "name": "DISTRIBUTION_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Encumbrance type for budgeting/control."
+    },
+    {
+      "name": "EXPENDITURE_ITEM_DATE",
+      "type": "DATE",
+      "desc": "Project accounting expenditure item date."
+    },
+    {
+      "name": "EXPENDITURE_ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Project accounting expenditure organization ID."
+    },
+    {
+      "name": "EXPENDITURE_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Project accounting expenditure type."
+    },
+    {
+      "name": "LINE_LOCATION_ID",
+      "type": "NUMBER",
+      "desc": "Shipment schedule identifier (FK to PO_LINE_LOCATIONS_ALL)."
+    },
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier (multi-org)."
+    },
+    {
+      "name": "PO_DISTRIBUTION_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier of the distribution."
+    },
+    {
+      "name": "PO_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Document header ID (FK to PO_HEADERS_ALL)."
+    },
+    {
+      "name": "PO_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Document line ID (FK to PO_LINES_ALL)."
+    },
+    {
+      "name": "PO_RELEASE_ID",
+      "type": "NUMBER",
+      "desc": "Release unique identifier (for blanket releases)."
+    },
+    {
+      "name": "PROJECT_ACCOUNTING_CONTEXT",
+      "type": "VARCHAR2",
+      "desc": "Project accounting flexfield context."
+    },
+    {
+      "name": "PROJECT_ID",
+      "type": "NUMBER",
+      "desc": "Project accounting project identifier."
+    },
+    {
+      "name": "QUANTITY_BILLED",
+      "type": "NUMBER",
+      "desc": "Quantity invoiced by Oracle Payables."
+    },
+    {
+      "name": "QUANTITY_CANCELLED",
+      "type": "NUMBER",
+      "desc": "Quantity cancelled."
+    },
+    {
+      "name": "QUANTITY_DELIVERED",
+      "type": "NUMBER",
+      "desc": "Quantity delivered."
+    },
+    {
+      "name": "QUANTITY_FINANCED",
+      "type": "NUMBER",
+      "desc": "Units pre-paid for financing distributions."
+    },
+    {
+      "name": "QUANTITY_ORDERED",
+      "type": "NUMBER",
+      "desc": "Quantity ordered."
+    },
+    {
+      "name": "QUANTITY_RECOUPED",
+      "type": "NUMBER",
+      "desc": "Units for which prepayments have been liquidated."
+    },
+    {
+      "name": "RATE",
+      "type": "NUMBER",
+      "desc": "Currency conversion rate."
+    },
+    {
+      "name": "RATE_DATE",
+      "type": "DATE",
+      "desc": "Currency conversion date."
+    },
+    {
+      "name": "SET_OF_BOOKS_ID",
+      "type": "NUMBER",
+      "desc": "Set of Books identifier (ledger)."
+    },
+    {
+      "name": "SOURCE_DISTRIBUTION_ID",
+      "type": "NUMBER",
+      "desc": "Source distribution ID (for planned distributions copied to releases)."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier (multi-org)."
+    },
+    {
+      "name": "SET_OF_BOOKS_ID",
+      "type": "NUMBER",
+      "desc": "Set of Books identifier (ledger)."
+    },
+    {
+      "name": "PO_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Document header ID (FK to PO_HEADERS_ALL)."
+    },
+    {
+      "name": "PO_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Document line ID (FK to PO_LINES_ALL)."
+    },
+    {
+      "name": "LINE_LOCATION_ID",
+      "type": "NUMBER",
+      "desc": "Shipment schedule identifier (FK to PO_LINE_LOCATIONS_ALL)."
+    },
+    {
+      "name": "ACCRUAL_ACCOUNT_ID",
+      "type": "NUMBER",
+      "desc": "Unique identifier for the General Ledger accrual account."
+    },
+    {
+      "name": "ACCRUE_ON_RECEIPT_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether items are accrued upon receipt (Y/N)."
+    },
+    {
+      "name": "ACCRUED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the distribution is accrued (received but not yet billed)."
+    },
+    {
+      "name": "AMOUNT_BILLED",
+      "type": "NUMBER",
+      "desc": "Amount invoiced by Oracle Payables against the distribution."
+    },
+    {
+      "name": "AMOUNT_CANCELLED",
+      "type": "NUMBER",
+      "desc": "Amount cancelled for service lines."
+    },
+    {
+      "name": "AMOUNT_DELIVERED",
+      "type": "NUMBER",
+      "desc": "Amount delivered for service lines."
+    },
+    {
+      "name": "AMOUNT_FINANCED",
+      "type": "NUMBER",
+      "desc": "For advance/financing distributions, amount pre-paid."
+    },
+    {
+      "name": "AMOUNT_ORDERED",
+      "type": "NUMBER",
+      "desc": "Amount ordered for service lines."
+    },
+    {
+      "name": "AWARD_ID",
+      "type": "NUMBER",
+      "desc": "Award identifier for grants or funded projects."
+    }
+  ],
+  "notes": "The PO_DISTRIBUTIONS_ALL table provides accounting-level detail for each purchase order line shipment. Each distribution breaks down accounting, funding, and destination details for a portion of the PO line, supporting both encumbrance and accrual accounting. Key roles include budgetary control, receiving and invoicing, project accounting, and inventory/expense purchases. Common use cases include querying PO spend per accounting code, tracking open commitments, and linking distributions to GL entries. The table tracks quantities (ordered, received, billed, etc.) and amounts. It is often joined with GL, PO headers/lines/locations, and project modules.",
+  "join_hints": [
+    "PO_DISTRIBUTIONS_ALL.PO_HEADER_ID = PO_HEADERS_ALL.PO_HEADER_ID",
+    "PO_DISTRIBUTIONS_ALL.PO_LINE_ID = PO_LINES_ALL.PO_LINE_ID",
+    "PO_DISTRIBUTIONS_ALL.LINE_LOCATION_ID = PO_LINE_LOCATIONS_ALL.LINE_LOCATION_ID",
+    "PO_DISTRIBUTIONS_ALL.CODE_COMBINATION_ID = GL_CODE_COMBINATIONS.CODE_COMBINATION_ID"
+  ]
+}

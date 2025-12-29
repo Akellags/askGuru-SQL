@@ -1,0 +1,41 @@
+{
+  "input": {
+    "main_training": "data/data_warehouse/oracle_train/training_data_sets_4jul2025_v5_xiyan_compatible.jsonl",
+    "corrections": "data/data_warehouse/oracle_train/corrections.jsonl",
+    "joins": "data/data_warehouse/oracle_train/joins.json",
+    "keywords": "data/data_warehouse/oracle_train/keywords.json",
+    "table_schemas": "data/data_warehouse/oracle_train"
+  },
+  "output": {
+    "base_dir": "data/oracle_sft_conversations"
+  },
+  "augmentation": {
+    "enabled": true,
+    "techniques": {
+      "schema_permutation": {
+        "enabled": true,
+        "variations_per_example": 2
+      },
+      "synonym_swap": {
+        "enabled": true,
+        "variations_per_example": 2
+      },
+      "sql_normalization": {
+        "enabled": false,
+        "variations_per_example": 1
+      }
+    },
+    "deduplication_enabled": true,
+    "validation": {
+      "check_sql_equivalence": true,
+      "check_rag_validity": true,
+      "check_keyword_mapping": true,
+      "check_alignment": true
+    }
+  },
+  "splits": {
+    "train_ratio": 0.80,
+    "val_ratio": 0.10,
+    "test_ratio": 0.10
+  }
+}

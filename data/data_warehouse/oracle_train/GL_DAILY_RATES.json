@@ -1,0 +1,62 @@
+{
+  "table": "GL_DAILY_RATES",
+  "purpose": "Business-use subset of GL_DAILY_RATES.",
+  "pk": [],
+  "fks": [],
+  "columns": [
+    {
+      "name": "FROM_CURRENCY",
+      "type": "VARCHAR",
+      "desc": "Source currency code."
+    },
+    {
+      "name": "TO_CURRENCY",
+      "type": "VARCHAR",
+      "desc": "Target currency code."
+    },
+    {
+      "name": "CONVERSION_DATE",
+      "type": "DATE",
+      "desc": "Date the rate is effective."
+    },
+    {
+      "name": "CONVERSION_RATE",
+      "type": "NUMBER",
+      "desc": "Applied exchange rate."
+    },
+    {
+      "name": "CONVERSION_TYPE",
+      "type": "VARCHAR",
+      "desc": "Type of rate (e.g., Corporate, Spot)."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "FROM_CURRENCY",
+      "type": "VARCHAR",
+      "desc": "Source currency code."
+    },
+    {
+      "name": "TO_CURRENCY",
+      "type": "VARCHAR",
+      "desc": "Target currency code."
+    },
+    {
+      "name": "CONVERSION_DATE",
+      "type": "DATE",
+      "desc": "Date the rate is effective."
+    },
+    {
+      "name": "CONVERSION_RATE",
+      "type": "NUMBER",
+      "desc": "Applied exchange rate."
+    },
+    {
+      "name": "CONVERSION_TYPE",
+      "type": "VARCHAR",
+      "desc": "Type of rate (e.g., Corporate, Spot)."
+    }
+  ],
+  "notes": "gl_daily_rates holds daily exchange rates used in multi-currency financial transactions across Oracle EBS modules. It is a critical table in Oracle E-Business Suite (EBS) 12.1.1 and 12.2.2 within the General Ledger (GL) module, storing daily currency conversion rates necessary for accurate financial reporting across multiple currencies. It maintains exchange rate data used to convert transactions from a source currency to a target currency. Key columns include from_currency (source currency code), to_currency (target currency code), conversion_date (date the rate is effective), conversion_rate (applied exchange rate), and conversion_type (rate type, such as Corporate, Spot, or User-defined). This table enables proper currency conversions for multinational accounting and financial consolidation processes.",
+  "join_hints": []
+}

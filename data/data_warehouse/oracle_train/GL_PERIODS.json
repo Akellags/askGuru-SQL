@@ -1,0 +1,144 @@
+{
+  "table": "GL_PERIODS",
+  "purpose": "Business-use subset of GL_PERIODS.",
+  "pk": [],
+  "fks": [],
+  "columns": [
+    {
+      "name": "PERIOD_SET_NAME",
+      "type": "VARCHAR2",
+      "desc": "Name of the accounting calendar (period set) this period belongs to."
+    },
+    {
+      "name": "PERIOD_NAME",
+      "type": "VARCHAR2",
+      "desc": "System-generated name of the accounting period (e.g., JAN-2023)."
+    },
+    {
+      "name": "START_DATE",
+      "type": "DATE",
+      "desc": "Date on which the accounting period begins."
+    },
+    {
+      "name": "END_DATE",
+      "type": "DATE",
+      "desc": "Date on which the accounting period ends."
+    },
+    {
+      "name": "YEAR_START_DATE",
+      "type": "DATE",
+      "desc": "Start date of the fiscal year that contains this period."
+    },
+    {
+      "name": "QUARTER_START_DATE",
+      "type": "DATE",
+      "desc": "Start date of the fiscal quarter that contains this period."
+    },
+    {
+      "name": "PERIOD_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Type of the accounting period (e.g., Monthly, Quarterly, Yearly)."
+    },
+    {
+      "name": "PERIOD_YEAR",
+      "type": "NUMBER",
+      "desc": "Fiscal year to which this accounting period belongs (e.g., 2023)."
+    },
+    {
+      "name": "PERIOD_NUM",
+      "type": "NUMBER",
+      "desc": "Numeric period number within the fiscal year (e.g., 1 for January)."
+    },
+    {
+      "name": "QUARTER_NUM",
+      "type": "NUMBER",
+      "desc": "Quarter number within the fiscal year (e.g., 1, 2, 3, 4)."
+    },
+    {
+      "name": "ENTERED_PERIOD_NAME",
+      "type": "VARCHAR2",
+      "desc": "User-entered name of the accounting period (optional override of PERIOD_NAME)."
+    },
+    {
+      "name": "ADJUSTMENT_PERIOD_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating whether the period is an adjustment period ('Y' for yes)."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Standard WHO column; date the record was created."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Standard WHO column; date the record was created."
+    },
+    {
+      "name": "PERIOD_SET_NAME",
+      "type": "VARCHAR2",
+      "desc": "Name of the accounting calendar (period set) this period belongs to."
+    },
+    {
+      "name": "PERIOD_NAME",
+      "type": "VARCHAR2",
+      "desc": "System-generated name of the accounting period (e.g., JAN-2023)."
+    },
+    {
+      "name": "START_DATE",
+      "type": "DATE",
+      "desc": "Date on which the accounting period begins."
+    },
+    {
+      "name": "END_DATE",
+      "type": "DATE",
+      "desc": "Date on which the accounting period ends."
+    },
+    {
+      "name": "YEAR_START_DATE",
+      "type": "DATE",
+      "desc": "Start date of the fiscal year that contains this period."
+    },
+    {
+      "name": "QUARTER_START_DATE",
+      "type": "DATE",
+      "desc": "Start date of the fiscal quarter that contains this period."
+    },
+    {
+      "name": "PERIOD_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Type of the accounting period (e.g., Monthly, Quarterly, Yearly)."
+    },
+    {
+      "name": "PERIOD_YEAR",
+      "type": "NUMBER",
+      "desc": "Fiscal year to which this accounting period belongs (e.g., 2023)."
+    },
+    {
+      "name": "PERIOD_NUM",
+      "type": "NUMBER",
+      "desc": "Numeric period number within the fiscal year (e.g., 1 for January)."
+    },
+    {
+      "name": "QUARTER_NUM",
+      "type": "NUMBER",
+      "desc": "Quarter number within the fiscal year (e.g., 1, 2, 3, 4)."
+    },
+    {
+      "name": "ENTERED_PERIOD_NAME",
+      "type": "VARCHAR2",
+      "desc": "User-entered name of the accounting period (optional override of PERIOD_NAME)."
+    },
+    {
+      "name": "ADJUSTMENT_PERIOD_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating whether the period is an adjustment period ('Y' for yes)."
+    }
+  ],
+  "notes": "gl_periods defines periods and fiscal calendars used across ledgers for accounting and reporting. It captures period metadata such as period_name, period_type, and period_set_name, which together form the composite primary key. Key columns include period_year (fiscal year), adjustment_flag (Y if it is an adjustment period allowing date overlaps), period_num (sequential number of the period in a fiscal year), start_date, and end_date. Each period is uniquely identified within its period set and type, and no two periods can overlap unless flagged as an adjustment period. This table underpins accurate time-based financial control across all ledgers.",
+  "join_hints": [
+    "GL_PERIODS.PERIOD_SET_NAME = GL_LEDGERS.PERIOD_SET_NAME"
+  ]
+}

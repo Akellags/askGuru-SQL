@@ -1,0 +1,223 @@
+{
+  "table": "PO_HEADERS_ALL",
+  "purpose": "Business-use subset of PO_HEADERS_ALL.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "VENDOR_ID",
+      "ref_table": "AP_SUPPLIERS",
+      "ref_column": "VENDOR_ID"
+    },
+    {
+      "column": "VENDOR_SITE_ID",
+      "ref_table": "AP_SUPPLIER_SITES_ALL",
+      "ref_column": "VENDOR_SITE_ID"
+    },
+    {
+      "column": "ORG_ID",
+      "ref_table": "HR_OPERATING_UNITS",
+      "ref_column": "ORGANIZATION_ID"
+    }
+  ],
+  "columns": [
+    {
+      "name": "ACCEPTANCE_DUE_DATE",
+      "type": "DATE",
+      "desc": "Date by which the supplier should accept the purchase order."
+    },
+    {
+      "name": "AGENT_ID",
+      "type": "NUMBER",
+      "desc": "Buyer unique identifier (FK to PER_ALL_PEOPLE_F)."
+    },
+    {
+      "name": "APPROVED_DATE",
+      "type": "DATE",
+      "desc": "Date the purchase order was last approved."
+    },
+    {
+      "name": "APPROVED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether the purchase order is approved (Y/N)."
+    },
+    {
+      "name": "AUTHORIZATION_STATUS",
+      "type": "VARCHAR2",
+      "desc": "Authorization status of the purchase order."
+    },
+    {
+      "name": "CANCEL_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether the purchase order is cancelled (Y/N)."
+    },
+    {
+      "name": "CLOSED_CODE",
+      "type": "VARCHAR2",
+      "desc": "Closure status of the document (e.g., CLOSED, FINALLY CLOSED)."
+    },
+    {
+      "name": "CLOSED_DATE",
+      "type": "DATE",
+      "desc": "Date the document was closed."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Date the record was created."
+    },
+    {
+      "name": "CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Currency code for the PO (FK to FND_CURRENCIES)."
+    },
+    {
+      "name": "ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Key Flexfield enabled flag."
+    },
+    {
+      "name": "END_DATE",
+      "type": "DATE",
+      "desc": "Expiration date of the document."
+    },
+    {
+      "name": "FROZEN_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the document is frozen (Y/N)."
+    },
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier (multi-org)."
+    },
+    {
+      "name": "PO_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier of the PO header."
+    },
+    {
+      "name": "RATE",
+      "type": "NUMBER",
+      "desc": "Currency conversion rate."
+    },
+    {
+      "name": "RATE_DATE",
+      "type": "DATE",
+      "desc": "Currency conversion date."
+    },
+    {
+      "name": "RATE_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Currency conversion rate type."
+    },
+    {
+      "name": "REVISION_NUM",
+      "type": "NUMBER",
+      "desc": "Document revision number."
+    },
+    {
+      "name": "SEGMENT1",
+      "type": "VARCHAR2",
+      "desc": "Purchase order number (human-readable identifier)."
+    },
+    {
+      "name": "TERMS_ID",
+      "type": "NUMBER",
+      "desc": "Payment terms identifier."
+    },
+    {
+      "name": "TYPE_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Type of document (STANDARD, BLANKET, CONTRACT)."
+    },
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "Supplier identifier (FK to AP_SUPPLIERS)."
+    },
+    {
+      "name": "VENDOR_SITE_ID",
+      "type": "NUMBER",
+      "desc": "Supplier site identifier (FK to AP_SUPPLIER_SITES_ALL)."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "Supplier identifier (FK to AP_SUPPLIERS)."
+    },
+    {
+      "name": "VENDOR_SITE_ID",
+      "type": "NUMBER",
+      "desc": "Supplier site identifier (FK to AP_SUPPLIER_SITES_ALL)."
+    },
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier (multi-org)."
+    },
+    {
+      "name": "CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Currency code for the PO (FK to FND_CURRENCIES)."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Date the record was created."
+    },
+    {
+      "name": "PO_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier of the PO header."
+    },
+    {
+      "name": "ACCEPTANCE_DUE_DATE",
+      "type": "DATE",
+      "desc": "Date by which the supplier should accept the purchase order."
+    },
+    {
+      "name": "AGENT_ID",
+      "type": "NUMBER",
+      "desc": "Buyer unique identifier (FK to PER_ALL_PEOPLE_F)."
+    },
+    {
+      "name": "APPROVED_DATE",
+      "type": "DATE",
+      "desc": "Date the purchase order was last approved."
+    },
+    {
+      "name": "APPROVED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether the purchase order is approved (Y/N)."
+    },
+    {
+      "name": "AUTHORIZATION_STATUS",
+      "type": "VARCHAR2",
+      "desc": "Authorization status of the purchase order."
+    },
+    {
+      "name": "CANCEL_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether the purchase order is cancelled (Y/N)."
+    },
+    {
+      "name": "CLOSED_CODE",
+      "type": "VARCHAR2",
+      "desc": "Closure status of the document (e.g., CLOSED, FINALLY CLOSED)."
+    },
+    {
+      "name": "CLOSED_DATE",
+      "type": "DATE",
+      "desc": "Date the document was closed."
+    }
+  ],
+  "notes": "The PO_HEADERS_ALL table is the master table for purchase order (PO) headers in Oracle Purchasing. It holds metadata and transactional data for purchase orders, blanket agreements, and contracts. The table is critical for tracking supplier agreements, approval status, and financial terms. Key fields include segment1 (PO number), creation_date (PO date), vendor_id, vendor_site_id (supplier details), currency_code, rate (exchange rate), and type_lookup_code (e.g., STANDARD, BLANKET, CONTRACT). Approval is tracked via approved_flag and approved_date, and the operating unit is identified by org_id. Status tracking uses columns like closed_date, cancel_flag, frozen_flag, and closed_code. Most queries filter type_lookup_code = 'STANDARD' for regular POs, and org_id is crucial for reporting across business units.",
+  "join_hints": [
+    "PO_HEADERS_ALL.PO_HEADER_ID = PO_LINES_ALL.PO_HEADER_ID",
+    "PO_HEADERS_ALL.VENDOR_ID = AP_SUPPLIERS.VENDOR_ID",
+    "PO_HEADERS_ALL.VENDOR_SITE_ID = AP_SUPPLIER_SITES_ALL.VENDOR_SITE_ID",
+    "PO_HEADERS_ALL.ORG_ID = HR_OPERATING_UNITS.ORGANIZATION_ID"
+  ]
+}

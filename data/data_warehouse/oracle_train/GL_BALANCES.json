@@ -1,0 +1,21 @@
+{
+  "table": "GL_BALANCES",
+  "columns": [
+    {"name":"LEDGER_ID","type":"NUMBER","desc":"FK to GL_LEDGERS"},
+    {"name":"CODE_COMBINATION_ID","type":"NUMBER","desc":"FK to GL_CODE_COMBINATIONS"},
+    {"name":"PERIOD_NAME","type":"VARCHAR2","desc":"E.g., MAR-2003"},
+    {"name":"ACTUAL_FLAG","type":"VARCHAR2","desc":"A/B/E"},
+    {"name":"BEGIN_BALANCE_DR","type":"NUMBER","desc":"Beginning debit"},
+    {"name":"BEGIN_BALANCE_CR","type":"NUMBER","desc":"Beginning credit"},
+    {"name":"PERIOD_NET_DR","type":"NUMBER","desc":"Net debits in period"},
+    {"name":"PERIOD_NET_CR","type":"NUMBER","desc":"Net credits in period"}
+  ],
+  "foreign_keys": [
+    {"column":"LEDGER_ID","ref_table":"GL_LEDGERS","ref_column":"LEDGER_ID"},
+    {"column":"CODE_COMBINATION_ID","ref_table":"GL_CODE_COMBINATIONS","ref_column":"CODE_COMBINATION_ID"}
+  ],
+  "example_joins": [
+    "GL_BALANCES.PERIOD_NAME = GL_PERIODS.PERIOD_NAME"
+  ],
+  "notes": "Compute ending balance as (BEGIN_DR - BEGIN_CR) + (PERIOD_NET_DR - PERIOD_NET_CR)."
+}

@@ -1,0 +1,203 @@
+{
+  "table": "AP_INV_APRVL_HIST_ALL",
+  "purpose": "Business-use subset of AP_INV_APRVL_HIST_ALL.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "INVOICE_ID",
+      "ref_table": "AP_INVOICES_ALL",
+      "ref_column": "INVOICE_ID"
+    },
+    {
+      "column": "APPROVER_ID",
+      "ref_table": "FND_USER",
+      "ref_column": "USER_ID"
+    },
+    {
+      "column": "CREATED_BY",
+      "ref_table": "FND_USER",
+      "ref_column": "USER_ID"
+    },
+    {
+      "column": "LAST_UPDATED_BY",
+      "ref_table": "FND_USER",
+      "ref_column": "USER_ID"
+    },
+    {
+      "column": "LAST_UPDATE_LOGIN",
+      "ref_table": "FND_LOGINS",
+      "ref_column": "LOGIN_ID"
+    }
+  ],
+  "columns": [
+    {
+      "name": "INVOICE_ID",
+      "type": "NUMBER",
+      "desc": "Invoice identifier (links to AP_INVOICES_ALL)."
+    },
+    {
+      "name": "ITERATION",
+      "type": "NUMBER",
+      "desc": "Count of times invoice passed through approval workflow."
+    },
+    {
+      "name": "RESPONSE",
+      "type": "VARCHAR2",
+      "desc": "Response from approver (e.g., APPROVE, REJECT)."
+    },
+    {
+      "name": "APPROVER_ID",
+      "type": "NUMBER",
+      "desc": "Approver identifier (links to FND_USER.USER_ID)."
+    },
+    {
+      "name": "APPROVER_NAME",
+      "type": "VARCHAR2",
+      "desc": "No longer used."
+    },
+    {
+      "name": "AMOUNT_APPROVED",
+      "type": "NUMBER",
+      "desc": "Invoice amount at the time of approval response."
+    },
+    {
+      "name": "APPROVER_COMMENTS",
+      "type": "VARCHAR2",
+      "desc": "Approver's comments."
+    },
+    {
+      "name": "CREATED_BY",
+      "type": "NUMBER",
+      "desc": "User who created this row (FND_USER.USER_ID)."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Date when the row was created."
+    },
+    {
+      "name": "LAST_UPDATE_DATE",
+      "type": "DATE",
+      "desc": "Date of last update."
+    },
+    {
+      "name": "LAST_UPDATED_BY",
+      "type": "NUMBER",
+      "desc": "User who last updated this row (FND_USER.USER_ID)."
+    },
+    {
+      "name": "LAST_UPDATE_LOGIN",
+      "type": "NUMBER",
+      "desc": "Login ID of user who last updated (FND_LOGINS.LOGIN_ID)."
+    },
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Operating unit identifier for multi-org support."
+    },
+    {
+      "name": "NOTIFICATION_ORDER",
+      "type": "NUMBER",
+      "desc": "Order in which notifications were sent to approvers."
+    },
+    {
+      "name": "ORIG_SYSTEM",
+      "type": "VARCHAR2",
+      "desc": "Originating system for the approver_id."
+    },
+    {
+      "name": "ITEM_CLASS",
+      "type": "VARCHAR2",
+      "desc": "AME Item Class requiring approval."
+    },
+    {
+      "name": "ITEM_ID",
+      "type": "VARCHAR2",
+      "desc": "Unique identifier for the AME transaction item."
+    },
+    {
+      "name": "LINE_NUMBER",
+      "type": "NUMBER",
+      "desc": "Invoice line number."
+    },
+    {
+      "name": "HOLD_ID",
+      "type": "NUMBER",
+      "desc": "Hold identifier."
+    },
+    {
+      "name": "HISTORY_TYPE",
+      "type": "VARCHAR2",
+      "desc": "For internal use only."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Operating unit identifier for multi-org support."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Date when the row was created."
+    },
+    {
+      "name": "CREATED_BY",
+      "type": "NUMBER",
+      "desc": "User who created this row (FND_USER.USER_ID)."
+    },
+    {
+      "name": "ITEM_ID",
+      "type": "VARCHAR2",
+      "desc": "Unique identifier for the AME transaction item."
+    },
+    {
+      "name": "INVOICE_ID",
+      "type": "NUMBER",
+      "desc": "Invoice identifier (links to AP_INVOICES_ALL)."
+    },
+    {
+      "name": "ITERATION",
+      "type": "NUMBER",
+      "desc": "Count of times invoice passed through approval workflow."
+    },
+    {
+      "name": "RESPONSE",
+      "type": "VARCHAR2",
+      "desc": "Response from approver (e.g., APPROVE, REJECT)."
+    },
+    {
+      "name": "APPROVER_ID",
+      "type": "NUMBER",
+      "desc": "Approver identifier (links to FND_USER.USER_ID)."
+    },
+    {
+      "name": "APPROVER_NAME",
+      "type": "VARCHAR2",
+      "desc": "No longer used."
+    },
+    {
+      "name": "AMOUNT_APPROVED",
+      "type": "NUMBER",
+      "desc": "Invoice amount at the time of approval response."
+    },
+    {
+      "name": "APPROVER_COMMENTS",
+      "type": "VARCHAR2",
+      "desc": "Approver's comments."
+    },
+    {
+      "name": "LAST_UPDATE_DATE",
+      "type": "DATE",
+      "desc": "Date of last update."
+    },
+    {
+      "name": "LAST_UPDATED_BY",
+      "type": "NUMBER",
+      "desc": "User who last updated this row (FND_USER.USER_ID)."
+    }
+  ],
+  "notes": "",
+  "join_hints": []
+}

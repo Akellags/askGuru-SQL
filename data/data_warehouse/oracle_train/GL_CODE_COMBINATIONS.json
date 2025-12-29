@@ -1,0 +1,74 @@
+{
+  "table": "GL_CODE_COMBINATIONS",
+  "purpose": "Business-use subset of GL_CODE_COMBINATIONS.",
+  "pk": [],
+  "fks": [],
+  "columns": [
+    {
+      "name": "CODE_COMBINATION_ID",
+      "type": "NUMBER",
+      "desc": "Primary key."
+    },
+    {
+      "name": "CHART_OF_ACCOUNTS_ID",
+      "type": "NUMBER",
+      "desc": "Chart of accounts ID."
+    },
+    {
+      "name": "SEGMENT1",
+      "type": "VARCHAR",
+      "desc": "Account segment 1."
+    },
+    {
+      "name": "SEGMENT2",
+      "type": "VARCHAR",
+      "desc": "Account segment 2."
+    },
+    {
+      "name": "SEGMENT3",
+      "type": "VARCHAR",
+      "desc": "Account segment 3."
+    },
+    {
+      "name": "SUMMARY_FLAG",
+      "type": "VARCHAR",
+      "desc": "Y/N for summary account."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "CODE_COMBINATION_ID",
+      "type": "NUMBER",
+      "desc": "Primary key."
+    },
+    {
+      "name": "CHART_OF_ACCOUNTS_ID",
+      "type": "NUMBER",
+      "desc": "Chart of accounts ID."
+    },
+    {
+      "name": "SEGMENT1",
+      "type": "VARCHAR",
+      "desc": "Account segment 1."
+    },
+    {
+      "name": "SEGMENT2",
+      "type": "VARCHAR",
+      "desc": "Account segment 2."
+    },
+    {
+      "name": "SEGMENT3",
+      "type": "VARCHAR",
+      "desc": "Account segment 3."
+    },
+    {
+      "name": "SUMMARY_FLAG",
+      "type": "VARCHAR",
+      "desc": "Y/N for summary account."
+    }
+  ],
+  "notes": "gl_code_combinations holds fully qualified accounting code combinations (chart of accounts segments). The table holds individual segment values for code_combination_id such as segment1, segment2, segment3, segment4 etc.",
+  "join_hints": [
+    "GL_CODE_COMBINATIONS.CODE_COMBINATION_ID = AP_INVOICE_DISTRIBUTIONS_ALL.DIST_CODE_COMBINATION_ID"
+  ]
+}

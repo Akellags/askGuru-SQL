@@ -1,0 +1,239 @@
+{
+  "table": "AP_SUPPLIERS",
+  "purpose": "Business-use subset of AP_SUPPLIERS.",
+  "pk": [],
+  "fks": [],
+  "columns": [
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier for each supplier (vendor)."
+    },
+    {
+      "name": "SEGMENT1",
+      "type": "VARCHAR2",
+      "desc": "Supplier number; a unique user-defined identifier for the supplier."
+    },
+    {
+      "name": "VENDOR_NAME",
+      "type": "VARCHAR2",
+      "desc": "Supplier name; full name of the vendor."
+    },
+    {
+      "name": "VENDOR_TYPE_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Supplier type/classification (e.g., EMPLOYEE, EXTERNAL, STATUTORY)."
+    },
+    {
+      "name": "INVOICE_CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Default currency used for invoices from this supplier."
+    },
+    {
+      "name": "DISTRIBUTION_SET_ID",
+      "type": "NUMBER",
+      "desc": "Identifier for the default distribution set for this supplier."
+    },
+    {
+      "name": "AMOUNT_INCLUDES_TAX_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if amounts include tax (Y/N)."
+    },
+    {
+      "name": "EMPLOYEE_ID",
+      "type": "NUMBER",
+      "desc": "If supplier is an employee, links to employee record (FK to PER_ALL_PEOPLE_F)."
+    },
+    {
+      "name": "HOLD_ALL_PAYMENTS_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if all payments are held for this supplier (Y/N)."
+    },
+    {
+      "name": "HOLD_FUTURE_PAYMENTS_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if future payments are held (Y/N)."
+    },
+    {
+      "name": "ONE_TIME_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Identifies if supplier is a one-time vendor (Y/N)."
+    },
+    {
+      "name": "HOLD_UNMATCHED_INVOICES_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag to hold unmatched invoices automatically (Y/N)."
+    },
+    {
+      "name": "ALLOW_UNORDERED_RECEIPTS_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if unordered receipts are allowed (Y/N)."
+    },
+    {
+      "name": "CREATE_DEBIT_MEMO_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if debit memos can be automatically created (Y/N)."
+    },
+    {
+      "name": "ALLOW_AWT_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag to indicate if Allow Withholding Tax is enabled (Y/N)."
+    },
+    {
+      "name": "HOLD_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the supplier is on purchasing hold (Y/N)."
+    },
+    {
+      "name": "PARTY_ID",
+      "type": "NUMBER",
+      "desc": "Party ID in the Trading Community Architecture (TCA)."
+    },
+    {
+      "name": "PAY_GROUP_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Payment group to which the supplier belongs (e.g., EMPLOYEES, STATUTORY)."
+    },
+    {
+      "name": "PAYMENT_PRIORITY",
+      "type": "NUMBER",
+      "desc": "Numeric priority for payments (lower number = higher priority)."
+    },
+    {
+      "name": "TERMS_ID",
+      "type": "NUMBER",
+      "desc": "FK to payment terms (AP_TERMS)."
+    },
+    {
+      "name": "SET_OF_BOOKS_ID",
+      "type": "NUMBER",
+      "desc": "Set of Books identifier; associates supplier to a ledger."
+    },
+    {
+      "name": "AUTO_TAX_CALC_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Specifies where tax calculation happens (Supplier/Line/Tax Engine)."
+    },
+    {
+      "name": "PAY_DATE_BASIS_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Basis for payment date calculation (Invoice Date, Goods Received, etc.)."
+    },
+    {
+      "name": "PREPAY_CODE_COMBINATION_ID",
+      "type": "NUMBER",
+      "desc": "GL account ID for prepayments."
+    },
+    {
+      "name": "ACCTS_PAY_CODE_COMBINATION_ID",
+      "type": "NUMBER",
+      "desc": "Liability account code combination ID (payables account)."
+    },
+    {
+      "name": "AWT_GROUP_ID",
+      "type": "NUMBER",
+      "desc": "Identifier for the withholding tax group."
+    },
+    {
+      "name": "VAT_CODE",
+      "type": "VARCHAR2",
+      "desc": "VAT code applicable to the supplier."
+    },
+    {
+      "name": "VAT_REGISTRATION_NUM",
+      "type": "VARCHAR2",
+      "desc": "VAT registration number for tax compliance."
+    },
+    {
+      "name": "VERIFICATION_REQUEST_ID",
+      "type": "NUMBER",
+      "desc": "Identifier for the verification request (HMRC integration)."
+    },
+    {
+      "name": "VERIFICATION_NUMBER",
+      "type": "VARCHAR2",
+      "desc": "Verification number returned by tax authority (e.g., HMRC)."
+    },
+    {
+      "name": "WITHHOLDING_STATUS_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Status of withholding for the supplier (ENABLED, DISABLED, etc.)."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier for each supplier (vendor)."
+    },
+    {
+      "name": "VENDOR_NAME",
+      "type": "VARCHAR2",
+      "desc": "Supplier name; full name of the vendor."
+    },
+    {
+      "name": "SET_OF_BOOKS_ID",
+      "type": "NUMBER",
+      "desc": "Set of Books identifier; associates supplier to a ledger."
+    },
+    {
+      "name": "SEGMENT1",
+      "type": "VARCHAR2",
+      "desc": "Supplier number; a unique user-defined identifier for the supplier."
+    },
+    {
+      "name": "VENDOR_TYPE_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Supplier type/classification (e.g., EMPLOYEE, EXTERNAL, STATUTORY)."
+    },
+    {
+      "name": "INVOICE_CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Default currency used for invoices from this supplier."
+    },
+    {
+      "name": "DISTRIBUTION_SET_ID",
+      "type": "NUMBER",
+      "desc": "Identifier for the default distribution set for this supplier."
+    },
+    {
+      "name": "AMOUNT_INCLUDES_TAX_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if amounts include tax (Y/N)."
+    },
+    {
+      "name": "EMPLOYEE_ID",
+      "type": "NUMBER",
+      "desc": "If supplier is an employee, links to employee record (FK to PER_ALL_PEOPLE_F)."
+    },
+    {
+      "name": "HOLD_ALL_PAYMENTS_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if all payments are held for this supplier (Y/N)."
+    },
+    {
+      "name": "HOLD_FUTURE_PAYMENTS_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if future payments are held (Y/N)."
+    },
+    {
+      "name": "ONE_TIME_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Identifies if supplier is a one-time vendor (Y/N)."
+    },
+    {
+      "name": "HOLD_UNMATCHED_INVOICES_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag to hold unmatched invoices automatically (Y/N)."
+    },
+    {
+      "name": "ALLOW_UNORDERED_RECEIPTS_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if unordered receipts are allowed (Y/N)."
+    }
+  ],
+  "notes": "AP_SUPPLIERS holds supplier master records across all operating units. Each supplier is uniquely identified by VENDOR_ID. This table is central to invoice and purchase order operations in Oracle AP and Purchasing modules. Supplier data is global (not tied to a specific organization).",
+  "join_hints": [
+    "AP_SUPPLIERS.VENDOR_ID = AP_SUPPLIER_SITES_ALL.VENDOR_ID"
+  ]
+}

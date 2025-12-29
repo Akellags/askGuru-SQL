@@ -1,0 +1,19 @@
+# vLLM serving defaults for 1×A100-80GB, 70B 4-bit, 4 concurrent
+# Tune based on actual latency and memory headroom.
+
+model:
+  path: outputs/merged_oracle_llama70b_awq4
+
+server:
+  host: 0.0.0.0
+  port: 8000
+
+generation:
+  max_model_len: 8192
+  max_num_seqs: 4
+  max_tokens: 512
+  temperature: 0.0
+  top_p: 1.0
+
+gpu:
+  gpu_memory_utilization: 0.92

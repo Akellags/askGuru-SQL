@@ -1,0 +1,364 @@
+{
+  "table": "RCV_SHIPMENT_LINES",
+  "purpose": "Business-use subset of RCV_SHIPMENT_LINES.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "SHIPMENT_HEADER_ID",
+      "ref_table": "RCV_SHIPMENT_HEADERS",
+      "ref_column": "SHIPMENT_HEADER_ID"
+    },
+    {
+      "column": "PO_HEADER_ID",
+      "ref_table": "PO_HEADERS_ALL",
+      "ref_column": "PO_HEADER_ID"
+    },
+    {
+      "column": "PO_LINE_ID",
+      "ref_table": "PO_LINES_ALL",
+      "ref_column": "PO_LINE_ID"
+    },
+    {
+      "column": "PO_LINE_LOCATION_ID",
+      "ref_table": "PO_LINE_LOCATIONS_ALL",
+      "ref_column": "LINE_LOCATION_ID"
+    },
+    {
+      "column": "PO_DISTRIBUTION_ID",
+      "ref_table": "PO_DISTRIBUTIONS_ALL",
+      "ref_column": "PO_DISTRIBUTION_ID"
+    },
+    {
+      "column": "SHIP_TO_LOCATION_ID",
+      "ref_table": "HR_LOCATIONS_ALL",
+      "ref_column": "LOCATION_ID"
+    },
+    {
+      "column": "ITEM_ID",
+      "ref_table": "MTL_SYSTEM_ITEMS_B",
+      "ref_column": "INVENTORY_ITEM_ID"
+    }
+  ],
+  "columns": [
+    {
+      "name": "SHIPMENT_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier for the shipment line."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Standard WHO column - date when this row was created."
+    },
+    {
+      "name": "SHIPMENT_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Shipment header ID (FK to RCV_SHIPMENT_HEADERS)."
+    },
+    {
+      "name": "LINE_NUM",
+      "type": "NUMBER",
+      "desc": "Shipment line number."
+    },
+    {
+      "name": "CATEGORY_ID",
+      "type": "NUMBER",
+      "desc": "Item category unique identifier."
+    },
+    {
+      "name": "QUANTITY_SHIPPED",
+      "type": "NUMBER",
+      "desc": "Number of items shipped."
+    },
+    {
+      "name": "QUANTITY_RECEIVED",
+      "type": "NUMBER",
+      "desc": "Number of items received."
+    },
+    {
+      "name": "UNIT_OF_MEASURE",
+      "type": "VARCHAR2",
+      "desc": "Unit of measure for the shipment line."
+    },
+    {
+      "name": "ITEM_DESCRIPTION",
+      "type": "VARCHAR2",
+      "desc": "Description of the item."
+    },
+    {
+      "name": "ITEM_ID",
+      "type": "NUMBER",
+      "desc": "Item identifier (FK to MTL_SYSTEM_ITEMS_B)."
+    },
+    {
+      "name": "ITEM_REVISION",
+      "type": "VARCHAR2",
+      "desc": "Item revision number."
+    },
+    {
+      "name": "VENDOR_ITEM_NUM",
+      "type": "VARCHAR2",
+      "desc": "Supplier’s item number."
+    },
+    {
+      "name": "VENDOR_LOT_NUM",
+      "type": "VARCHAR2",
+      "desc": "Supplier’s lot number."
+    },
+    {
+      "name": "UOM_CONVERSION_RATE",
+      "type": "NUMBER",
+      "desc": "Not currently used (reserved for UOM conversions)."
+    },
+    {
+      "name": "SHIPMENT_LINE_STATUS_CODE",
+      "type": "VARCHAR2",
+      "desc": "Receipt status of the shipment line (e.g., RECEIVED, PENDING)."
+    },
+    {
+      "name": "SOURCE_DOCUMENT_CODE",
+      "type": "VARCHAR2",
+      "desc": "Source document type (e.g., PO, Requisition)."
+    },
+    {
+      "name": "PO_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Purchase order header ID (FK to PO_HEADERS_ALL)."
+    },
+    {
+      "name": "PO_RELEASE_ID",
+      "type": "NUMBER",
+      "desc": "Purchase order release unique identifier."
+    },
+    {
+      "name": "PO_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Purchase order line ID (FK to PO_LINES_ALL)."
+    },
+    {
+      "name": "PO_LINE_LOCATION_ID",
+      "type": "NUMBER",
+      "desc": "PO shipment ID (FK to PO_LINE_LOCATIONS_ALL)."
+    },
+    {
+      "name": "PO_DISTRIBUTION_ID",
+      "type": "NUMBER",
+      "desc": "PO distribution ID (FK to PO_DISTRIBUTIONS_ALL)."
+    },
+    {
+      "name": "REQUISITION_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Requisition line unique identifier."
+    },
+    {
+      "name": "REQ_DISTRIBUTION_ID",
+      "type": "NUMBER",
+      "desc": "Requisition distribution unique identifier."
+    },
+    {
+      "name": "ROUTING_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Receiving routing unique identifier."
+    },
+    {
+      "name": "PACKING_SLIP",
+      "type": "VARCHAR2",
+      "desc": "Packing slip number."
+    },
+    {
+      "name": "FROM_ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Source organization ID (inventory org for internal orders)."
+    },
+    {
+      "name": "DELIVER_TO_PERSON_ID",
+      "type": "NUMBER",
+      "desc": "Requester identifier (FK to HR_EMPLOYEES or PER_ALL_PEOPLE_F)."
+    },
+    {
+      "name": "EMPLOYEE_ID",
+      "type": "NUMBER",
+      "desc": "Receiver identifier (FK to PER_ALL_PEOPLE_F)."
+    },
+    {
+      "name": "DESTINATION_TYPE_CODE",
+      "type": "VARCHAR2",
+      "desc": "Destination type (e.g., INVENTORY, EXPENSE)."
+    },
+    {
+      "name": "TO_ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Destination organization ID."
+    },
+    {
+      "name": "TO_SUBINVENTORY",
+      "type": "VARCHAR2",
+      "desc": "Default destination subinventory."
+    },
+    {
+      "name": "LOCATOR_ID",
+      "type": "NUMBER",
+      "desc": "Not currently used (locator for subinventory)."
+    },
+    {
+      "name": "CHARGE_ACCOUNT_ID",
+      "type": "NUMBER",
+      "desc": "Intransit charge account unique identifier."
+    },
+    {
+      "name": "TRANSPORTATION_ACCOUNT_ID",
+      "type": "NUMBER",
+      "desc": "Intransit transportation account unique identifier."
+    },
+    {
+      "name": "SHIPMENT_UNIT_PRICE",
+      "type": "NUMBER",
+      "desc": "Item unit price on shipment line."
+    },
+    {
+      "name": "TRANSFER_COST",
+      "type": "NUMBER",
+      "desc": "Intransit transfer cost."
+    },
+    {
+      "name": "TRANSPORTATION_COST",
+      "type": "NUMBER",
+      "desc": "Intransit transportation cost."
+    },
+    {
+      "name": "COMMENTS",
+      "type": "VARCHAR2",
+      "desc": "Receiver or approver comments."
+    },
+    {
+      "name": "PRIMARY_UNIT_OF_MEASURE",
+      "type": "VARCHAR2",
+      "desc": "Primary UOM of the item."
+    },
+    {
+      "name": "SHIP_TO_LOCATION_ID",
+      "type": "NUMBER",
+      "desc": "Ship-to location ID (FK to HR_LOCATIONS_ALL)."
+    },
+    {
+      "name": "COUNTRY_OF_ORIGIN_CODE",
+      "type": "VARCHAR2",
+      "desc": "Country of manufacture code."
+    },
+    {
+      "name": "OE_ORDER_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Sales order unique identifier (Order Management)."
+    },
+    {
+      "name": "OE_ORDER_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Sales order line identifier."
+    },
+    {
+      "name": "CUSTOMER_ITEM_NUM",
+      "type": "VARCHAR2",
+      "desc": "Customer’s item number."
+    },
+    {
+      "name": "COST_GROUP_ID",
+      "type": "NUMBER",
+      "desc": "Cost group ID (Oracle WMS)."
+    },
+    {
+      "name": "SECONDARY_QUANTITY_SHIPPED",
+      "type": "NUMBER",
+      "desc": "Quantity shipped in secondary UOM."
+    },
+    {
+      "name": "SECONDARY_QUANTITY_RECEIVED",
+      "type": "NUMBER",
+      "desc": "Quantity received in secondary UOM."
+    },
+    {
+      "name": "SECONDARY_UNIT_OF_MEASURE",
+      "type": "VARCHAR2",
+      "desc": "Secondary unit of measure."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Standard WHO column - date when this row was created."
+    },
+    {
+      "name": "PO_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Purchase order header ID (FK to PO_HEADERS_ALL)."
+    },
+    {
+      "name": "PO_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Purchase order line ID (FK to PO_LINES_ALL)."
+    },
+    {
+      "name": "ITEM_ID",
+      "type": "NUMBER",
+      "desc": "Item identifier (FK to MTL_SYSTEM_ITEMS_B)."
+    },
+    {
+      "name": "SHIPMENT_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier for the shipment line."
+    },
+    {
+      "name": "SHIPMENT_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Shipment header ID (FK to RCV_SHIPMENT_HEADERS)."
+    },
+    {
+      "name": "LINE_NUM",
+      "type": "NUMBER",
+      "desc": "Shipment line number."
+    },
+    {
+      "name": "CATEGORY_ID",
+      "type": "NUMBER",
+      "desc": "Item category unique identifier."
+    },
+    {
+      "name": "QUANTITY_SHIPPED",
+      "type": "NUMBER",
+      "desc": "Number of items shipped."
+    },
+    {
+      "name": "QUANTITY_RECEIVED",
+      "type": "NUMBER",
+      "desc": "Number of items received."
+    },
+    {
+      "name": "UNIT_OF_MEASURE",
+      "type": "VARCHAR2",
+      "desc": "Unit of measure for the shipment line."
+    },
+    {
+      "name": "ITEM_DESCRIPTION",
+      "type": "VARCHAR2",
+      "desc": "Description of the item."
+    },
+    {
+      "name": "ITEM_REVISION",
+      "type": "VARCHAR2",
+      "desc": "Item revision number."
+    },
+    {
+      "name": "VENDOR_ITEM_NUM",
+      "type": "VARCHAR2",
+      "desc": "Supplier’s item number."
+    }
+  ],
+  "notes": "The RCV_SHIPMENT_LINES table tracks detailed item-level data for each receipt or shipment, linking the receipt process to PO and requisition structures. It supports 3-way match functionality in Accounts Payable and is used in receipt transactions, ASN integration, and receiving validation. Key columns include ITEM_ID, QUANTITY_RECEIVED, PO_LINE_ID, and SHIPMENT_HEADER_ID.",
+  "join_hints": [
+    "RCV_SHIPMENT_LINES.SHIPMENT_HEADER_ID = RCV_SHIPMENT_HEADERS.SHIPMENT_HEADER_ID",
+    "RCV_SHIPMENT_LINES.PO_LINE_ID = PO_LINES_ALL.PO_LINE_ID",
+    "RCV_SHIPMENT_LINES.PO_LINE_LOCATION_ID = PO_LINE_LOCATIONS_ALL.LINE_LOCATION_ID",
+    "RCV_SHIPMENT_LINES.PO_DISTRIBUTION_ID = PO_DISTRIBUTIONS_ALL.PO_DISTRIBUTION_ID",
+    "RCV_SHIPMENT_LINES.SHIP_TO_LOCATION_ID = HR_LOCATIONS_ALL.LOCATION_ID"
+  ]
+}

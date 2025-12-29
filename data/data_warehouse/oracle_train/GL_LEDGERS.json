@@ -1,0 +1,128 @@
+{
+  "table": "GL_LEDGERS",
+  "purpose": "Business-use subset of GL_LEDGERS.",
+  "pk": [
+    "LEDGER_ID"
+  ],
+  "fks": [
+    {
+      "column": "CURRENCY_CODE",
+      "ref_table": "FND_CURRENCIES",
+      "ref_column": "CURRENCY_CODE"
+    },
+    {
+      "column": "CHART_OF_ACCOUNTS_ID",
+      "ref_table": "FND_ID_FLEX_STRUCTURES",
+      "ref_column": "ID_FLEX_NUM"
+    },
+    {
+      "column": "PERIOD_SET_NAME",
+      "ref_table": "GL_PERIODS",
+      "ref_column": "PERIOD_SET_NAME"
+    },
+    {
+      "column": "ACCOUNTED_PERIOD_TYPE",
+      "ref_table": "GL_PERIODS",
+      "ref_column": "PERIOD_TYPE"
+    }
+  ],
+  "columns": [
+    {
+      "name": "LEDGER_ID",
+      "type": "NUMBER",
+      "desc": "Primary key uniquely identifying the ledger."
+    },
+    {
+      "name": "NAME",
+      "type": "VARCHAR",
+      "desc": "User-defined name of the ledger e.g., 'Corporate Ledger - US GAAP'"
+    },
+    {
+      "name": "SHORT_NAME",
+      "type": "VARCHAR",
+      "desc": "Abbreviated identifier for reporting and integration"
+    },
+    {
+      "name": "CURRENCY_CODE",
+      "type": "VARCHAR",
+      "desc": "References fnd_currencies.currency_code"
+    },
+    {
+      "name": "CHART_OF_ACCOUNTS_ID",
+      "type": "NUMBER",
+      "desc": "References fnd_id_flex_structures.id_flex_num + ID_FLEX_CODE = 'GL#'"
+    },
+    {
+      "name": "PERIOD_SET_NAME",
+      "type": "VARCHAR",
+      "desc": "Maps calendar periods to the ledger"
+    },
+    {
+      "name": "ACCOUNTED_PERIOD_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Links to gl_periods along with PERIOD_SET_NAME"
+    },
+    {
+      "name": "LEDGER_CATEGORY_CODE",
+      "type": "VARCHAR",
+      "desc": "Classifies ledgers as PRIMARY or SECONDARY or ALIAS"
+    },
+    {
+      "name": "ENABLED_FLAG",
+      "type": "VARCHAR",
+      "desc": "Indicates whether the ledger is active"
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "CURRENCY_CODE",
+      "type": "VARCHAR",
+      "desc": "References fnd_currencies.currency_code"
+    },
+    {
+      "name": "LEDGER_ID",
+      "type": "NUMBER",
+      "desc": "Primary key uniquely identifying the ledger."
+    },
+    {
+      "name": "NAME",
+      "type": "VARCHAR",
+      "desc": "User-defined name of the ledger e.g., 'Corporate Ledger - US GAAP'"
+    },
+    {
+      "name": "SHORT_NAME",
+      "type": "VARCHAR",
+      "desc": "Abbreviated identifier for reporting and integration"
+    },
+    {
+      "name": "CHART_OF_ACCOUNTS_ID",
+      "type": "NUMBER",
+      "desc": "References fnd_id_flex_structures.id_flex_num + ID_FLEX_CODE = 'GL#'"
+    },
+    {
+      "name": "PERIOD_SET_NAME",
+      "type": "VARCHAR",
+      "desc": "Maps calendar periods to the ledger"
+    },
+    {
+      "name": "ACCOUNTED_PERIOD_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Links to gl_periods along with PERIOD_SET_NAME"
+    },
+    {
+      "name": "LEDGER_CATEGORY_CODE",
+      "type": "VARCHAR",
+      "desc": "Classifies ledgers as PRIMARY or SECONDARY or ALIAS"
+    },
+    {
+      "name": "ENABLED_FLAG",
+      "type": "VARCHAR",
+      "desc": "Indicates whether the ledger is active"
+    }
+  ],
+  "notes": "gl_ledgers stores ledger definitions, uniquely identified by ledger_id. Ledgers are fundamental for financial reporting. Key fields include currency_code, chart_of_accounts_id, and period_set_name. An Oracle EBS instance can have multiple ledgers, each typically representing a separate company. A ledger is a critical accounting entity from which financial statements are generated. Key attributes include currency_code (accounting currency), chart_of_accounts_id (the COA structure used), accounted_period_type (linked to gl_periods.period_type), and period_set_name (from gl_calendars). ledger_category_code classifies ledgers as PRIMARY or REPORTING, with PRIMARY being the most common for operational and financial queries.",
+  "join_hints": [
+    "GL_PERIODS.PERIOD_SET_NAME = GL_LEDGERS.PERIOD_SET_NAME AND GL_PERIODS.ACCOUNTED_PERIOD_NAME = GL_LEDGERS.PERIOD_NAME",
+    "GL_LEDGERS.LEDGER_ID = GL_BALANCES.LEDGER_ID"
+  ]
+}

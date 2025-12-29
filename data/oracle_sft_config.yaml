@@ -1,0 +1,125 @@
+# Oracle EBS NL2SQL SFT Dataset Pipeline Configuration
+# Date: 2025-12-29
+# Purpose: Configure all phases of data pipeline execution
+
+input:
+  # Main training data: instruction-input-output format
+  main_training: "data/data_warehouse/oracle_train/training_data_sets_4jul2025_v5_xiyan_compatible.jsonl"
+  
+  # High-quality corrections: question-corrected_sql format
+  corrections: "data/data_warehouse/oracle_train/corrections.jsonl"
+  
+  # Foreign key relationships for RAG context
+  joins: "data/data_warehouse/oracle_train/joins.json"
+  
+  # Business term to database column mappings
+  keywords: "data/data_warehouse/oracle_train/keywords.json"
+  
+  # Table schema definitions (all *.json files in this folder)
+  table_schemas: "data/data_warehouse/oracle_train"
+
+output:
+  # Base directory for all output files
+  base_dir: "data/oracle_sft_conversations"
+  
+  # Output file names (will be created in base_dir):
+  # - oracle_sft_conversations_train.json (80% of data)
+  # - oracle_sft_conversations_val.json (10% of data)
+  # - oracle_sft_conversations_test.json (10% of data)
+  # - oracle_sft_conversations_full.json (all valid examples)
+  # - data_quality_report.json (metrics + validation)
+
+augmentation:
+  # Enable/disable entire augmentation pipeline
+  enabled: true
+  
+  techniques:
+    # Technique 1: Schema permutation (reorder tables in RAG context)
+    schema_permutation:
+      enabled: true
+      variations_per_example: 2
+      multiplier_expected: 2.0-2.5
+    
+    # Technique 2: Synonym swapping (rephrase question using keywords)
+    synonym_swap:
+      enabled: true
+      variations_per_example: 2
+      multiplier_expected: 1.5-2.0
+    
+    # Technique 3: SQL normalization (add aliases, use IN vs =)
+    # WARNING: Disabled by default - requires careful validation
+    sql_normalization:
+      enabled: false
+      variations_per_example: 1
+      multiplier_expected: 1.1-1.2
+  
+  # Combined effect of all enabled techniques
+  total_multiplier_target: 2.4-3.0
+  target_final_size: 6000-7500
+  
+  # Remove exact duplicates after augmentation
+  deduplication_enabled: true
+  
+  # Validation checks during augmentation
+  validation:
+    check_sql_equivalence: true    # Verify SQL output is same
+    check_rag_validity: true       # Verify RAG context uses real tables
+    check_keyword_mapping: true    # Verify keywords exist
+    check_alignment: true          # Verify SQL can be found in prompt
+
+splits:
+  # Train/val/test proportions
+  train_ratio: 0.80
+  val_ratio: 0.10
+  test_ratio: 0.10
+  
+  # Stratification criteria (for advanced use)
+  stratify_by:
+    - num_tables     # Single vs multi-table queries
+    - quality_tier   # High vs primary vs secondary
+    - has_joins      # With/without joins
+
+quality:
+  # SQL validation settings
+  sql_validation:
+    allow_select: true
+    allow_with: true
+    allow_dml: false
+    allow_ddl: false
+  
+  # Prompt length constraints
+  prompt_length:
+    min_chars: 100
+    max_chars: 16000  # Token budget: ~4k tokens max
+    target_chars: 6500-9000
+  
+  # Thresholds for quality metrics
+  thresholds:
+    min_valid_rate: 0.95      # At least 95% valid examples
+    max_alignment_failures: 0.01  # Less than 1% alignment issues
+    min_rag_coverage: 0.95    # 95%+ examples have RAG context
+
+logging:
+  # Log level: DEBUG, INFO, WARNING, ERROR
+  level: INFO
+  
+  # Log file location (optional, comment out to disable)
+  file: "logs/oracle_sft_dataset_build.log"
+
+# Advanced: Dataset composition preferences (not used in Phase 1)
+preferences:
+  # Should we weight corrections higher during training?
+  weight_corrections: true
+  correction_weight_multiplier: 3.0
+  
+  # Use schema learning examples for training?
+  use_schema_learning_for_training: false
+  
+  # Domain filtering (empty = use all)
+  domain_filter: []  # Examples: ["GL", "AP", "PO"] for specific modules
+  
+  # Minimum tables per example
+  min_tables: 1
+  
+  # Maximum tables per example (to avoid overly complex queries)
+  max_tables: 10

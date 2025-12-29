@@ -1,0 +1,337 @@
+{
+  "table": "AP_CHECKS_ALL",
+  "purpose": "Business-use subset of AP_CHECKS_ALL.",
+  "pk": [],
+  "fks": [],
+  "columns": [
+    {
+      "name": "AMOUNT",
+      "type": "NUMBER",
+      "desc": "Indicates the payment amount in the payment currency."
+    },
+    {
+      "name": "BANK_ACCOUNT_ID",
+      "type": "NUMBER",
+      "desc": "Deprecated; was used to store the bank account identifier."
+    },
+    {
+      "name": "BANK_ACCOUNT_NAME",
+      "type": "VARCHAR2",
+      "desc": "Name of the bank account from which the payment is made."
+    },
+    {
+      "name": "CHECK_DATE",
+      "type": "DATE",
+      "desc": "Date when the payment was issued."
+    },
+    {
+      "name": "CHECK_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique internal identifier for the check/payment record."
+    },
+    {
+      "name": "CHECK_NUMBER",
+      "type": "NUMBER",
+      "desc": "Payment/check number assigned to the transaction."
+    },
+    {
+      "name": "CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Currency code of the payment (e.g., USD, EUR)."
+    },
+    {
+      "name": "PAYMENT_METHOD_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Payment method (e.g., CHECK, EFT, WIRE)."
+    },
+    {
+      "name": "PAYMENT_TYPE_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates the payment type: Quick, Manual, Refund, etc."
+    },
+    {
+      "name": "CHECKRUN_NAME",
+      "type": "VARCHAR2",
+      "desc": "Payment Process Request name (batch name) in Payment Manager."
+    },
+    {
+      "name": "CHECK_FORMAT_ID",
+      "type": "NUMBER",
+      "desc": "Payment format ID attached to the payment document."
+    },
+    {
+      "name": "CHECK_STOCK_ID",
+      "type": "NUMBER",
+      "desc": "Identifier for the check stock/document template."
+    },
+    {
+      "name": "CREATED_BY",
+      "type": "NUMBER",
+      "desc": "WHO column; user ID of the person who created the record (FK to FND_USER)."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "WHO column; date when this row was created."
+    },
+    {
+      "name": "STATUS_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Status of the payment: Negotiable, Cleared, Spoiled, etc."
+    },
+    {
+      "name": "VENDOR_NAME",
+      "type": "VARCHAR2",
+      "desc": "Name of the supplier receiving the payment."
+    },
+    {
+      "name": "VENDOR_SITE_CODE",
+      "type": "VARCHAR2",
+      "desc": "Code of the supplier site associated with the payment."
+    },
+    {
+      "name": "BANK_ACCOUNT_NUM",
+      "type": "VARCHAR2",
+      "desc": "Supplier's bank account number for electronic payments."
+    },
+    {
+      "name": "BANK_ACCOUNT_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Type of the supplier's bank account (e.g., Savings, Checking)."
+    },
+    {
+      "name": "BANK_NUM",
+      "type": "VARCHAR2",
+      "desc": "Supplier's bank number (used in EFT/ACH)."
+    },
+    {
+      "name": "CHECK_VOUCHER_NUM",
+      "type": "NUMBER",
+      "desc": "Deprecated; no longer used."
+    },
+    {
+      "name": "CLEARED_AMOUNT",
+      "type": "NUMBER",
+      "desc": "Amount cleared by the bank as of the cleared date."
+    },
+    {
+      "name": "CLEARED_DATE",
+      "type": "DATE",
+      "desc": "Date the payment was cleared by the bank."
+    },
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Operating unit identifier; supports Multi-Org structure."
+    },
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "FK to AP_SUPPLIERS; supplier unique identifier."
+    },
+    {
+      "name": "VENDOR_SITE_ID",
+      "type": "NUMBER",
+      "desc": "FK to AP_SUPPLIER_SITES_ALL; supplier site identifier."
+    },
+    {
+      "name": "EXCHANGE_RATE",
+      "type": "NUMBER",
+      "desc": "Exchange rate for foreign currency payments."
+    },
+    {
+      "name": "EXCHANGE_DATE",
+      "type": "DATE",
+      "desc": "Date when the exchange rate is effective."
+    },
+    {
+      "name": "EXCHANGE_RATE_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Type of exchange rate (e.g., Spot, Corporate)."
+    },
+    {
+      "name": "BASE_AMOUNT",
+      "type": "NUMBER",
+      "desc": "Payment amount in the functional (ledger) currency."
+    },
+    {
+      "name": "CHECKRUN_ID",
+      "type": "NUMBER",
+      "desc": "Unique identifier for the payment process request (batch)."
+    },
+    {
+      "name": "REQUEST_ID",
+      "type": "NUMBER",
+      "desc": "WHO column; concurrent request ID of the last program that updated the record."
+    },
+    {
+      "name": "EXTERNAL_BANK_ACCOUNT_ID",
+      "type": "NUMBER",
+      "desc": "FK to IBY_EXT_BANK_ACCOUNTS; supplier's external bank account."
+    },
+    {
+      "name": "DESCRIPTION",
+      "type": "VARCHAR2",
+      "desc": "Free-text description of the payment."
+    },
+    {
+      "name": "ACTUAL_VALUE_DATE",
+      "type": "DATE",
+      "desc": "Actual value date; used by Cash Management."
+    },
+    {
+      "name": "ANTICIPATED_VALUE_DATE",
+      "type": "DATE",
+      "desc": "Anticipated value date; used by Cash Management."
+    },
+    {
+      "name": "RELEASED_DATE",
+      "type": "DATE",
+      "desc": "Date/time when a stop payment was released."
+    },
+    {
+      "name": "STOPPED_DATE",
+      "type": "DATE",
+      "desc": "Date/time when a stop payment was recorded."
+    },
+    {
+      "name": "CE_BANK_ACCT_USE_ID",
+      "type": "NUMBER",
+      "desc": "Identifier for bank account usage assigned by Cash Management."
+    },
+    {
+      "name": "PAYMENT_METHOD_CODE",
+      "type": "VARCHAR2",
+      "desc": "Unique identifier of the payment method selected."
+    },
+    {
+      "name": "PARTY_ID",
+      "type": "NUMBER",
+      "desc": "Party identifier for the supplier (Trading Community Architecture)."
+    },
+    {
+      "name": "PARTY_SITE_ID",
+      "type": "NUMBER",
+      "desc": "Party site identifier for the supplier (Trading Community Architecture)."
+    },
+    {
+      "name": "PAYMENT_PROFILE_ID",
+      "type": "NUMBER",
+      "desc": "Unique identifier for the Payment Process Profile (Oracle Payments)."
+    },
+    {
+      "name": "PAYMENT_DOCUMENT_ID",
+      "type": "NUMBER",
+      "desc": "Identifier of the payment document used (check stock, template, etc.)."
+    },
+    {
+      "name": "COMPLETED_PMTS_GROUP_ID",
+      "type": "NUMBER",
+      "desc": "Unique ID for completed payments (Oracle Payments)."
+    },
+    {
+      "name": "PAYMENT_ID",
+      "type": "NUMBER",
+      "desc": "Unique identifier for the payment in Oracle Payments."
+    },
+    {
+      "name": "PAYMENT_INSTRUCTION_ID",
+      "type": "NUMBER",
+      "desc": "Unique identifier for the payment instruction in Oracle Payments."
+    },
+    {
+      "name": "REMIT_TO_SUPPLIER_NAME",
+      "type": "VARCHAR2",
+      "desc": "Name of the supplier to whom the invoice amount will be remitted."
+    },
+    {
+      "name": "REMIT_TO_SUPPLIER_ID",
+      "type": "NUMBER",
+      "desc": "Unique identifier of the supplier to whom the invoice is remitted."
+    },
+    {
+      "name": "REMIT_TO_SUPPLIER_SITE",
+      "type": "VARCHAR2",
+      "desc": "Name of the supplier site to whom the invoice amount will be remitted."
+    },
+    {
+      "name": "REMIT_TO_SUPPLIER_SITE_ID",
+      "type": "NUMBER",
+      "desc": "Unique identifier of the supplier site to whom the invoice amount will be remitted."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "FK to AP_SUPPLIERS; supplier unique identifier."
+    },
+    {
+      "name": "VENDOR_NAME",
+      "type": "VARCHAR2",
+      "desc": "Name of the supplier receiving the payment."
+    },
+    {
+      "name": "VENDOR_SITE_ID",
+      "type": "NUMBER",
+      "desc": "FK to AP_SUPPLIER_SITES_ALL; supplier site identifier."
+    },
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Operating unit identifier; supports Multi-Org structure."
+    },
+    {
+      "name": "CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Currency code of the payment (e.g., USD, EUR)."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "WHO column; date when this row was created."
+    },
+    {
+      "name": "CREATED_BY",
+      "type": "NUMBER",
+      "desc": "WHO column; user ID of the person who created the record (FK to FND_USER)."
+    },
+    {
+      "name": "AMOUNT",
+      "type": "NUMBER",
+      "desc": "Indicates the payment amount in the payment currency."
+    },
+    {
+      "name": "BANK_ACCOUNT_ID",
+      "type": "NUMBER",
+      "desc": "Deprecated; was used to store the bank account identifier."
+    },
+    {
+      "name": "BANK_ACCOUNT_NAME",
+      "type": "VARCHAR2",
+      "desc": "Name of the bank account from which the payment is made."
+    },
+    {
+      "name": "CHECK_DATE",
+      "type": "DATE",
+      "desc": "Date when the payment was issued."
+    },
+    {
+      "name": "CHECK_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique internal identifier for the check/payment record."
+    },
+    {
+      "name": "CHECK_NUMBER",
+      "type": "NUMBER",
+      "desc": "Payment/check number assigned to the transaction."
+    },
+    {
+      "name": "PAYMENT_METHOD_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Payment method (e.g., CHECK, EFT, WIRE)."
+    }
+  ],
+  "notes": "",
+  "join_hints": []
+}

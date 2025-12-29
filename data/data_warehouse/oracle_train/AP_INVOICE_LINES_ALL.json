@@ -1,0 +1,70 @@
+{
+  "table": "AP_INVOICE_LINES_ALL",
+  "purpose": "Business-use subset of AP_INVOICE_LINES_ALL.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "INVOICE_ID",
+      "ref_table": "AP_INVOICES_ALL",
+      "ref_column": "INVOICE_ID"
+    }
+  ],
+  "columns": [
+    {
+      "name": "INVOICE_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Primary key."
+    },
+    {
+      "name": "INVOICE_ID",
+      "type": "NUMBER",
+      "desc": "Links to ap_invoices_all.invoice_id."
+    },
+    {
+      "name": "LINE_NUMBER",
+      "type": "NUMBER",
+      "desc": "Line number."
+    },
+    {
+      "name": "LINE_TYPE_LOOKUP_CODE",
+      "type": "VARCHAR",
+      "desc": "Type of invoice line (Item, Tax, etc.)."
+    },
+    {
+      "name": "AMOUNT",
+      "type": "NUMBER",
+      "desc": "Line amount."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "INVOICE_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Primary key."
+    },
+    {
+      "name": "INVOICE_ID",
+      "type": "NUMBER",
+      "desc": "Links to ap_invoices_all.invoice_id."
+    },
+    {
+      "name": "LINE_NUMBER",
+      "type": "NUMBER",
+      "desc": "Line number."
+    },
+    {
+      "name": "LINE_TYPE_LOOKUP_CODE",
+      "type": "VARCHAR",
+      "desc": "Type of invoice line (Item, Tax, etc.)."
+    },
+    {
+      "name": "AMOUNT",
+      "type": "NUMBER",
+      "desc": "Line amount."
+    }
+  ],
+  "notes": "ap_invoice_lines_all stores individual invoice line data for each invoice in AP_INVOICES_ALL. Each line contains a type (e.g., Item, Tax, Freight), amount, and can be linked to distributions. It enables detailed expense tracking and accounting.",
+  "join_hints": [
+    "AP_INVOICE_LINES_ALL.INVOICE_LINE_ID = AP_INVOICE_DISTRIBUTIONS_ALL.INVOICE_LINE_ID"
+  ]
+}
