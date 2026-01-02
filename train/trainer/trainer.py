@@ -118,6 +118,7 @@ class DeepCustomTrainer(Trainer):
             optimizers=optimizers,
             preprocess_logits_for_metrics=preprocess_logits_for_metrics,
         )
+
         if extra_losses is not None and len(extra_losses) > 0:
             self.add_callback(AddExtraLossesToTrainerState(extra_losses))
         # Override self.model.generation_config if a GenerationConfig is specified in args.
@@ -126,7 +127,7 @@ class DeepCustomTrainer(Trainer):
             gen_config = self.load_generation_config(self.args.generation_config)
             self.model.generation_config = gen_config
 
-    def _maybe_log_save_evaluate(self, tr_loss, grad_norm, model, trial, epoch, ignore_keys_for_eval):
+    def _maybe_log_save_evaluate(self, tr_loss, grad_norm, model, trial, epoch, ignore_keys_for_eval, *args, **kwargs):
         if self.control.should_log and self.state.global_step > self._globalstep_last_logged:
             if is_torch_xla_available():
                 xm.mark_step()
@@ -171,7 +172,13 @@ class DeepCustomTrainer(Trainer):
                 self.lr_scheduler.step(metrics[metric_to_check])
 
         if self.control.should_save:
-            self._save_checkpoint(model, trial, metrics=metrics)
+            # Patch for _save_checkpoint signature compatibility
+            import inspect
+            sig = inspect.signature(self._save_checkpoint)
+            if 'metrics' in sig.parameters:
+                self._save_checkpoint(model, trial, metrics=metrics)
+            else:
+                self._save_checkpoint(model, trial)
             self.control = self.callback_handler.on_save(self.args, self.state, self.control)
 
     def compute_loss(self, model, inputs, return_outputs=False, **kwargs):

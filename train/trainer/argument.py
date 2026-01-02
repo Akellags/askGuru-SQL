@@ -5,7 +5,7 @@ from transformers import (
 )
 @dataclass
 class ModelArguments:
-    model_name_or_path: Optional[str] = field(default="Qwen/Qwen-7B")
+    model_name_or_path: Optional[str] = field(default="meta-llama/Llama-3.1-70B-Instruct")
     use_flash_attention: bool = field(default=False, metadata={"help": "Whether to use Flash Attention."})
     model_type: str = 'auto'
 
@@ -91,3 +91,7 @@ class LoraArguments:
     lora_weight_path: str = ""
     lora_bias: str = "none"
     q_lora: bool = False
+
+    def __post_init__(self):
+        if isinstance(self.lora_target_modules, str):
+            self.lora_target_modules = [m.strip() for m in self.lora_target_modules.split(',')]

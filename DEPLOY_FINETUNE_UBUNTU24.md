@@ -86,7 +86,7 @@ cd /llamaSFT
 git clone https://github.com/YOUR-USERNAME/askGuru-SQL.git . 2>/dev/null || echo "Existing repo or copy files manually"
 
 # Create subdirectories
-mkdir -p models data outputs logs checkpoints
+mkdir -p models outputs logs checkpoints
 
 # Set HuggingFace cache to /llamaSFT/hf_home
 mkdir -p /llamaSFT/hf_home
@@ -202,8 +202,13 @@ pip install \
   wandb \
   tensorboard \
   huggingface-hub \
-  deepspeed==0.14.4 \
+  deepspeed==0.14.4
+  
+  For 
   flash-attn
+  download it from here
+  https://github.com/Dao-AILab/flash-attention/releases
+  pip install flash_attn-2.8.3+cu12torch2.4cxx11abiFALSE-cp312-cp312-linux_x86_64.whl
 
 ```
 
@@ -220,14 +225,14 @@ pip install wandb
 pip install tensorboard
 ```
 
-### 4. Install Quantization Libraries (for post-training)
+### 4. Install Quantization Libraries (for post-training) -  not needed when training
 
 ```bash
 # AWQ for quantization
 pip install autoawq
 
 # GPTQ alternative
-did
+
 ```
 
 ### 5. Verify All Dependencies
@@ -276,7 +281,7 @@ cd /llamaSFT/models
 
 huggingface-cli download meta-llama/Llama-3.1-70B-Instruct \
   --local-dir ./llama-3.1-70b-instruct \
-  --token <YOUR_HUGGINGFACE_TOKEN>
+  --token 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
 ```
 
 ### 2. Verify Model Download
@@ -303,7 +308,7 @@ EOF
 ### 1. Verify Dataset Files
 
 ```bash
-cd /llamaSFT
+cd /llamaSFT/askGuru-SQL
 
 # List available datasets
 ls -lh data/oracle_sft_conversations/
@@ -323,7 +328,7 @@ python3 << 'EOF'
 import json
 import os
 
-data_dir = "/llamaSFT/data/oracle_sft_conversations"
+data_dir = "/llamaSFT/askGuru-SQL/data/oracle_sft_conversations"
 
 for split in ["train", "val"]:
     path = f"{data_dir}/oracle_sft_conversations_{split}.json"
@@ -360,13 +365,15 @@ ls -la /llamaSFT/
 
 ---
 
+TODO: NEED to worm from here in the morning
+
 ## Training Configuration
 
 ### 1. Review/Create DeepSpeed ZeRO-3 Config
 
 ```bash
 # Check existing config
-cat train/config/dp_zero3.json
+cat train/config/dp_zero3.json - (make usrer to check its there)
 
 # If not present, create it:
 cat > train/config/dp_zero3.json << 'EOF'
@@ -421,7 +428,7 @@ cat > train/config/zero3_a100.yaml << 'EOF'
 compute_environment: LOCAL_MACHINE
 debug: false
 deepspeed_config:
-  deepspeed_config_file: train/config/dp_zero3.json
+  deepspeed_config_file: /llamaSFT/askGuru-SQL/train/config/dp_zero3.json
   zero3_init_flag: true
 distributed_type: DEEPSPEED
 downcast_bf16: 'no'
@@ -444,15 +451,15 @@ EOF
 ```bash
 cat > train_config.yaml << 'EOF'
 # Model configuration
-model_name_or_path: models/llama-3.1-70b-instruct
+model_name_or_path: /llamaSFT/models/llama-3.1-70b-instruct
 model_max_length: 8192
 
 # Data configuration
-data_path: data/oracle_sft_conversations/oracle_sft_conversations_train.json
-eval_data_path: data/oracle_sft_conversations/oracle_sft_conversations_val.json
+data_path: /llamaSFT/data/oracle_sft_conversations/oracle_sft_conversations_train.json
+eval_data_path: /llamaSFT/data/oracle_sft_conversations/oracle_sft_conversations_val.json
 
 # Training configuration
-output_dir: outputs/oracle_llama70b_lora
+output_dir: /llamaSFT/outputs/oracle_llama70b_lora
 num_train_epochs: 3
 per_device_train_batch_size: 4
 per_device_eval_batch_size: 8
@@ -487,7 +494,7 @@ enable_dialect_router: false
 temperature: 0.0
 
 # Logging
-logging_dir: logs/
+logging_dir: /llamaSFT/logs/
 logging_strategy: steps
 report_to: [tensorboard]
 
@@ -509,7 +516,7 @@ source venv/bin/activate
 
 # Run training with DeepSpeed ZeRO-3
 accelerate launch --config_file train/config/zero3_a100.yaml \
-  custom_oracle_llama/sft_oracle_llama70b_lora.py \
+  askGuru-SQL/custom_oracle_llama/sft_oracle_llama70b_lora.py \
   --model_name_or_path /llamaSFT/models/llama-3.1-70b-instruct \
   --data_path /llamaSFT/data/oracle_sft_conversations/oracle_sft_conversations_train.json \
   --eval_data_path /llamaSFT/data/oracle_sft_conversations/oracle_sft_conversations_val.json \
@@ -701,10 +708,25 @@ EOF
 
 ```bash
 # Install dependencies for merging
-pip install -r requirements.txt
+pip install -r requirements.txt (not needed as we have done this already earlier)
+
+#but install the following
+pip install autoawq --no-build-isolation
+
+#if that fails, then try this
+pip install autoawq==0.2.8 --no-build-isolation --extra-index-url https://download.pytorch.org/whl/cu124
+
+# Install directly from source
+pip install git+https://github.com/AutoGPTQ/AutoGPTQ.git --no-build-isolation
+
+pip install vllm>=0.6.0
+
+sudo apt-get update && sudo apt-get install libaio-dev -y
+
 
 # Run merge script
-python custom_oracle_llama/package_oracle_model.py \
+export PYTHONPATH=$PYTHONPATH:/llamaSFT/askGuru-SQL
+python askGuru-SQL/custom_oracle_llama/package_oracle_model.py \
   --base_model models/llama-3.1-70b-instruct \
   --lora_adapter outputs/oracle_llama70b_lora \
   --merged_out outputs/merged_oracle_llama70b \

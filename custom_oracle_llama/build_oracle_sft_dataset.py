@@ -24,6 +24,7 @@ import logging
 import os
 import random
 import re
+import yaml
 from collections import defaultdict
 from typing import Any, Dict, List, Optional, Set, Tuple
 
@@ -232,9 +233,9 @@ def build_rag_context(
                 # Handle columns as list of dicts
                 columns_data = schema.get("columns", [])
                 if isinstance(columns_data, list):
-                    cols = [col.get("name", "") for col in columns_data[:5]]
+                    cols = [col.get("name", "") for col in columns_data]
                 else:
-                    cols = list(columns_data.keys())[:5]
+                    cols = list(columns_data.keys())
                 table_section += f"\n- {table}: {', '.join(cols)}"
             else:
                 table_section += f"\n- {table}"
@@ -246,7 +247,7 @@ def build_rag_context(
         join_section = "# Join Graph\n" + "\n".join(f"- {jp}" for jp in join_paths)
         sections.append(join_section)
     
-    # Relevant Columns (sample from schemas)
+    # Relevant Columns (include all from schemas)
     if tables:
         col_section = "# Relevant Columns"
         for table in tables:
@@ -256,12 +257,12 @@ def build_rag_context(
                 
                 # Handle columns as list of dicts
                 if isinstance(columns_data, list):
-                    for col_info in columns_data[:3]:
+                    for col_info in columns_data:
                         col_name = col_info.get("name", "")
                         col_type = col_info.get("type", "UNKNOWN")
                         col_section += f"\n- {table}.{col_name}: {col_type}"
                 else:
-                    for col_name, col_info in list(columns_data.items())[:3]:
+                    for col_name, col_info in list(columns_data.items()):
                         col_type = col_info.get("type", "UNKNOWN") if isinstance(col_info, dict) else "UNKNOWN"
                         col_section += f"\n- {table}.{col_name}: {col_type}"
         
@@ -697,7 +698,7 @@ def main() -> None:
         raise FileNotFoundError(f"Config not found: {args.config}")
     
     with open(args.config, "r", encoding="utf-8") as f:
-        config = json.load(f)
+        config = yaml.safe_load(f)
     
     # Build dataset
     result = build_dataset_from_config(config)

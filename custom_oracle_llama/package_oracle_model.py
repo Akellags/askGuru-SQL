@@ -30,12 +30,33 @@ import json
 import logging
 import os
 import shutil
-from datetime import datetime
+import sys
+from datetime import datetime, timezone
 from typing import Any, Dict, Optional
+from pathlib import Path
+
+# Add project root to PYTHONPATH for internal imports
+project_root = str(Path(__file__).resolve().parent.parent)
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
 import torch
 
 logger = logging.getLogger(__name__)
+
+# Monkey-patch for Transformers compatibility with AutoAWQ/PEFT
+try:
+    import transformers.activations
+    if not hasattr(transformers.activations, "PytorchGELUTanh"):
+        logger.info("Monkey-patching transformers.activations.PytorchGELUTanh for compatibility")
+        import torch.nn as nn
+        import torch.nn.functional as F
+        class PytorchGELUTanh(nn.Module):
+            def forward(self, input):
+                return F.gelu(input, approximate="tanh")
+        transformers.activations.PytorchGELUTanh = PytorchGELUTanh
+except ImportError:
+    pass
 
 
 def _sha256_of_file(path: str) -> Optional[str]:
@@ -77,14 +98,32 @@ def quantize_awq(merged_model: str, quant_out: str, group_size: int = 128, w_bit
     This implementation uses a best-effort API compatible with common AutoAWQ versions.
     If your internal AWQ package differs, adapt this function.
     """
-    try:
-        from awq import AutoAWQForCausalLM
-    except Exception:
-        try:
-            from autoawq import AutoAWQForCausalLM
-        except Exception as e:
-            raise RuntimeError(f"AWQ quantization requested but AutoAWQ is not installed: {e}")
+    import importlib.util
+    
+    # Try multiple possible module names for AutoAWQ
+    autoawq_module = None
+    for mod_name in ["awq", "autoawq"]:
+        if importlib.util.find_spec(mod_name) is not None:
+            try:
+                module = importlib.import_module(mod_name)
+                if hasattr(module, "AutoAWQForCausalLM"):
+                    autoawq_module = module
+                    logger.info(f"Successfully imported AutoAWQ via module: {mod_name}")
+                    break
+            except Exception as e:
+                logger.warning(f"Found {mod_name} but failed to import: {e}")
 
+    if autoawq_module is None:
+        # Diagnostic: print where we are looking
+        logger.error("AutoAWQ not found in sys.path. Current sys.path:")
+        for p in sys.path:
+            logger.error(f"  {p}")
+        raise RuntimeError(
+            "AWQ quantization requested but AutoAWQ is not installed or importable. "
+            "Please run: pip install autoawq"
+        )
+
+    AutoAWQForCausalLM = autoawq_module.AutoAWQForCausalLM
     from transformers import AutoTokenizer
 
     os.makedirs(quant_out, exist_ok=True)
@@ -199,7 +238,7 @@ def main() -> None:
         os.makedirs(args.quant_out, exist_ok=True)
 
     manifest = {
-        "created_at": datetime.utcnow().isoformat() + "Z",
+        "created_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "base_model": args.base_model,
         "lora_adapter": args.lora_adapter,
         "merged_out": args.merged_out,

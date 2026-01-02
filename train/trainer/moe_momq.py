@@ -4,8 +4,17 @@ import torch.nn.functional as F
 
 import math
 from typing import Optional, List
-from model.modeling_qwen2 import Qwen2ForCausalLM, Qwen2RMSNorm
-from model.modeling_mistral import MistralForCausalLM, MistralRMSNorm
+try:
+    from transformers.models.llama.modeling_llama import LlamaRMSNorm
+    RMSNormClass = LlamaRMSNorm
+except ImportError:
+    try:
+        from transformers.models.mistral.modeling_mistral import MistralRMSNorm
+        RMSNormClass = MistralRMSNorm
+    except ImportError:
+        RMSNormClass = None
+
+
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
@@ -110,7 +119,7 @@ def replace_module(model: nn.Module, config, training_args, lora_args):
         _replace_module(parent, target_name, new_module, target)
 
 
-def momq_init(config, training_args, lora_args):
+def momq_init(model_args, config, training_args, lora_args):
     config.use_moe_lora = training_args.use_moe_lora
     config.use_moe_expert = training_args.use_moe_expert
     config.output_router_logits = training_args.output_router_logits
@@ -137,26 +146,16 @@ def momq_init(config, training_args, lora_args):
         config.hard_dialect_router = training_args.hard_dialect_router
 
     # Load the default model first
-    if 'qwen' in model_args.model_type:
-        model = Qwen2ForCausalLM.from_pretrained(
-            model_args.model_name_or_path,
-            config=config,
-            cache_dir=training_args.cache_dir,
-            torch_dtype=torch.bfloat16,
-            trust_remote_code=True,
-            attn_implementation="flash_attention_2" if model_args.use_flash_attention else None
-        )
-    elif 'mistral' in model_args.model_type:
-        model = MistralForCausalLM.from_pretrained(
-            model_args.model_name_or_path,
-            config=config,
-            cache_dir=training_args.cache_dir,
-            torch_dtype=torch.bfloat16,
-            trust_remote_code=True,
-            attn_implementation="flash_attention_2" if model_args.use_flash_attention else None
-        )
-    else:
-        raise NotImplementedError
+        # Load model (supports LLaMA, SQLCoder, Mistral, and other HuggingFace models)
+    model = AutoModelForCausalLM.from_pretrained(
+        model_args.model_name_or_path,
+        config=config,
+        cache_dir=training_args.cache_dir,
+        torch_dtype=torch.bfloat16,
+        trust_remote_code=True,
+        attn_implementation="flash_attention_2" if model_args.use_flash_attention else None
+    )
+
     if training_args.use_moe_lora:
         print('Using MoE Lora')
         replace_module(model, config, training_args, lora_args)
@@ -176,7 +175,7 @@ def momq_init(config, training_args, lora_args):
 
         if training_args.unfreeze_layer_norms:
             for name, sub_module in model.named_modules():
-                if isinstance(sub_module, (Qwen2RMSNorm, MistralRMSNorm)):
+                if RMSNormClass and isinstance(sub_module, RMSNormClass):
                     for param_name, param in sub_module.named_parameters():
                         param.requires_grad = True
 

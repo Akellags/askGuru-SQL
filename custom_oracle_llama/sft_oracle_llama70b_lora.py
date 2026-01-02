@@ -37,7 +37,7 @@ if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
 import transformers
-from datasets import load_dataset, set_caching_enabled
+from datasets import load_dataset
 from transformers import set_seed
 
 from train.trainer.argument import ModelArguments, TrainingArguments, DataArguments, LoraArguments
@@ -71,8 +71,7 @@ def train() -> None:
 
     preprocess_train = make_preprocess_fn(tokenizer, training_args, is_eval=False)
     preprocess_eval = make_preprocess_fn(tokenizer, training_args, is_eval=True)
-
-    set_caching_enabled(True)
+    
     train_raw = load_dataset("json", data_files=data_args.data_path)["train"]
     logger.info(f"Loaded {len(train_raw)} training examples")
     

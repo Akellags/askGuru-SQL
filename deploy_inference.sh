@@ -44,7 +44,7 @@ export HF_HOME="/llamaSFT/hf_home"
 # vLLM parameters
 VLLM_PORT=8000
 VLLM_HOST="0.0.0.0"
-VLLM_DTYPE="bfloat16"
+VLLM_DTYPE="float16"
 VLLM_MAX_MODEL_LEN=8192
 VLLM_MAX_NUM_SEQS=4
 VLLM_MAX_TOKENS=512
@@ -424,7 +424,6 @@ start_vllm_server() {
         --dtype "${VLLM_DTYPE}" \
         --max-model-len "${VLLM_MAX_MODEL_LEN}" \
         --max-num-seqs "${VLLM_MAX_NUM_SEQS}" \
-        --max-tokens "${VLLM_MAX_TOKENS}" \
         --gpu-memory-utilization "${VLLM_GPU_MEMORY_UTIL}" \
         --quantization awq \
         --host "${VLLM_HOST}" \

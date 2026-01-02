@@ -65,15 +65,11 @@ sudo apt-get install -y \
   openssh-server
 ```
 
-### 2. Create Deployment User (Optional but Recommended)
+### 2. Use Existing 'ubuntu' User
 
 ```bash
-# Create dedicated user for inference
-sudo useradd -m -s /bin/bash inference
-sudo usermod -aG sudo inference
-sudo -u inference -i
-
-# From here on, all commands run as 'inference' user
+# Using existing 'ubuntu' user
+# Ensure you are logged in as 'ubuntu'
 cd ~
 ```
 
@@ -272,30 +268,36 @@ python custom_oracle_llama/package_oracle_model.py \
 ### 4. Verify Merged Model
 
 ```bash
-python3 << 'EOF'
+python << 'EOF'
+import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-# Test loading quantized model
+model_path = "/llamaSFT/outputs/merged_oracle_llama70b_awq4"
+
+# Use float16 directly to avoid the "not supported" warning
 model = AutoModelForCausalLM.from_pretrained(
-    "./models/merged_oracle_llama70b_awq4",
-    torch_dtype="auto",
+    model_path,
+    torch_dtype=torch.float16,
     device_map="auto"
 )
-tokenizer = AutoTokenizer.from_pretrained("./models/merged_oracle_llama70b_awq4")
+tokenizer = AutoTokenizer.from_pretrained(model_path, fix_mistral_regex=True)
 
 print("✓ Quantized model loaded successfully")
-print(f"  Model type: {type(model)}")
-print(f"  Vocab size: {len(tokenizer)}")
 
-# Test a simple generation
-prompt = "SELECT * FROM"
+prompt = "get trial balances of multiple ledgers when leger short names are provided"
 inputs = tokenizer(prompt, return_tensors="pt").to("cuda")
-outputs = model.generate(**inputs, max_new_tokens=10)
-generated = tokenizer.decode(outputs[0])
+
+# Generate more tokens for a better test
+outputs = model.generate(**inputs, max_new_tokens=30)
+
+# skip_special_tokens=True removes the <|begin_of_text|> part
+generated = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
 print(f"\n✓ Generation test passed")
 print(f"  Prompt: {prompt}")
 print(f"  Output: {generated}")
 EOF
+
 ```
 
 ---
@@ -306,15 +308,15 @@ EOF
 
 ```bash
 # Create inference config
-cat > inference_config.yaml << 'EOF'
+cat > devOps/inference_config.yaml << 'EOF'
 # vLLM Inference Configuration for Oracle EBS NL2SQL
 # 1× A100-80GB, 4 concurrent users
 
-model_name_or_path: ./models/merged_oracle_llama70b_awq4
+model_name_or_path: /llamaSFT/outputs/merged_oracle_llama70b_awq4
 
 # Model parameters
-dtype: bfloat16
-max_model_len: 8192
+dtype: float16
+max_model_len: 16384
 trust_remote_code: true
 
 # GPU optimization
@@ -323,7 +325,7 @@ enforce_eager: false
 
 # Concurrency & performance
 max_num_seqs: 4           # Max concurrent sequences
-max_tokens: 512           # Max output tokens per request
+# max_tokens: 512           # Max output tokens per request
 
 # vLLM server parameters
 host: 0.0.0.0
@@ -356,17 +358,22 @@ For development/testing:
 source /llamaSFT/askGuru-SQL/.venv/bin/activate
 cd /llamaSFT
 
+# Use PYTORCH_ALLOC_CONF (PYTORCH_CUDA_ALLOC_CONF is deprecated)
+export PYTORCH_ALLOC_CONF=expandable_segments:True
+
 python -m vllm.entrypoints.openai.api_server \
-  --model ./models/merged_oracle_llama70b_awq4 \
-  --dtype bfloat16 \
+  --model /llamaSFT/outputs/merged_oracle_llama70b_awq4 \
+  --dtype float16 \
   --max-model-len 8192 \
   --max-num-seqs 4 \
-  --max-tokens 512 \
-  --gpu-memory-utilization 0.92 \
+  --gpu-memory-utilization 0.60 \
   --quantization awq \
   --host 0.0.0.0 \
-  --port 8000 \
+  --port 8001 \
+  --swap-space 4 \
   --enforce-eager
+
+
 ```
 
 Expected output:
@@ -407,14 +414,13 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=inference
-WorkingDirectory=/home/inference/askguru-sql-inference
-ExecStart=/home/inference/askguru-sql-inference/venv/bin/python -m vllm.entrypoints.openai.api_server \
+User=ubuntu
+WorkingDirectory=/llamaSFT
+ExecStart=/llamaSFT/askGuru-SQL/.venv/bin/python -m vllm.entrypoints.openai.api_server \
   --model ./models/merged_oracle_llama70b_awq4 \
-  --dtype bfloat16 \
+  --dtype float16 \
   --max-model-len 8192 \
   --max-num-seqs 4 \
-  --max-tokens 512 \
   --gpu-memory-utilization 0.92 \
   --quantization awq \
   --port 8000
@@ -460,7 +466,7 @@ curl http://localhost:8000/v1/completions \
   -d '{
     "model": "merged_oracle_llama70b_awq4",
     "prompt": "SELECT * FROM",
-    "max_tokens": 50,
+    "max_tokens": 100,
     "temperature": 0.0
   }'
 ```
@@ -479,7 +485,7 @@ client = OpenAI(
 
 # Test inference
 response = client.completions.create(
-    model="merged_oracle_llama70b_awq4",
+    model="/llamaSFT/outputs/merged_oracle_llama70b_awq4", # Use the full path
     prompt="SELECT COUNT(*) FROM ap_invoices WHERE status = 'PAID'",
     max_tokens=100,
     temperature=0.0
@@ -519,12 +525,15 @@ Return ONLY Oracle SQL. No markdown. No explanations. No comments.
 - AP_SUPPLIERS.VENDOR_NAME: VARCHAR2
 
 [User Question]
-Count total amount of paid invoices by supplier"""
+Count total amount of paid invoices by supplier
+
+[SQL]
+"""
 
 response = client.completions.create(
-    model="merged_oracle_llama70b_awq4",
+    model="/llamaSFT/outputs/merged_oracle_llama70b_awq4",
     prompt=user_prompt,
-    max_tokens=256,
+    max_tokens=512,
     temperature=0.0,
     top_p=1.0
 )

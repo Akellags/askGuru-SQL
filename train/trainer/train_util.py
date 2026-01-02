@@ -64,10 +64,19 @@ def modify_model_with_lora(model: nn.Module, training_args: TrainingArguments, l
 
     if training_args.use_lora:
         print('Using Single Lora')
+        target_modules = lora_args.lora_target_modules
+        if isinstance(target_modules, str):
+            target_modules = [m.strip() for m in target_modules.split(',')]
+        elif not isinstance(target_modules, list):
+            target_modules = list(target_modules)
+        
+        if len(target_modules) == 1 and isinstance(target_modules[0], str) and ',' in target_modules[0]:
+            target_modules = [m.strip() for m in target_modules[0].split(',')]
+        
         lora_config = LoraConfig(
             r=lora_args.lora_r,
             lora_alpha=lora_args.lora_alpha,
-            target_modules=lora_args.lora_target_modules,
+            target_modules=target_modules,
             lora_dropout=lora_args.lora_dropout,
             bias=lora_args.lora_bias,
             task_type="CAUSAL_LM",
@@ -124,10 +133,19 @@ def load_tokenizer_and_model(model_args, training_args: TrainingArguments, lora_
         )
         if training_args.use_lora:
             print('Using Single Lora')
+            target_modules = lora_args.lora_target_modules
+            if isinstance(target_modules, str):
+                target_modules = [m.strip() for m in target_modules.split(',')]
+            elif not isinstance(target_modules, list):
+                target_modules = list(target_modules)
+            
+            if len(target_modules) == 1 and isinstance(target_modules[0], str) and ',' in target_modules[0]:
+                target_modules = [m.strip() for m in target_modules[0].split(',')]
+            
             lora_config = LoraConfig(
                 r=lora_args.lora_r,
                 lora_alpha=lora_args.lora_alpha,
-                target_modules=lora_args.lora_target_modules,
+                target_modules=target_modules,
                 lora_dropout=lora_args.lora_dropout,
                 bias=lora_args.lora_bias,
                 task_type="CAUSAL_LM",
@@ -149,7 +167,8 @@ def load_tokenizer_and_model(model_args, training_args: TrainingArguments, lora_
     # Note: Start fine-tuning the XiYan multi-dialect MOE model in MOMQ mode.
     elif 'momq' in model_args.model_type:
         # init moe lora config
-        model = momq_init(config, training_args, lora_args)
+        model = momq_init(model_args, config, training_args, lora_args)
+
 
     else:
         raise ValueError(f"model_type {model_args.model_type} not supported")

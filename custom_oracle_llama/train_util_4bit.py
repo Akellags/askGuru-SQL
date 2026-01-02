@@ -89,10 +89,19 @@ def load_tokenizer_and_model_4bit(model_args, training_args, lora_args):
     logger.info("Model prepared for k-bit training")
 
     if getattr(training_args, "use_lora", False):
+        target_modules = lora_args.lora_target_modules
+        if isinstance(target_modules, str):
+            target_modules = [m.strip() for m in target_modules.split(',')]
+        elif not isinstance(target_modules, list):
+            target_modules = list(target_modules)
+        
+        if len(target_modules) == 1 and isinstance(target_modules[0], str) and ',' in target_modules[0]:
+            target_modules = [m.strip() for m in target_modules[0].split(',')]
+        
         lora_config = LoraConfig(
             r=lora_args.lora_r,
             lora_alpha=lora_args.lora_alpha,
-            target_modules=lora_args.lora_target_modules,
+            target_modules=target_modules,
             lora_dropout=lora_args.lora_dropout,
             bias=lora_args.lora_bias,
             task_type="CAUSAL_LM",
