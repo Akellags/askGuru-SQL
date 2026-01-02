@@ -281,7 +281,7 @@ cd /llamaSFT/models
 
 huggingface-cli download meta-llama/Llama-3.1-70B-Instruct \
   --local-dir ./llama-3.1-70b-instruct \
-  --token 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
+  --token <add your token here>
 ```
 
 ### 2. Verify Model Download
