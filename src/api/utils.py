@@ -39,13 +39,41 @@ def format_mschema_text(tables_data: List[Dict[str, Any]]) -> str:
 def get_filtered_schema(mschema: List[Dict[str, Any]], requested_tables: Optional[List[str]] = None) -> str:
     """Get formatted schema text, optionally filtered by table names."""
     if not requested_tables:
-        return format_mschema_text(mschema)
+        # Return a limited set or empty to avoid token limit issues if nothing requested
+        # Ideally, we'd have a table selector, but for now we'll require tables or return a subset
+        return "No specific tables requested. Please provide relevant tables."
     
     filtered = [t for t in mschema if t['table_name'].lower() in [rt.lower() for rt in requested_tables]]
+    if not filtered:
+         return f"Requested tables {requested_tables} not found in schema."
     return format_mschema_text(filtered)
 
-def build_llama_prompt(question: str, schema_text: str) -> str:
+def build_enriched_question(question: str, filters: Optional[str] = None, group_columns: Optional[str] = None, columns_list: Optional[str] = None) -> str:
+    """Build enriched question by concatenating all provided inputs with descriptive prefixes."""
+    enriched = question.strip().replace('\n', ' ')
+    
+    if filters and filters.strip():
+        enriched += f" Using these filters : {filters.strip().replace(chr(10), ' ').replace(chr(13), ' ')}"
+    
+    if group_columns and group_columns.strip():
+        enriched += f" Group by these columns : {group_columns.strip().replace(chr(10), ' ').replace(chr(13), ' ')}"
+    
+    if columns_list and columns_list.strip():
+        enriched += f" Return these columns only in the final query : {columns_list.strip().replace(chr(10), ' ').replace(chr(13), ' ')}"
+    
+    enriched += " and also get all the primary keys from the tables used to generate the sql"
+    
+    return enriched
+
+def build_llama_prompt(request: Any, schema_text: str) -> str:
     """Build the prompt for LLaMA-3.1 model."""
+    enriched_question = build_enriched_question(
+        request.question, 
+        request.filters, 
+        request.group_columns, 
+        request.columns_list
+    )
+    
     return f"""You are a SQL expert. You need to read and understand the following 【database schema】 description and generate a valid Oracle SQL statement to answer the [User Question].
 
 Return **Oracle SQL only**. No markdown. No explanation.
@@ -54,14 +82,21 @@ Return **Oracle SQL only**. No markdown. No explanation.
 {schema_text}
 
 [User Question]
-{question}
+{enriched_question}
 
 ```sql"""
 
-def build_sqlcoder_prompt(question: str, schema_text: str) -> str:
+def build_sqlcoder_prompt(request: Any, schema_text: str) -> str:
     """Build the prompt for SQLCoder-70B model."""
+    enriched_question = build_enriched_question(
+        request.question, 
+        request.filters, 
+        None, # SQLCoder template usually doesn't separate group_columns
+        request.columns_list
+    )
+    
     return f"""### Task
-Generate a SQL query to answer the following question: `{question}`
+Generate a SQL query to answer the following question: `{enriched_question}`
 
 ### Database Schema
 {schema_text}
@@ -69,13 +104,19 @@ Generate a SQL query to answer the following question: `{question}`
 ### SQL Query
 """
 
-def build_critic_prompt(question: str, schema_text: str, invalid_sql: str, error_msg: str) -> str:
+def build_critic_prompt(request: Any, schema_text: str, invalid_sql: str, error_msg: str) -> str:
     """Build the prompt for the critic/self-correction loop."""
+    enriched_question = build_enriched_question(
+        request.question, 
+        request.filters, 
+        request.group_columns, 
+        request.columns_list
+    )
     return f"""You are an Oracle SQL expert. The previous SQL you generated failed with an error.
 Please review the schema and the error message, and provide a corrected Oracle SQL statement.
 
 [User Question]
-{question}
+{enriched_question}
 
 【database schema】
 {schema_text}

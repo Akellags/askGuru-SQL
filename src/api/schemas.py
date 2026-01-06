@@ -4,6 +4,9 @@ from typing import Optional, List, Any
 class SQLRequest(BaseModel):
     question: str = Field(..., example="What are the total invoice amounts for each supplier?")
     tables: Optional[List[str]] = Field(None, description="Optional list of relevant tables to narrow down the schema")
+    filters: Optional[str] = Field(None, description="Optional filtering context")
+    columns_list: Optional[str] = Field(None, description="Optional specific columns requested")
+    group_columns: Optional[str] = Field(None, description="Optional grouping columns requested")
 
 class SQLResponse(BaseModel):
     sql: str

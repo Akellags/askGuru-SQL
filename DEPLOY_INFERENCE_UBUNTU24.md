@@ -364,9 +364,9 @@ export PYTORCH_ALLOC_CONF=expandable_segments:True
 python -m vllm.entrypoints.openai.api_server \
   --model /llamaSFT/outputs/merged_oracle_llama70b_awq4 \
   --dtype float16 \
-  --max-model-len 8192 \
+  --max-model-len 16384 \
   --max-num-seqs 4 \
-  --gpu-memory-utilization 0.60 \
+  --gpu-memory-utilization 0.90 \
   --quantization awq \
   --host 0.0.0.0 \
   --port 8001 \

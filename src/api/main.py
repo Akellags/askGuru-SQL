@@ -77,6 +77,11 @@ MSCHEMA_CACHE = load_mschema(settings.MSCHEMA_PATH)
 async def call_model(url: str, prompt: str) -> str:
     """Helper to call vLLM OpenAI-compatible endpoint."""
     endpoint = f"{url.rstrip('/')}/completions"
+    
+    print(f"\n{'-'*20} Sending Prompt to vLLM {'-'*20}")
+    print(prompt)
+    print(f"{'-'*60}\n")
+
     async with httpx.AsyncClient(timeout=60.0) as client:
         try:
             response = await client.post(
@@ -99,7 +104,7 @@ async def call_model(url: str, prompt: str) -> str:
 
 async def run_fallback_strategy(request: SQLRequest, schema_text: str) -> SQLResponse:
     # 1. Initial Generation (LLaMA)
-    llama_prompt = build_llama_prompt(request.question, schema_text)
+    llama_prompt = build_llama_prompt(request, schema_text)
     generated_text = await call_model(settings.PRIMARY_MODEL_URL, llama_prompt)
     final_sql = clean_sql(generated_text)
     model_used = "LLaMA-3.1-70B (Fallback)"
@@ -119,7 +124,7 @@ async def run_fallback_strategy(request: SQLRequest, schema_text: str) -> SQLRes
     
     if not is_valid:
         # Critic Loop: Ask the model to fix the error once
-        critic_prompt = build_critic_prompt(request.question, schema_text, final_sql, db_error)
+        critic_prompt = build_critic_prompt(request, schema_text, final_sql, db_error)
         generated_text = await call_model(settings.PRIMARY_MODEL_URL, critic_prompt)
         final_sql = clean_sql(generated_text)
         
@@ -128,7 +133,7 @@ async def run_fallback_strategy(request: SQLRequest, schema_text: str) -> SQLRes
 
     # 4. Secondary Model Fallback if still invalid
     if not is_valid and settings.ENABLE_SECONDARY_MODEL:
-        sqlcoder_prompt = build_sqlcoder_prompt(request.question, schema_text)
+        sqlcoder_prompt = build_sqlcoder_prompt(request, schema_text)
         generated_text = await call_model(settings.SECONDARY_MODEL_URL, sqlcoder_prompt)
         final_sql = clean_sql(generated_text)
         model_used = "SQLCoder-70B (Fallback)"
@@ -145,8 +150,8 @@ async def run_fallback_strategy(request: SQLRequest, schema_text: str) -> SQLRes
 
 async def run_voting_strategy(request: SQLRequest, schema_text: str) -> SQLResponse:
     # 1. Parallel Generation
-    llama_prompt = build_llama_prompt(request.question, schema_text)
-    sqlcoder_prompt = build_sqlcoder_prompt(request.question, schema_text)
+    llama_prompt = build_llama_prompt(request, schema_text)
+    sqlcoder_prompt = build_sqlcoder_prompt(request, schema_text)
     
     tasks = [
         call_model(settings.PRIMARY_MODEL_URL, llama_prompt),
@@ -199,6 +204,11 @@ async def run_voting_strategy(request: SQLRequest, schema_text: str) -> SQLRespo
           responses={500: {"model": ErrorResponse}},
           dependencies=[Depends(get_api_key)])
 async def generate_sql(request: SQLRequest):
+    print(f"\n{'='*20} Incoming Request {'='*20}")
+    print(f"Question: {request.question}")
+    print(f"Tables: {request.tables}")
+    if request.filters: print(f"Filters: {request.filters}")
+    
     # Prepare Schema
     schema_text = get_filtered_schema(MSCHEMA_CACHE, request.tables)
     
