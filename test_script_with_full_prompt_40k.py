@@ -30,6 +30,7 @@ Count total amount of paid invoices by supplier
 """
 
 db_schema = """
+    
     The below tables are related to purchase order related data. PO_HEADERS_ALL has a child table called PO_LINES_ALL
     AND PO_LINES_ALL identified by PO_LINE_ID primary key and has a child table PO_LINE_LOCATIONS_ALL 
     AND PO_LINE_LOCATIONS_ALL identified line_locations_id primary key and has a child table PO_DISTRIBUTIONS_ALL
@@ -2825,9 +2826,13 @@ SELECT ai.invoice_id AS standard_invoice_id,
        AND ai.invoice_num ='<p>abc123</p>'
 ORDER BY accounting_date
     
-### === Few Shot Example Queries End ===        
+    ### === Few Shot Example Queries End ===        
 
 """
+
+
+
+
 
 prompt=""" 
 You are a Oracle EBS expert. Generate executable SQL based on the user's question.
@@ -2858,6 +2863,7 @@ Give me the list of invoices where the purchase order payment terms is different
 - When in any join that has MTL_SYSTEM_ITEMS table must necessary have 2 joins. namely
 
 Follow JOIN HINTS. Do not invent columns. Guard divisions with NULLIF.
+
 
 [User Question]
 Give me the list of invoices where the purchase order payment terms is different from invoice payment terms  Filters/Constraints: operating unit vision operation only  Return ONLY these columns: invoice number, invoice date, puchase order number, purchase order payment terms, invoice payment terms
