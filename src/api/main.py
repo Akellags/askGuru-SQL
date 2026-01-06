@@ -82,7 +82,7 @@ async def call_model(url: str, prompt: str) -> str:
             response = await client.post(
                 endpoint,
                 json={
-                    "model": "merged_model",
+                    "model": settings.MODEL_NAME,
                     "prompt": prompt,
                     "max_tokens": settings.MAX_TOKENS,
                     "temperature": settings.TEMPERATURE,

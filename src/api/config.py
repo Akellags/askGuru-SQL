@@ -11,6 +11,7 @@ class Settings(BaseModel):
     # Model Endpoints (vLLM)
     PRIMARY_MODEL_URL: str = os.getenv("PRIMARY_MODEL_URL", "http://localhost:8000/v1")
     SECONDARY_MODEL_URL: str = os.getenv("SECONDARY_MODEL_URL", "http://localhost:8001/v1")
+    MODEL_NAME: str = os.getenv("MODEL_NAME", "/llamaSFT/outputs/merged_oracle_llama70b_awq4")
     
     # Ensemble Control
     ENABLE_SECONDARY_MODEL: bool = os.getenv("ENABLE_SECONDARY_MODEL", "false").lower() == "true"
