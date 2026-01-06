@@ -13,8 +13,11 @@ This guide covers the deployment of the FastAPI orchestration layer that manages
 The API requires the following packages. You can install them in your virtual environment:
 
 ```bash
+sudo apt-get update && sudo apt-get install -y libaio1 libaio-dev libstdc++6
 pip install fastapi uvicorn httpx oracledb pydantic-settings python-dotenv
 ```
+
+
 
 ## 3. Environment Configuration
 
@@ -30,6 +33,7 @@ Create a `.env` file in the `src/api` directory or set the following environment
 | `DATABASE_PASSWORD` | Oracle DB Password | `apps` |
 | `DATABASE_DSN` | Oracle DB DSN | `183.82.4.173:1529/VIS` |
 | `ORACLE_CLIENT_LIB_UBUNTU` | Path to Oracle Instant Client (Optional) | `""` |
+| `API_KEY` | Secret key for API access | `""` |
 | `MSCHEMA_PATH` | Path to `askGuru_m-schema_converted.txt` | `data/data_warehouse/oracle_train/askGuru_m-schema_converted.txt` |
 
 ## 4. Starting the API Server
@@ -74,13 +78,14 @@ python -m vllm.entrypoints.openai.api_server \
 
 ## 6. Testing with CURL
 
-Once the API is running, you can test it with the following CURL command:
+Once the API is running, you can test it with the following CURL command (replace `your-secret-api-key-here` with the value from your `.env`):
 
 ```bash
-curl -X POST http://localhost:8080/generate-sql \
+curl -X POST http://localhost:8000/generate-sql \
      -H "Content-Type: application/json" \
+     -H "X-API-Key: your-secret-api-key-here" \
      -d '{
-           "question": "Show me all invoices for vendor 'ABC' created in the last 30 days",
+           "question": "Show me all invoices for vendor ABC created in the last 30 days",
            "tables": ["AP_INVOICES_ALL", "AP_SUPPLIERS"]
          }'
 ```

@@ -1,0 +1,12 @@
+services:
+  askguru-api:
+    build: .
+    container_name: askguru-api
+    network_mode: "host"
+    env_file:
+      - src/api/.env
+    volumes:
+      - .:/app
+    restart: always
+    environment:
+      - PYTHONPATH=/app

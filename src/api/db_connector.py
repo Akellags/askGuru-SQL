@@ -22,6 +22,7 @@ def validate_sql_with_oracle(sql: str) -> Tuple[bool, Optional[str], Optional[Di
             password=settings.ORACLE_PASSWORD,
             dsn=settings.ORACLE_DSN
         )
+        connection.call_timeout = settings.DB_TIMEOUT * 1000 # in milliseconds
         cursor = connection.cursor()
         
         # Use EXPLAIN PLAN to validate syntax and schema without executing
@@ -50,6 +51,7 @@ def execute_oracle_query(sql: str) -> Tuple[Optional[list], Optional[str]]:
             password=settings.ORACLE_PASSWORD,
             dsn=settings.ORACLE_DSN
         )
+        connection.call_timeout = settings.DB_TIMEOUT * 1000 # in milliseconds
         cursor = connection.cursor()
         cursor.execute(sql)
         # Fetch first 100 rows for brevity

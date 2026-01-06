@@ -21,10 +21,14 @@ class Settings(BaseModel):
     ORACLE_PASSWORD: str = os.getenv("DATABASE_PASSWORD", os.getenv("ORACLE_PASSWORD", "apps"))
     ORACLE_DSN: str = os.getenv("DATABASE_DSN", os.getenv("ORACLE_DSN", "183.82.4.173:1529/VIS"))
     ORACLE_LIB_DIR: str = os.getenv("ORACLE_CLIENT_LIB_UBUNTU", "")
+    DB_TIMEOUT: int = int(os.getenv("DB_TIMEOUT", "10")) # Seconds
     
     # M-Schema Path
     MSCHEMA_PATH: str = os.getenv("MSCHEMA_PATH", "data/data_warehouse/oracle_train/askGuru_m-schema_converted.txt")
     
+    # Security
+    API_KEY: str = os.getenv("API_KEY", "")
+
     # Logic Settings
     MAX_TOKENS: int = int(os.getenv("MAX_TOKENS", "512"))
     TEMPERATURE: float = float(os.getenv("TEMPERATURE", "0.0"))
