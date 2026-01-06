@@ -26,10 +26,11 @@ MSCHEMA_CACHE = load_mschema(settings.MSCHEMA_PATH)
 
 async def call_model(url: str, prompt: str) -> str:
     """Helper to call vLLM OpenAI-compatible endpoint."""
+    endpoint = f"{url.rstrip('/')}/completions"
     async with httpx.AsyncClient(timeout=60.0) as client:
         try:
             response = await client.post(
-                f"{url}/completions",
+                endpoint,
                 json={
                     "model": "merged_model",
                     "prompt": prompt,
@@ -38,11 +39,13 @@ async def call_model(url: str, prompt: str) -> str:
                     "stop": ["```", ";"]
                 }
             )
+            if response.status_code != 200:
+                print(f"Error from {endpoint}: {response.status_code} - {response.text}")
             response.raise_for_status()
             data = response.json()
             return data["choices"][0]["text"].strip()
         except Exception as e:
-            raise HTTPException(status_code=500, detail=f"Model call failed: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Model call failed at {endpoint}: {str(e)}")
 
 async def run_fallback_strategy(request: SQLRequest, schema_text: str) -> SQLResponse:
     # 1. Initial Generation (LLaMA)

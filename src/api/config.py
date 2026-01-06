@@ -1,5 +1,9 @@
 import os
 from pydantic import BaseModel
+from dotenv import load_dotenv
+
+# Load .env file from the current directory
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
 class Settings(BaseModel):
     PROJECT_NAME: str = "askGuru-SQL API"

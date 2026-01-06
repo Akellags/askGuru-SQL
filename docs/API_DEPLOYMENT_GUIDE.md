@@ -39,7 +39,7 @@ Run the following command from the project root:
 ```bash
 # Ensure you are in the project root
 export PYTHONPATH=$PYTHONPATH:$(pwd)
-uvicorn src.api.main:app --host 0.0.0.0 --port 8080 --reload
+uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 ## 5. Starting vLLM Servers (Reference)
