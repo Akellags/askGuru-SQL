@@ -4,7 +4,7 @@ import json
 
 client = OpenAI(
     api_key="not-needed",
-    base_url="http://localhost:8000/v1"
+    base_url="http://localhost:8001/v1"
 )
 
 # Complete prompt format (as used in training)
