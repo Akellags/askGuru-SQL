@@ -104,7 +104,7 @@ async def call_model(url: str, prompt: str) -> str:
 
 async def run_fallback_strategy(request: SQLRequest, schema_text: str) -> SQLResponse:
     # 1. Initial Generation (LLaMA)
-    llama_prompt = build_llama_prompt(request, schema_text)
+    llama_prompt = build_llama_prompt(request, MSCHEMA_CACHE, schema_text)
     generated_text = await call_model(settings.PRIMARY_MODEL_URL, llama_prompt)
     final_sql = clean_sql(generated_text)
     model_used = "LLaMA-3.1-70B (Fallback)"
@@ -124,7 +124,7 @@ async def run_fallback_strategy(request: SQLRequest, schema_text: str) -> SQLRes
     
     if not is_valid:
         # Critic Loop: Ask the model to fix the error once
-        critic_prompt = build_critic_prompt(request, schema_text, final_sql, db_error)
+        critic_prompt = build_critic_prompt(request, MSCHEMA_CACHE, schema_text, final_sql, db_error)
         generated_text = await call_model(settings.PRIMARY_MODEL_URL, critic_prompt)
         final_sql = clean_sql(generated_text)
         
@@ -133,7 +133,7 @@ async def run_fallback_strategy(request: SQLRequest, schema_text: str) -> SQLRes
 
     # 4. Secondary Model Fallback if still invalid
     if not is_valid and settings.ENABLE_SECONDARY_MODEL:
-        sqlcoder_prompt = build_sqlcoder_prompt(request, schema_text)
+        sqlcoder_prompt = build_sqlcoder_prompt(request, MSCHEMA_CACHE, schema_text)
         generated_text = await call_model(settings.SECONDARY_MODEL_URL, sqlcoder_prompt)
         final_sql = clean_sql(generated_text)
         model_used = "SQLCoder-70B (Fallback)"
@@ -150,8 +150,8 @@ async def run_fallback_strategy(request: SQLRequest, schema_text: str) -> SQLRes
 
 async def run_voting_strategy(request: SQLRequest, schema_text: str) -> SQLResponse:
     # 1. Parallel Generation
-    llama_prompt = build_llama_prompt(request, schema_text)
-    sqlcoder_prompt = build_sqlcoder_prompt(request, schema_text)
+    llama_prompt = build_llama_prompt(request, MSCHEMA_CACHE, schema_text)
+    sqlcoder_prompt = build_sqlcoder_prompt(request, MSCHEMA_CACHE, schema_text)
     
     tasks = [
         call_model(settings.PRIMARY_MODEL_URL, llama_prompt),

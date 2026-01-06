@@ -18,55 +18,35 @@ def format_mschema_text(tables_data: List[Dict[str, Any]]) -> str:
     """Format M-Schema dictionary into the text format expected by the model."""
     lines = []
     for table in tables_data:
-        lines.append(f"Table: {table['table_name']}")
-        if "notes" in table:
-            lines.append(f"Description: {table['notes']}")
-        lines.append("Columns:")
-        for col in table['columns']:
-            col_line = f"- {col['name']} ({col['type']}): {col.get('description', '')}"
-            if col.get('is_primary'):
-                col_line += " [PRIMARY KEY]"
-            lines.append(col_line)
+        # Check if table has essential columns
+        essential_cols = [c for c in table['columns'] if c.get('is_primary') or c.get('is_essential')]
         
-        if table.get("foreign_keys"):
-            lines.append("Foreign Keys:")
-            for fk in table['foreign_keys']:
-                lines.append(f"- {fk['column']} -> {fk['ref_table']}.{fk['ref_column']}")
+        lines.append(f"{table['table_name']} (")
+        for col in table['columns']:
+            prefix = "**[ESSENTIAL]** " if (col.get('is_primary') or col.get('is_essential')) else ""
+            desc = f" -- {col.get('description', '')}" if col.get('description') else ""
+            lines.append(f"  {prefix}{col['name']} {col['type']}{desc}")
+        lines.append(")")
         lines.append("") # Spacer
     
     return "\n".join(lines)
 
-def get_filtered_schema(mschema: List[Dict[str, Any]], requested_tables: Optional[List[str]] = None) -> str:
-    """Get formatted schema text, optionally filtered by table names."""
-    if not requested_tables:
-        # Return a limited set or empty to avoid token limit issues if nothing requested
-        # Ideally, we'd have a table selector, but for now we'll require tables or return a subset
-        return "No specific tables requested. Please provide relevant tables."
+def get_join_hints(mschema: List[Dict[str, Any]], requested_tables: List[str]) -> str:
+    """Extract join hints for requested tables."""
+    hints = []
+    table_names = [t.lower() for t in requested_tables]
+    for table in mschema:
+        if table['table_name'].lower() in table_names:
+            for fk in table.get('foreign_keys', []):
+                if fk['ref_table'].lower() in table_names:
+                    hints.append(f"  - {table['table_name']}.{fk['column']} = {fk['ref_table']}.{fk['ref_column']}")
     
-    filtered = [t for t in mschema if t['table_name'].lower() in [rt.lower() for rt in requested_tables]]
-    if not filtered:
-         return f"Requested tables {requested_tables} not found in schema."
-    return format_mschema_text(filtered)
+    if not hints:
+        return ""
+    return "\nJOIN HINTS:\n" + "\n".join(list(set(hints)))
 
-def build_enriched_question(question: str, filters: Optional[str] = None, group_columns: Optional[str] = None, columns_list: Optional[str] = None) -> str:
-    """Build enriched question by concatenating all provided inputs with descriptive prefixes."""
-    enriched = question.strip().replace('\n', ' ')
-    
-    if filters and filters.strip():
-        enriched += f" Using these filters : {filters.strip().replace(chr(10), ' ').replace(chr(13), ' ')}"
-    
-    if group_columns and group_columns.strip():
-        enriched += f" Group by these columns : {group_columns.strip().replace(chr(10), ' ').replace(chr(13), ' ')}"
-    
-    if columns_list and columns_list.strip():
-        enriched += f" Return these columns only in the final query : {columns_list.strip().replace(chr(10), ' ').replace(chr(13), ' ')}"
-    
-    enriched += " and also get all the primary keys from the tables used to generate the sql"
-    
-    return enriched
-
-def build_llama_prompt(request: Any, schema_text: str) -> str:
-    """Build the prompt for LLaMA-3.1 model."""
+def build_llama_prompt(request: Any, mschema: List[Dict[str, Any]], schema_text: str) -> str:
+    """Build the prompt for LLaMA-3.1 model matching test_script_with_full_prompt.py format."""
     enriched_question = build_enriched_question(
         request.question, 
         request.filters, 
@@ -74,32 +54,58 @@ def build_llama_prompt(request: Any, schema_text: str) -> str:
         request.columns_list
     )
     
-    return f"""You are a SQL expert. You need to read and understand the following 【database schema】 description and generate a valid Oracle SQL statement to answer the [User Question].
-
-Return **Oracle SQL only**. No markdown. No explanation.
-
-【database schema】
-{schema_text}
+    join_hints = get_join_hints(mschema, request.tables or [])
+    
+    return f"""You are a Oracle EBS expert. Generate executable SQL based on the user's question.
+Only output SQL query. Do not invent columns - use only those in the schema.
+CRITICAL: Columns marked with **[ESSENTIAL]** are mandatory for proper joins and aggregations - prioritize them.
 
 [User Question]
 {enriched_question}
 
+[Database Schema]
+{schema_text}
+{join_hints}
+
+[Reference Information]
+[Rules]
+- **CRITICAL**: Examples marked with [* VERY SIMILAR] are semantically matched to your question. Follow their SQL structure, JOIN patterns, WHERE logic, aggregation strategy, and CTE usage EXACTLY. Do NOT simplify or refactor them - they are proven patterns that work for this data model.
+- Examples marked with * are most similar to the current question - follow their patterns and structure closely. Mimic their JOIN order, subquery approach (CTE vs NOT EXISTS vs LEFT JOIN), aggregation, and filtering logic.
+- **MANDATORY**: Always include all JOIN key columns in the SELECT clause. Every ID or key used to JOIN tables must be present in the final result set.
+- Do not invent columns; use only those in [Database Schema].
+- When computing closing balance, use this expression exactly:
+  NVL(BEGIN_BALANCE_DR,0) - NVL(BEGIN_BALANCE_CR,0)
+  + NVL(PERIOD_NET_DR,0) - NVL(PERIOD_NET_CR,0)
+- Do NOT reference a column alias inside CASE unless it is computed in a subquery.
+  EITHER inline the full expression inside CASE (preferred),
+  OR compute it in a subquery and reference it in the outer SELECT.
+- Always guard divisions:  / NULLIF(ABS(<denominator>), 0)
+- Prefer PERIOD_NAME-based filters (e.g., 'Jan-03','Jun-03'), not literal START_DATEs.
+- CRITICAL: Month abbreviations in PERIOD_NAME must ALWAYS be in title case format: 'Jan-03', 'Feb-03', 'Mar-03', 'Apr-03', 'May-03', 'Jun-03', 'Jul-03', 'Aug-03', 'Sep-03', 'Oct-03', 'Nov-03', 'Dec-03'. Do NOT use uppercase (MAR-03, APR-03) or lowercase (mar-03, apr-03).
+- When in any join that has MTL_SYSTEM_ITEMS table must necessary have 2 joins.
+
+Follow JOIN HINTS. Do not invent columns. Guard divisions with NULLIF.
+
+Return **Oracle SQL only**. No markdown. No explanation.
 ```sql"""
 
-def build_sqlcoder_prompt(request: Any, schema_text: str) -> str:
+def build_sqlcoder_prompt(request: Any, mschema: List[Dict[str, Any]], schema_text: str) -> str:
     """Build the prompt for SQLCoder-70B model."""
     enriched_question = build_enriched_question(
         request.question, 
         request.filters, 
-        None, # SQLCoder template usually doesn't separate group_columns
+        None,
         request.columns_list
     )
+    
+    join_hints = get_join_hints(mschema, request.tables or [])
     
     return f"""### Task
 Generate a SQL query to answer the following question: `{enriched_question}`
 
 ### Database Schema
 {schema_text}
+{join_hints}
 
 ### SQL Query
 """
