@@ -366,7 +366,7 @@ python -m vllm.entrypoints.openai.api_server \
   --dtype float16 \
   --max-model-len 16384 \
   --max-num-seqs 4 \
-  --gpu-memory-utilization 0.90 \
+  --gpu-memory-utilization 0.85 \
   --quantization awq \
   --host 0.0.0.0 \
   --port 8001 \
@@ -421,7 +421,7 @@ ExecStart=/llamaSFT/askGuru-SQL/.venv/bin/python -m vllm.entrypoints.openai.api_
   --dtype float16 \
   --max-model-len 8192 \
   --max-num-seqs 4 \
-  --gpu-memory-utilization 0.92 \
+  --gpu-memory-utilization 0.85 \
   --quantization awq \
   --port 8000
 

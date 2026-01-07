@@ -19,8 +19,8 @@ class EmbedderManager:
         self.cache_dir = cache_dir
         
         print(f"Loading BGE embedder: {model_name}")
-        import torch
-        device = "cuda" if torch.cuda.is_available() else "cpu"
+        # Use CPU for embedding to save VRAM for the large LLM
+        device = "cpu"
         self.model = SentenceTransformer(model_name, cache_folder=cache_dir, device=device)
         self.embedding_dim = self.model.get_sentence_embedding_dimension()
         print(f"Embedding dimension: {self.embedding_dim}")
