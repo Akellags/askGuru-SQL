@@ -1,0 +1,37 @@
+{
+    "generation": {
+        "model_id": "XGenerationLab/XiYanSQL-QwenCoder-7B-2504",
+        "max_new_tokens": 1500,
+        "temperature": 0.0,
+        "top_p": 0.95,
+        "repetition_penalty": 1.05,
+        "prompt_mode": "xiyan"
+    },
+    "paths": {
+        "index_dir": "/askGuruARAG/rag/index/bm25",
+        "vectors_dir": "/askGuruARAG/rag/index/vectors",
+        "tables_dir": "/askGuruARAG/rag/data/tables",
+        "fewshots": "/askGuruARAG/rag/data/fewshots.jsonl",
+        "joins": "/askGuruARAG/rag/data/joins/joins.json",
+        "router_map": "/askGuruARAG/rag/data/router/keywords.json",
+        "feedback_store": "/askGuruARAG/rag/data/feedback/corrections.jsonl"
+    },
+    "retrieval": {
+        "max_tables": 8,
+        "per_table_cols": 12,
+        "fewshots_k": 4
+    },
+    "guard": {
+        "policy": "patch-only"
+    },
+    "similarity": {
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "exact_threshold": 0.80,
+        "close_threshold": 0.60
+    },
+    "embedder": {
+        "model_name": "BAAI/bge-en-icl",
+        "model_type": "bge",
+        "cache_dir": null
+    }
+}

@@ -1,0 +1,455 @@
+{
+  "table": "PO_LINE_LOCATIONS_ALL",
+  "purpose": "Business-use subset of PO_LINE_LOCATIONS_ALL.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "PO_LINE_ID",
+      "ref_table": "PO_LINES_ALL",
+      "ref_column": "PO_LINE_ID"
+    },
+    {
+      "column": "PO_HEADER_ID",
+      "ref_table": "PO_HEADERS_ALL",
+      "ref_column": "PO_HEADER_ID"
+    },
+    {
+      "column": "SHIP_TO_LOCATION_ID",
+      "ref_table": "HR_LOCATIONS_ALL",
+      "ref_column": "LOCATION_ID"
+    },
+    {
+      "column": "SHIP_TO_ORGANIZATION_ID",
+      "ref_table": "ORG_ORGANIZATION_DEFINITIONS",
+      "ref_column": "ORGANIZATION_ID"
+    }
+  ],
+  "essential_columns": [
+    {
+      "name": "SHIP_TO_ORGANIZATION_ID",
+      "reason": "mandatory for joining with mtl_system_items or org_organization_definitions "
+    }
+  ],
+  "columns": [
+    {
+      "name": "AMOUNT",
+      "type": "NUMBER",
+      "desc": "Amount on the shipment for service lines."
+    },
+    {
+      "name": "AMOUNT_BILLED",
+      "type": "NUMBER",
+      "desc": "Amount billed for service lines."
+    },
+    {
+      "name": "AMOUNT_CANCELLED",
+      "type": "NUMBER",
+      "desc": "Amount cancelled for service lines."
+    },
+    {
+      "name": "AMOUNT_RECEIVED",
+      "type": "NUMBER",
+      "desc": "Amount received for service lines."
+    },
+    {
+      "name": "AMOUNT_REJECTED",
+      "type": "NUMBER",
+      "desc": "Amount rejected for service lines."
+    },
+    {
+      "name": "AMOUNT_SHIPPED",
+      "type": "NUMBER",
+      "desc": "Amount pending for Work Confirmation."
+    },
+    {
+      "name": "APPROVED_DATE",
+      "type": "DATE",
+      "desc": "Approval date for shipment (no longer used)."
+    },
+    {
+      "name": "APPROVED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether the shipment is approved (Y/N)."
+    },
+    {
+      "name": "CALCULATE_TAX_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether tax needs to be calculated."
+    },
+    {
+      "name": "CANCEL_DATE",
+      "type": "DATE",
+      "desc": "Date the shipment was cancelled."
+    },
+    {
+      "name": "CANCEL_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether the shipment is cancelled (Y/N)."
+    },
+    {
+      "name": "CANCEL_REASON",
+      "type": "VARCHAR2",
+      "desc": "Cancellation reason provided by the employee."
+    },
+    {
+      "name": "CANCELLED_BY",
+      "type": "NUMBER",
+      "desc": "Employee ID who cancelled the shipment."
+    },
+    {
+      "name": "CLOSED_BY",
+      "type": "NUMBER",
+      "desc": "Employee ID who closed the shipment."
+    },
+    {
+      "name": "CLOSED_CODE",
+      "type": "VARCHAR2",
+      "desc": "Closure status of the shipment (e.g., OPEN, CLOSED, CANCELLED)."
+    },
+    {
+      "name": "CLOSED_DATE",
+      "type": "DATE",
+      "desc": "Date the shipment was closed."
+    },
+    {
+      "name": "CLOSED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "No longer used."
+    },
+    {
+      "name": "CLOSED_FOR_INVOICE_DATE",
+      "type": "DATE",
+      "desc": "Date the shipment was closed for invoice."
+    },
+    {
+      "name": "CLOSED_FOR_RECEIVING_DATE",
+      "type": "DATE",
+      "desc": "Date the shipment was closed for receiving."
+    },
+    {
+      "name": "CLOSED_REASON",
+      "type": "VARCHAR2",
+      "desc": "Reason why the shipment was closed."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Date when the row was created."
+    },
+    {
+      "name": "DAYS_EARLY_RECEIPT_ALLOWED",
+      "type": "NUMBER",
+      "desc": "Max days early that items can be received."
+    },
+    {
+      "name": "DAYS_LATE_RECEIPT_ALLOWED",
+      "type": "NUMBER",
+      "desc": "Max days late that items can be received."
+    },
+     {
+      "name": "SHIP_TO_ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "This is inventory organization that must be joined with organization id of mtl_system_items or org_organization_definitions"
+    },
+    {
+      "name": "FINAL_MATCH_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the shipment is finally matched by AP invoice."
+    },
+    {
+      "name": "FOB_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Type of free-on-board terms for the shipment."
+    },
+    {
+      "name": "FREIGHT_TERMS_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Freight terms for the RFQ or quotation shipment."
+    },
+    {
+      "name": "INSPECTION_REQUIRED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether inspection is required before invoice payment."
+    },
+    {
+      "name": "INVOICE_CLOSE_TOLERANCE",
+      "type": "NUMBER",
+      "desc": "Tolerance % within which the shipment is auto-closed for invoicing."
+    },
+    {
+      "name": "LINE_LOCATION_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier of the shipment schedule."
+    },
+    {
+      "name": "MANUAL_PRICE_CHANGE_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Y if price was manually overridden (for Blanket Release shipments)."
+    },
+    {
+      "name": "MATCH_OPTION",
+      "type": "VARCHAR2",
+      "desc": "Indicates if invoice is matched to PO or receipt."
+    },
+    {
+      "name": "MATCHING_BASIS",
+      "type": "VARCHAR2",
+      "desc": "Matching basis of the line location."
+    },
+    {
+      "name": "NEED_BY_DATE",
+      "type": "DATE",
+      "desc": "Need-by date for the shipment schedule."
+    },
+    {
+      "name": "NOTE_TO_RECEIVER",
+      "type": "VARCHAR2",
+      "desc": "Shipment-level note to the receiver."
+    },
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier (multi-org)."
+    },
+    {
+      "name": "PO_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Document header unique identifier (FK to PO_HEADERS_ALL)."
+    },
+    {
+      "name": "PO_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Document line unique identifier (FK to PO_LINES_ALL)."
+    },
+    {
+      "name": "PO_RELEASE_ID",
+      "type": "NUMBER",
+      "desc": "Release unique identifier for a release shipment."
+    },
+    {
+      "name": "PROMISED_DATE",
+      "type": "DATE",
+      "desc": "Supplier-promised delivery date."
+    },
+    {
+      "name": "QTY_RCV_EXCEPTION_CODE",
+      "type": "VARCHAR2",
+      "desc": "Action taken when quantity received exceeds tolerance."
+    },
+    {
+      "name": "QTY_RCV_TOLERANCE",
+      "type": "NUMBER",
+      "desc": "Max over-receipt tolerance %."
+    },
+    {
+      "name": "QUANTITY",
+      "type": "NUMBER",
+      "desc": "Quantity ordered or break quantity."
+    },
+    {
+      "name": "QUANTITY_ACCEPTED",
+      "type": "NUMBER",
+      "desc": "Quantity accepted after inspection."
+    },
+    {
+      "name": "QUANTITY_BILLED",
+      "type": "NUMBER",
+      "desc": "Quantity invoiced (matched by AP)."
+    },
+    {
+      "name": "QUANTITY_CANCELLED",
+      "type": "NUMBER",
+      "desc": "Quantity cancelled."
+    },
+    {
+      "name": "QUANTITY_FINANCED",
+      "type": "NUMBER",
+      "desc": "Units pre-paid (for Financing Pay Items)."
+    },
+    {
+      "name": "QUANTITY_RECEIVED",
+      "type": "NUMBER",
+      "desc": "Quantity received so far."
+    },
+    {
+      "name": "QUANTITY_RECOUPED",
+      "type": "NUMBER",
+      "desc": "Units for which prepayments have been liquidated."
+    },
+    {
+      "name": "QUANTITY_REJECTED",
+      "type": "NUMBER",
+      "desc": "Quantity rejected after inspection."
+    },
+    {
+      "name": "QUANTITY_SHIPPED",
+      "type": "NUMBER",
+      "desc": "Quantity shipped."
+    },
+    {
+      "name": "RECEIPT_DAYS_EXCEPTION_CODE",
+      "type": "VARCHAR2",
+      "desc": "Action for early/late receipt exceptions."
+    },
+    {
+      "name": "RECEIPT_REQUIRED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether receiving is required before payment."
+    },
+    {
+      "name": "RECEIVE_CLOSE_TOLERANCE",
+      "type": "NUMBER",
+      "desc": "Tolerance % within which the shipment auto-closes for receiving."
+    },
+    {
+      "name": "RECEIVING_ROUTING_ID",
+      "type": "NUMBER",
+      "desc": "Receipt routing unique identifier."
+    },
+    {
+      "name": "SECONDARY_QUANTITY",
+      "type": "NUMBER",
+      "desc": "OPM: Secondary quantity ordered."
+    },
+    {
+      "name": "SECONDARY_UNIT_OF_MEASURE",
+      "type": "VARCHAR2",
+      "desc": "OPM: Secondary UOM for the item."
+    },
+    {
+      "name": "SHIP_TO_LOCATION_ID",
+      "type": "NUMBER",
+      "desc": "Ship-to location ID (FK to HR_LOCATIONS_ALL)."
+    },
+    {
+      "name": "SHIPMENT_CLOSED_DATE",
+      "type": "DATE",
+      "desc": "Date shipment is fully closed (receiving + invoice)."
+    },
+    {
+      "name": "SHIPMENT_NUM",
+      "type": "NUMBER",
+      "desc": "Shipment line number."
+    },
+    {
+      "name": "SHIPMENT_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Type of shipment (Standard, Blanket, Planned)."
+    },
+    {
+      "name": "TAX_CODE_ID",
+      "type": "NUMBER",
+      "desc": "Unique identifier for the tax code."
+    },
+    {
+      "name": "TAX_NAME",
+      "type": "VARCHAR2",
+      "desc": "Tax code for the shipment."
+    },
+    {
+      "name": "TAX_USER_OVERRIDE_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the default tax was overridden."
+    },
+    {
+      "name": "TAXABLE_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether the shipment is taxable."
+    },
+    {
+      "name": "TERMS_ID",
+      "type": "NUMBER",
+      "desc": "Payment terms unique identifier."
+    },
+    {
+      "name": "UNIT_MEAS_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Unit of measure code for price break quantity."
+    },
+    {
+      "name": "UNIT_OF_MEASURE_CLASS",
+      "type": "VARCHAR2",
+      "desc": "Unit of measure class (e.g., Weight, Volume)."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier (multi-org)."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Date when the row was created."
+    },
+    {
+      "name": "PO_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Document header unique identifier (FK to PO_HEADERS_ALL)."
+    },
+    {
+      "name": "PO_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Document line unique identifier (FK to PO_LINES_ALL)."
+    },
+    {
+      "name": "LINE_LOCATION_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier of the shipment schedule."
+    },
+    {
+      "name": "QUANTITY",
+      "type": "NUMBER",
+      "desc": "Quantity ordered or break quantity."
+    },
+    {
+      "name": "AMOUNT",
+      "type": "NUMBER",
+      "desc": "Amount on the shipment for service lines."
+    },
+    {
+      "name": "AMOUNT_BILLED",
+      "type": "NUMBER",
+      "desc": "Amount billed for service lines."
+    },
+    {
+      "name": "AMOUNT_CANCELLED",
+      "type": "NUMBER",
+      "desc": "Amount cancelled for service lines."
+    },
+    {
+      "name": "AMOUNT_RECEIVED",
+      "type": "NUMBER",
+      "desc": "Amount received for service lines."
+    },
+    {
+      "name": "AMOUNT_REJECTED",
+      "type": "NUMBER",
+      "desc": "Amount rejected for service lines."
+    },
+    {
+      "name": "AMOUNT_SHIPPED",
+      "type": "NUMBER",
+      "desc": "Amount pending for Work Confirmation."
+    },
+    {
+      "name": "APPROVED_DATE",
+      "type": "DATE",
+      "desc": "Approval date for shipment (no longer used)."
+    },
+    {
+      "name": "APPROVED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether the shipment is approved (Y/N)."
+    }
+  ],
+  "notes": "The PO_LINE_LOCATIONS_ALL table tracks detailed shipment schedules for each PO line. It allows splitting PO lines into multiple deliveries with unique dates, quantities, and destinations. It is critical for receiving (tracks QUANTITY_RECEIVED), invoice matching (QUANTITY_BILLED), and reporting on delivery/receipt performance. Each record represents a specific delivery instance tied to a line, and includes quantities for received, billed, rejected, and canceled goods. For backdated status, quantities are aggregated from rcv_transactions based on transaction_date.",
+  "join_hints": [
+    "PO_LINE_LOCATIONS_ALL.PO_LINE_ID = PO_LINES_ALL.PO_LINE_ID",
+    "PO_LINE_LOCATIONS_ALL.PO_HEADER_ID = PO_HEADERS_ALL.PO_HEADER_ID",
+    "PO_LINE_LOCATIONS_ALL.SHIP_TO_LOCATION_ID = HR_LOCATIONS_ALL.LOCATION_ID",
+    "PO_LINE_LOCATIONS_ALL.SHIP_TO_ORGANIZATION_ID = ORG_ORGANIZATION_DEFINITIONS.ORGANIZATION_ID"
+  ]
+}
+

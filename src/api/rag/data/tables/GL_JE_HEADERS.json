@@ -1,0 +1,80 @@
+{
+  "table": "GL_JE_HEADERS",
+  "pk": [
+    "JE_HEADER_ID"
+  ],
+  "columns": [
+    {
+      "name": "JE_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Journal entry header identifier."
+    },
+    {
+      "name": "LEDGER_ID",
+      "type": "NUMBER",
+      "desc": "Ledger identifier (FK to GL_LEDGERS)."
+    },
+    {
+      "name": "PERIOD_NAME",
+      "type": "VARCHAR2",
+      "desc": "GL period name."
+    },
+    {
+      "name": "NAME",
+      "type": "VARCHAR2",
+      "desc": "Journal entry name."
+    },
+    {
+      "name": "JE_SOURCE",
+      "type": "VARCHAR2",
+      "desc": "Journal source."
+    },
+    {
+      "name": "JE_CATEGORY",
+      "type": "VARCHAR2",
+      "desc": "Journal category."
+    },
+    {
+      "name": "CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Currency code."
+    },
+    {
+      "name": "STATUS",
+      "type": "VARCHAR2",
+      "desc": "Posting status (e.g., P=Posted)."
+    },
+    {
+      "name": "ACTUAL_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Actual/Budget/Encumbrance flag (A/B/E)."
+    },
+    {
+      "name": "DEFAULT_EFFECTIVE_DATE",
+      "type": "DATE",
+      "desc": "Default effective date for lines."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Record creation date."
+    },
+    {
+      "name": "POSTED_DATE",
+      "type": "DATE",
+      "desc": "Date journal was posted."
+    }
+  ],
+  "fks": [
+    {
+      "column": "LEDGER_ID",
+      "ref_table": "GL_LEDGERS",
+      "ref_column": "LEDGER_ID"
+    }
+  ],
+  "join_hints": [
+    "GL_JE_LINES.JE_HEADER_ID = GL_JE_HEADERS.JE_HEADER_ID",
+    "GL_JE_HEADERS.LEDGER_ID = GL_LEDGERS.LEDGER_ID"
+  ],
+  "notes": "Header details for GL journal entries."
+}

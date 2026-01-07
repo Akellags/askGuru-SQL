@@ -1,0 +1,70 @@
+{
+  "table": "MTL_UOM_CONVERSIONS",
+  "purpose": "Business-use subset of MTL_UOM_CONVERSIONS.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "INVENTORY_ITEM_ID",
+      "ref_table": "MTL_SYSTEM_ITEMS_B",
+      "ref_column": "INVENTORY_ITEM_ID"
+    }
+  ],
+  "columns": [
+    {
+      "name": "UNIT_OF_MEASURE",
+      "type": "VARCHAR2(150)",
+      "desc": "Full name of the unit of measure, e.g., 'Square Feet'."
+    },
+    {
+      "name": "UOM_CODE",
+      "type": "VARCHAR2(150)",
+      "desc": "Code for the conversion UOM, e.g., 'SFT' for square feet (transaction UOM needing conversion to primary UOM)."
+    },
+    {
+      "name": "UOM_CLASS",
+      "type": "VARCHAR2(150)",
+      "desc": "Class of the UOM, e.g., 'Area' for square feet."
+    },
+    {
+      "name": "INVENTORY_ITEM_ID",
+      "type": "NUMBER",
+      "desc": "Inventory item ID for which this conversion rate applies."
+    },
+    {
+      "name": "CONVERSION_RATE",
+      "type": "NUMBER",
+      "desc": "Conversion rate from the primary unit of measure to the UOM code (transaction UOM)."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "INVENTORY_ITEM_ID",
+      "type": "NUMBER",
+      "desc": "Inventory item ID for which this conversion rate applies."
+    },
+    {
+      "name": "UNIT_OF_MEASURE",
+      "type": "VARCHAR2(150)",
+      "desc": "Full name of the unit of measure, e.g., 'Square Feet'."
+    },
+    {
+      "name": "UOM_CODE",
+      "type": "VARCHAR2(150)",
+      "desc": "Code for the conversion UOM, e.g., 'SFT' for square feet (transaction UOM needing conversion to primary UOM)."
+    },
+    {
+      "name": "UOM_CLASS",
+      "type": "VARCHAR2(150)",
+      "desc": "Class of the UOM, e.g., 'Area' for square feet."
+    },
+    {
+      "name": "CONVERSION_RATE",
+      "type": "NUMBER",
+      "desc": "Conversion rate from the primary unit of measure to the UOM code (transaction UOM)."
+    }
+  ],
+  "notes": "The MTL_UOM_CONVERSIONS table in Oracle Inventory serves as the repository for unit of measure (UOM) conversion rules. It allows the system to automatically convert between different units of measure, ensuring consistency across purchasing, inventory, order management, and manufacturing processes. It maintains conversion rates between primary and transaction UOMs, both standard and item-specific. Key columns include unit_of_measure (e.g., Square Feet), uom_code (transaction UOM like SFT), uom_class (UOM category like Area), inventory_item_id (item-specific rule), and conversion_rate (how to convert to/from the primary UOM).",
+  "join_hints": [
+    "MTL_UOM_CONVERSIONS.INVENTORY_ITEM_ID = MTL_SYSTEM_ITEMS_B.INVENTORY_ITEM_ID"
+  ]
+}

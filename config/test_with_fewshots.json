@@ -1,0 +1,7 @@
+{
+    "include_fewshots": "sql",
+    "fewshots_max": 4,
+    "fewshots_sql_maxchars": 8000,
+    "print_plan": true,
+    "dump_prompt": false
+}

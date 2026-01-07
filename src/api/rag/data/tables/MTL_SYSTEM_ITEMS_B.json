@@ -1,0 +1,417 @@
+{
+  "table": "MTL_SYSTEM_ITEMS_B",
+  "purpose": "Business-use subset of MTL_SYSTEM_ITEMS_B.",
+  "pk": [],
+  "fks": [],
+  "columns": [
+    {
+      "name": "ALLOW_ITEM_DESC_UPDATE_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if item descriptions can be updated on PO lines."
+    },
+    {
+      "name": "ALLOW_SUBSTITUTE_RECEIPTS_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if substitute receipts are allowed."
+    },
+    {
+      "name": "ALLOW_UNORDERED_RECEIPTS_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if unordered receipts are allowed."
+    },
+    {
+      "name": "COST_OF_SALES_ACCOUNT",
+      "type": "NUMBER",
+      "desc": "GL account for cost of sales."
+    },
+    {
+      "name": "COSTING_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating whether costing is enabled for the item."
+    },
+    {
+      "name": "CUSTOMER_ORDER_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the item is customer orderable."
+    },
+    {
+      "name": "CUSTOMER_ORDER_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the item is available for customer orders."
+    },
+    {
+      "name": "CYCLE_COUNT_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if the item is cycle count enabled."
+    },
+    {
+      "name": "DUAL_UOM_CONTROL",
+      "type": "NUMBER",
+      "desc": "Specifies if Dual Unit of Measure control is enabled."
+    },
+    {
+      "name": "DESCRIPTION",
+      "type": "VARCHAR2",
+      "desc": "Item description; note that SEGMENT1 holds the item code."
+    },
+    {
+      "name": "EXPENSE_ACCOUNT",
+      "type": "NUMBER",
+      "desc": "GL account for expense postings."
+    },
+    {
+      "name": "INSPECTION_REQUIRED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if inspection is required upon receipt."
+    },
+    {
+      "name": "INTERNAL_ORDER_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the item is available for internal orders."
+    },
+    {
+      "name": "INTERNAL_ORDER_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag showing if the item can be internally ordered."
+    },
+    {
+      "name": "INVENTORY_ASSET_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if the item is an inventory asset."
+    },
+    {
+      "name": "INVENTORY_ITEM_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating whether the item is an inventory item."
+    },
+    {
+      "name": "INVENTORY_ITEM_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique inventory item identifier (with ORGANIZATION_ID)."
+    },
+    {
+      "name": "INVENTORY_ITEM_STATUS_CODE",
+      "type": "VARCHAR2",
+      "desc": "Item status code indicating material availability status."
+    },
+    {
+      "name": "INVOICE_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the item can appear on invoices."
+    },
+    {
+      "name": "INVOICEABLE_ITEM_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Shows if the item can be invoiced."
+    },
+    {
+      "name": "INVOICING_RULE_ID",
+      "type": "NUMBER",
+      "desc": "Identifier for the invoicing rule applicable to the item."
+    },
+    {
+      "name": "ITEM_CATALOG_GROUP_ID",
+      "type": "NUMBER",
+      "desc": "Catalog group the item belongs to."
+    },
+    {
+      "name": "ITEM_TYPE",
+      "type": "VARCHAR2",
+      "desc": "User-defined item type classification."
+    },
+    {
+      "name": "LIST_PRICE_PER_UNIT",
+      "type": "NUMBER",
+      "desc": "Purchasing list price per unit."
+    },
+    {
+      "name": "LOCATION_CONTROL_CODE",
+      "type": "NUMBER",
+      "desc": "Code indicating if locator control is used."
+    },
+    {
+      "name": "LOT_CONTROL_CODE",
+      "type": "NUMBER",
+      "desc": "Code indicating if lot control is enabled."
+    },
+    {
+      "name": "MARKET_PRICE",
+      "type": "NUMBER",
+      "desc": "Market price used in procurement."
+    },
+    {
+      "name": "MTL_TRANSACTIONS_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if the item can be transacted in Inventory."
+    },
+    {
+      "name": "MUST_USE_APPROVED_VENDOR_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the item must be procured only from approved vendors."
+    },
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; organization identifier (with INVENTORY_ITEM_ID)."
+    },
+    {
+      "name": "PRIMARY_UNIT_OF_MEASURE",
+      "type": "VARCHAR2",
+      "desc": "Primary unit of measure for stocking the item."
+    },
+    {
+      "name": "PRIMARY_UOM_CODE",
+      "type": "VARCHAR2",
+      "desc": "Unit of measure code for the primary UOM."
+    },
+    {
+      "name": "PROCESS_COSTING_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating process costing is enabled (Oracle Process Mfg)."
+    },
+    {
+      "name": "PROCESS_EXECUTION_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating item use in OPM Process Execution."
+    },
+    {
+      "name": "PROCESS_QUALITY_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag for enabling OPM Process Quality usage."
+    },
+    {
+      "name": "PROCESS_SUPPLY_LOCATOR_ID",
+      "type": "NUMBER",
+      "desc": "Default supply locator for process execution."
+    },
+    {
+      "name": "PROCESS_SUPPLY_SUBINVENTORY",
+      "type": "VARCHAR2",
+      "desc": "Default subinventory for process execution supply transactions."
+    },
+    {
+      "name": "PROCESS_YIELD_LOCATOR_ID",
+      "type": "NUMBER",
+      "desc": "Default yield locator for process execution."
+    },
+    {
+      "name": "PROCESS_YIELD_SUBINVENTORY",
+      "type": "VARCHAR2",
+      "desc": "Default yield subinventory for process execution."
+    },
+    {
+      "name": "PRODUCT_FAMILY_ITEM_ID",
+      "type": "NUMBER",
+      "desc": "Product family identifier if item belongs to a product family."
+    },
+    {
+      "name": "PURCHASING_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if the item is purchasable."
+    },
+    {
+      "name": "PURCHASING_ITEM_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating the item is defined as a purchasing item."
+    },
+    {
+      "name": "PURCHASING_TAX_CODE",
+      "type": "VARCHAR2",
+      "desc": "Purchasing tax code applicable to the item."
+    },
+    {
+      "name": "QTY_RCV_EXCEPTION_CODE",
+      "type": "VARCHAR2",
+      "desc": "Over-tolerance receipt processing code."
+    },
+    {
+      "name": "QTY_RCV_TOLERANCE",
+      "type": "NUMBER",
+      "desc": "Max acceptable over-receipt percentage tolerance."
+    },
+    {
+      "name": "RECEIPT_DAYS_EXCEPTION_CODE",
+      "type": "VARCHAR2",
+      "desc": "Code for early/late receipt exception processing."
+    },
+    {
+      "name": "RECEIPT_REQUIRED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating receipt is required before payment."
+    },
+    {
+      "name": "RECEIVE_CLOSE_TOLERANCE",
+      "type": "NUMBER",
+      "desc": "Tolerance percentage for automatically closing receipts."
+    },
+    {
+      "name": "RECEIVING_ROUTING_ID",
+      "type": "NUMBER",
+      "desc": "Default receiving routing identifier."
+    },
+    {
+      "name": "RECIPE_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the item can appear on OPM recipes."
+    },
+    {
+      "name": "RESTRICT_LOCATORS_CODE",
+      "type": "NUMBER",
+      "desc": "Restriction code for locators."
+    },
+    {
+      "name": "RESTRICT_SUBINVENTORIES_CODE",
+      "type": "NUMBER",
+      "desc": "Restriction code for subinventories."
+    },
+    {
+      "name": "RFQ_REQUIRED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if an RFQ is required for the item."
+    },
+    {
+      "name": "SALES_ACCOUNT",
+      "type": "NUMBER",
+      "desc": "Sales account for the item."
+    },
+    {
+      "name": "SECONDARY_UOM_CODE",
+      "type": "VARCHAR2",
+      "desc": "Secondary Unit of Measure."
+    },
+    {
+      "name": "SERIAL_NUMBER_CONTROL_CODE",
+      "type": "NUMBER",
+      "desc": "Serial number control code."
+    },
+    {
+      "name": "SERIAL_STATUS_ENABLED",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating serial status is enabled."
+    },
+    {
+      "name": "SHELF_LIFE_CODE",
+      "type": "NUMBER",
+      "desc": "Shelf life control code."
+    },
+    {
+      "name": "SHELF_LIFE_DAYS",
+      "type": "NUMBER",
+      "desc": "Shelf life duration in days."
+    },
+    {
+      "name": "SOURCE_ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Source organization for default sourcing."
+    },
+    {
+      "name": "SOURCE_SUBINVENTORY",
+      "type": "VARCHAR2",
+      "desc": "Source subinventory for default sourcing."
+    },
+    {
+      "name": "SOURCE_TYPE",
+      "type": "NUMBER",
+      "desc": "Inventory or supplier source type indicator."
+    },
+    {
+      "name": "STOCK_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if the item is stockable."
+    },
+    {
+      "name": "SUMMARY_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the record is a summary (flexfield)."
+    },
+    {
+      "name": "TAX_CODE",
+      "type": "VARCHAR2",
+      "desc": "Tax code assigned to the item."
+    },
+    {
+      "name": "TAXABLE_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating whether the item is taxable."
+    },
+    {
+      "name": "SEGMENT1",
+      "type": "VARCHAR2",
+      "desc": "Item code (usually used as the key identifier in reporting)."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; organization identifier (with INVENTORY_ITEM_ID)."
+    },
+    {
+      "name": "INVENTORY_ITEM_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique inventory item identifier (with ORGANIZATION_ID)."
+    },
+    {
+      "name": "ALLOW_ITEM_DESC_UPDATE_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if item descriptions can be updated on PO lines."
+    },
+    {
+      "name": "ALLOW_SUBSTITUTE_RECEIPTS_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if substitute receipts are allowed."
+    },
+    {
+      "name": "ALLOW_UNORDERED_RECEIPTS_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if unordered receipts are allowed."
+    },
+    {
+      "name": "COST_OF_SALES_ACCOUNT",
+      "type": "NUMBER",
+      "desc": "GL account for cost of sales."
+    },
+    {
+      "name": "COSTING_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating whether costing is enabled for the item."
+    },
+    {
+      "name": "CUSTOMER_ORDER_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the item is customer orderable."
+    },
+    {
+      "name": "CUSTOMER_ORDER_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the item is available for customer orders."
+    },
+    {
+      "name": "CYCLE_COUNT_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if the item is cycle count enabled."
+    },
+    {
+      "name": "DUAL_UOM_CONTROL",
+      "type": "NUMBER",
+      "desc": "Specifies if Dual Unit of Measure control is enabled."
+    },
+    {
+      "name": "DESCRIPTION",
+      "type": "VARCHAR2",
+      "desc": "Item description; note that SEGMENT1 holds the item code."
+    },
+    {
+      "name": "EXPENSE_ACCOUNT",
+      "type": "NUMBER",
+      "desc": "GL account for expense postings."
+    },
+    {
+      "name": "INSPECTION_REQUIRED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if inspection is required upon receipt."
+    }
+  ],
+  "notes": "MTL_SYSTEM_ITEMS_B defines inventory items, supporting multiple modules like Inventory, Costing, Purchasing, BOM, and Manufacturing. Items are identified by INVENTORY_ITEM_ID and ORGANIZATION_ID, and support multilingual descriptions via MTL_SYSTEM_ITEMS_TL. The table includes attributes such as primary/secondary UOMs, item types, costing, and inspection flags. Segments are managed via the System Items flexfield (MSTK).",
+  "join_hints": []
+}

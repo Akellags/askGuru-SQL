@@ -1,0 +1,202 @@
+{
+  "table": "MTL_TRANSACTION_ACCOUNTS",
+  "purpose": "Business-use subset of MTL_TRANSACTION_ACCOUNTS.",
+  "pk": [],
+  "fks": [],
+  "columns": [
+    {
+      "name": "TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "Transaction identifier."
+    },
+    {
+      "name": "REFERENCE_ACCOUNT",
+      "type": "NUMBER",
+      "desc": "Transaction distribution account."
+    },
+    {
+      "name": "INVENTORY_ITEM_ID",
+      "type": "NUMBER",
+      "desc": "Inventory item identifier."
+    },
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier."
+    },
+    {
+      "name": "TRANSACTION_DATE",
+      "type": "DATE",
+      "desc": "Transaction date."
+    },
+    {
+      "name": "TRANSACTION_SOURCE_ID",
+      "type": "NUMBER",
+      "desc": "Transaction source identifier."
+    },
+    {
+      "name": "TRANSACTION_SOURCE_TYPE_ID",
+      "type": "NUMBER",
+      "desc": "Transaction source type identifier."
+    },
+    {
+      "name": "TRANSACTION_VALUE",
+      "type": "NUMBER",
+      "desc": "Accounting value in the transaction currency (null for base currency transactions)."
+    },
+    {
+      "name": "PRIMARY_QUANTITY",
+      "type": "NUMBER",
+      "desc": "Transaction quantity in primary UOM of the item."
+    },
+    {
+      "name": "GL_BATCH_ID",
+      "type": "NUMBER",
+      "desc": "Batch identifier for downloaded transaction journal entries (set to -1 if not yet transferred)."
+    },
+    {
+      "name": "ACCOUNTING_LINE_TYPE",
+      "type": "NUMBER",
+      "desc": "Purpose or description for the accounting entry."
+    },
+    {
+      "name": "BASE_TRANSACTION_VALUE",
+      "type": "NUMBER",
+      "desc": "Accounting value in the base currency."
+    },
+    {
+      "name": "CONTRA_SET_ID",
+      "type": "NUMBER",
+      "desc": "Offset account identifier."
+    },
+    {
+      "name": "RATE_OR_AMOUNT",
+      "type": "NUMBER",
+      "desc": "Material or material overhead rate/amount (depends on cost element identifier)."
+    },
+    {
+      "name": "BASIS_TYPE",
+      "type": "NUMBER",
+      "desc": "Basis for charging the material or material overhead value."
+    },
+    {
+      "name": "RESOURCE_ID",
+      "type": "NUMBER",
+      "desc": "Resource or sub-element identifier."
+    },
+    {
+      "name": "COST_ELEMENT_ID",
+      "type": "NUMBER",
+      "desc": "Cost element identifier."
+    },
+    {
+      "name": "ACTIVITY_ID",
+      "type": "NUMBER",
+      "desc": "Activity identifier."
+    },
+    {
+      "name": "CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Currency code used in the transaction."
+    },
+    {
+      "name": "CURRENCY_CONVERSION_DATE",
+      "type": "DATE",
+      "desc": "Date of the currency conversion."
+    },
+    {
+      "name": "CURRENCY_CONVERSION_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Currency conversion type used for the transaction."
+    },
+    {
+      "name": "CURRENCY_CONVERSION_RATE",
+      "type": "NUMBER",
+      "desc": "Currency conversion rate used for the transaction."
+    },
+    {
+      "name": "GL_SL_LINK_ID",
+      "type": "NUMBER",
+      "desc": "Identifier linking to GL_INTERFACE during GL transfer."
+    },
+    {
+      "name": "INV_SUB_LEDGER_ID",
+      "type": "NUMBER",
+      "desc": "INV accounting entry identifier."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier."
+    },
+    {
+      "name": "CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Currency code used in the transaction."
+    },
+    {
+      "name": "INVENTORY_ITEM_ID",
+      "type": "NUMBER",
+      "desc": "Inventory item identifier."
+    },
+    {
+      "name": "TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "Transaction identifier."
+    },
+    {
+      "name": "REFERENCE_ACCOUNT",
+      "type": "NUMBER",
+      "desc": "Transaction distribution account."
+    },
+    {
+      "name": "TRANSACTION_DATE",
+      "type": "DATE",
+      "desc": "Transaction date."
+    },
+    {
+      "name": "TRANSACTION_SOURCE_ID",
+      "type": "NUMBER",
+      "desc": "Transaction source identifier."
+    },
+    {
+      "name": "TRANSACTION_SOURCE_TYPE_ID",
+      "type": "NUMBER",
+      "desc": "Transaction source type identifier."
+    },
+    {
+      "name": "TRANSACTION_VALUE",
+      "type": "NUMBER",
+      "desc": "Accounting value in the transaction currency (null for base currency transactions)."
+    },
+    {
+      "name": "PRIMARY_QUANTITY",
+      "type": "NUMBER",
+      "desc": "Transaction quantity in primary UOM of the item."
+    },
+    {
+      "name": "GL_BATCH_ID",
+      "type": "NUMBER",
+      "desc": "Batch identifier for downloaded transaction journal entries (set to -1 if not yet transferred)."
+    },
+    {
+      "name": "ACCOUNTING_LINE_TYPE",
+      "type": "NUMBER",
+      "desc": "Purpose or description for the accounting entry."
+    },
+    {
+      "name": "BASE_TRANSACTION_VALUE",
+      "type": "NUMBER",
+      "desc": "Accounting value in the base currency."
+    },
+    {
+      "name": "CONTRA_SET_ID",
+      "type": "NUMBER",
+      "desc": "Offset account identifier."
+    }
+  ],
+  "notes": "mtl_transaction_accounts bridges inventory transactions to financial accounting in Oracle Inventory and Cost Management modules. Each record ties a material transaction (transaction_id) from mtl_material_transactions to its corresponding accounting entry. Key columns include reference_account (natural account segment), accounting_line_type (e.g., Inventory Valuation, COGS), base_transaction_value (functional currency amount), primary_quantity, inventory_item_id, organization_id, transaction_source_id, and transaction_date. It also tracks GL transfer statuses (gl_batch_id, gl_sl_link_id) and currency conversion details when applicable. The table ensures financial integrity between inventory movements and the General Ledger by providing full audit trails of valuation and expense posting.",
+  "join_hints": []
+}

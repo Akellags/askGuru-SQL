@@ -1,0 +1,112 @@
+{
+  "table": "AP_INVOICE_PAYMENTS_ALL",
+  "purpose": "Business-use subset of AP_INVOICE_PAYMENTS_ALL.",
+  "pk": [],
+  "fks": [],
+  "columns": [
+    {
+      "name": "ACCOUNTING_EVENT_ID",
+      "type": "NUMBER",
+      "desc": "Identifier for the accounting event associated with this payment; used for linking to SLA and GL."
+    },
+    {
+      "name": "ACCOUNTING_DATE",
+      "type": "DATE",
+      "desc": "GL accounting date of the payment; determines the financial period for posting."
+    },
+    {
+      "name": "ACCRUAL_POSTED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the payment has been posted to the accrual set of books ('Y' or 'N')."
+    },
+    {
+      "name": "AMOUNT",
+      "type": "NUMBER",
+      "desc": "Payment amount applied to the invoice, expressed in the invoice currency."
+    },
+    {
+      "name": "CASH_POSTED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the payment has been posted to the cash set of books ('Y' or 'N')."
+    },
+    {
+      "name": "CHECK_ID",
+      "type": "NUMBER",
+      "desc": "Identifier linking to the payment instrument (FK to AP_CHECKS_ALL)."
+    },
+    {
+      "name": "INVOICE_ID",
+      "type": "NUMBER",
+      "desc": "Foreign key referencing AP_INVOICES_ALL; identifies the invoice being paid."
+    },
+    {
+      "name": "INVOICE_PAYMENT_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier for the invoice payment record."
+    },
+    {
+      "name": "LAST_UPDATED_BY",
+      "type": "NUMBER",
+      "desc": "Standard WHO column; user ID who last updated this record (FK to FND_USER.USER_ID)."
+    },
+    {
+      "name": "LAST_UPDATE_DATE",
+      "type": "DATE",
+      "desc": "Standard WHO column; date when this record was last updated."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "ACCOUNTING_EVENT_ID",
+      "type": "NUMBER",
+      "desc": "Identifier for the accounting event associated with this payment; used for linking to SLA and GL."
+    },
+    {
+      "name": "ACCOUNTING_DATE",
+      "type": "DATE",
+      "desc": "GL accounting date of the payment; determines the financial period for posting."
+    },
+    {
+      "name": "ACCRUAL_POSTED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the payment has been posted to the accrual set of books ('Y' or 'N')."
+    },
+    {
+      "name": "AMOUNT",
+      "type": "NUMBER",
+      "desc": "Payment amount applied to the invoice, expressed in the invoice currency."
+    },
+    {
+      "name": "CASH_POSTED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the payment has been posted to the cash set of books ('Y' or 'N')."
+    },
+    {
+      "name": "CHECK_ID",
+      "type": "NUMBER",
+      "desc": "Identifier linking to the payment instrument (FK to AP_CHECKS_ALL)."
+    },
+    {
+      "name": "INVOICE_ID",
+      "type": "NUMBER",
+      "desc": "Foreign key referencing AP_INVOICES_ALL; identifies the invoice being paid."
+    },
+    {
+      "name": "INVOICE_PAYMENT_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier for the invoice payment record."
+    },
+    {
+      "name": "LAST_UPDATED_BY",
+      "type": "NUMBER",
+      "desc": "Standard WHO column; user ID who last updated this record (FK to FND_USER.USER_ID)."
+    },
+    {
+      "name": "LAST_UPDATE_DATE",
+      "type": "DATE",
+      "desc": "Standard WHO column; date when this record was last updated."
+    }
+  ],
+  "notes": "",
+  "join_hints": []
+}

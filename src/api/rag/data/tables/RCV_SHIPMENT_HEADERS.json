@@ -1,0 +1,207 @@
+{
+  "table": "RCV_SHIPMENT_HEADERS",
+  "purpose": "Business-use subset of RCV_SHIPMENT_HEADERS.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "VENDOR_ID",
+      "ref_table": "PO_VENDORS",
+      "ref_column": "VENDOR_ID"
+    },
+    {
+      "column": "VENDOR_SITE_ID",
+      "ref_table": "PO_VENDOR_SITES_ALL",
+      "ref_column": "VENDOR_SITE_ID"
+    },
+    {
+      "column": "SHIP_TO_LOCATION_ID",
+      "ref_table": "HR_LOCATIONS_ALL",
+      "ref_column": "LOCATION_ID"
+    },
+    {
+      "column": "EMPLOYEE_ID",
+      "ref_table": "PER_ALL_PEOPLE_F",
+      "ref_column": "PERSON_ID"
+    }
+  ],
+  "columns": [
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Standard WHO column - date when the row was created."
+    },
+    {
+      "name": "RECEIPT_SOURCE_CODE",
+      "type": "VARCHAR2",
+      "desc": "Source type of the shipment (e.g., Supplier, Internal Order)."
+    },
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "Source supplier unique identifier (FK to PO_VENDORS)."
+    },
+    {
+      "name": "VENDOR_SITE_ID",
+      "type": "NUMBER",
+      "desc": "Supplier site identifier (FK to PO_VENDOR_SITES_ALL)."
+    },
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Source organization ID (inventory org in case of Internal Order)."
+    },
+    {
+      "name": "SHIPMENT_NUM",
+      "type": "VARCHAR2",
+      "desc": "Shipment number assigned by the source."
+    },
+    {
+      "name": "RECEIPT_NUM",
+      "type": "VARCHAR2",
+      "desc": "Receipt number (user-facing shipment identifier)."
+    },
+    {
+      "name": "SHIP_TO_LOCATION_ID",
+      "type": "NUMBER",
+      "desc": "Ship-to location identifier (FK to HR_LOCATIONS_ALL)."
+    },
+    {
+      "name": "BILL_OF_LADING",
+      "type": "VARCHAR2",
+      "desc": "Bill of lading number."
+    },
+    {
+      "name": "PACKING_SLIP",
+      "type": "VARCHAR2",
+      "desc": "Packing slip number."
+    },
+    {
+      "name": "SHIPPED_DATE",
+      "type": "DATE",
+      "desc": "Date the goods were shipped by supplier."
+    },
+    {
+      "name": "EXPECTED_RECEIPT_DATE",
+      "type": "DATE",
+      "desc": "Expected arrival date of the shipment."
+    },
+    {
+      "name": "EMPLOYEE_ID",
+      "type": "NUMBER",
+      "desc": "Employee (receiver) identifier (FK to PER_ALL_PEOPLE_F)."
+    },
+    {
+      "name": "NUM_OF_CONTAINERS",
+      "type": "NUMBER",
+      "desc": "Number of containers in the shipment."
+    },
+    {
+      "name": "WAYBILL_AIRBILL_NUM",
+      "type": "VARCHAR2",
+      "desc": "Waybill or airbill number (carrier tracking number)."
+    },
+    {
+      "name": "COMMENTS",
+      "type": "VARCHAR2",
+      "desc": "Receiver or approver comments."
+    },
+    {
+      "name": "ASN_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Document type: ASN (Advance Shipment Notice), ASBN, Receive."
+    },
+    {
+      "name": "FREIGHT_BILL_NUMBER",
+      "type": "VARCHAR2",
+      "desc": "Freight bill number (PRO invoice number)."
+    },
+    {
+      "name": "INVOICE_STATUS_CODE",
+      "type": "VARCHAR2",
+      "desc": "Eligibility status for auto-invoice creation in Payables."
+    },
+    {
+      "name": "ASN_STATUS",
+      "type": "VARCHAR2",
+      "desc": "ASN shipment status (integration status)."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "Source supplier unique identifier (FK to PO_VENDORS)."
+    },
+    {
+      "name": "VENDOR_SITE_ID",
+      "type": "NUMBER",
+      "desc": "Supplier site identifier (FK to PO_VENDOR_SITES_ALL)."
+    },
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Source organization ID (inventory org in case of Internal Order)."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Standard WHO column - date when the row was created."
+    },
+    {
+      "name": "RECEIPT_SOURCE_CODE",
+      "type": "VARCHAR2",
+      "desc": "Source type of the shipment (e.g., Supplier, Internal Order)."
+    },
+    {
+      "name": "SHIPMENT_NUM",
+      "type": "VARCHAR2",
+      "desc": "Shipment number assigned by the source."
+    },
+    {
+      "name": "RECEIPT_NUM",
+      "type": "VARCHAR2",
+      "desc": "Receipt number (user-facing shipment identifier)."
+    },
+    {
+      "name": "SHIP_TO_LOCATION_ID",
+      "type": "NUMBER",
+      "desc": "Ship-to location identifier (FK to HR_LOCATIONS_ALL)."
+    },
+    {
+      "name": "BILL_OF_LADING",
+      "type": "VARCHAR2",
+      "desc": "Bill of lading number."
+    },
+    {
+      "name": "PACKING_SLIP",
+      "type": "VARCHAR2",
+      "desc": "Packing slip number."
+    },
+    {
+      "name": "SHIPPED_DATE",
+      "type": "DATE",
+      "desc": "Date the goods were shipped by supplier."
+    },
+    {
+      "name": "EXPECTED_RECEIPT_DATE",
+      "type": "DATE",
+      "desc": "Expected arrival date of the shipment."
+    },
+    {
+      "name": "EMPLOYEE_ID",
+      "type": "NUMBER",
+      "desc": "Employee (receiver) identifier (FK to PER_ALL_PEOPLE_F)."
+    },
+    {
+      "name": "NUM_OF_CONTAINERS",
+      "type": "NUMBER",
+      "desc": "Number of containers in the shipment."
+    }
+  ],
+  "notes": "The RCV_SHIPMENT_HEADERS table captures high-level metadata about inbound shipments, forming the header for grouped receipt transactions in Oracle EBS Receiving. It supports three-way matching (PO, Receipt, Invoice), receiving workflows for both external suppliers and internal orders, and integration with ASN (Advance Shipment Notice). Key columns include RECEIPT_NUM (used in UI), VENDOR_ID, ORGANIZATION_ID, ASN_TYPE, and ASN_STATUS. For Internal Orders, ORGANIZATION_ID is populated. Intransit receipts don't get a receipt number until actual receipt is recorded.",
+  "join_hints": [
+    "RCV_SHIPMENT_HEADERS.VENDOR_ID = PO_VENDORS.VENDOR_ID",
+    "RCV_SHIPMENT_HEADERS.SHIP_TO_LOCATION_ID = HR_LOCATIONS_ALL.LOCATION_ID",
+    "RCV_SHIPMENT_HEADERS.EMPLOYEE_ID = PER_ALL_PEOPLE_F.PERSON_ID"
+  ]
+}

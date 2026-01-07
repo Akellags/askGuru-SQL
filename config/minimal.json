@@ -1,0 +1,41 @@
+{
+    "_comment": "Minimal FastAPI configuration with only essential arguments",
+    
+    "model_id": "XGenerationLab/XiYanSQL-QwenCoder-7B-2504",
+    "prompt_mode": "xiyan",
+    
+    "index_dir": "/llamaSFT/askGuru-SQL/src/api/rag/index/bm25",
+    "vectors_dir": "/llamaSFT/askGuru-SQL/src/api/rag/index/vectors",
+    "tables_dir": "/llamaSFT/askGuru-SQL/src/api/rag/data/tables",
+    "fewshots": "/llamaSFT/askGuru-SQL/src/api/rag/data/fewshots.jsonl",
+    "joins": "/llamaSFT/askGuru-SQL/src/api/rag/data/joins/joins.json",
+    "router_map": "/llamaSFT/askGuru-SQL/src/api/rag/data/router/keywords.json",
+    "feedback_store": "/llamaSFT/askGuru-SQL/src/api/rag/data/feedback/corrections.jsonl",
+    "evidence_policies": "/llamaSFT/askGuru-SQL/src/api/rag/data/evidence_policies.json",
+    
+    "dialect": "Oracle EBS",
+    "include_fewshots": "sql",
+    "fewshots_max": 4,
+    "fewshots_sql_maxchars": 8000,
+    
+    "max_tables": 8,
+    "per_table_cols": 16,
+    
+    "dump_prompt": true,
+    "save_prompt": "/llamaSFT/askGuru-SQL/src/api/rag/debug/prompts/last_api_prompt.txt",
+    "print_plan": true,
+    "skip_ood": false,
+    "similarity": {
+        "enable_similarity_matching": false,
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "exact_threshold": 0.80,
+        "close_threshold": 0.60
+    },
+    "embedder": {
+        "model_name": "BAAI/bge-en-icl",
+        "model_type": "bge",
+        "cache_dir": "/llamaSFT/hf_home"
+    }
+}
+
+

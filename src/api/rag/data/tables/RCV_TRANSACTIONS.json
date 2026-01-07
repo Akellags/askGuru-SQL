@@ -1,0 +1,315 @@
+{
+  "table": "RCV_TRANSACTIONS",
+  "purpose": "Business-use subset of RCV_TRANSACTIONS.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "SHIPMENT_LINE_ID",
+      "ref_table": "RCV_SHIPMENT_LINES",
+      "ref_column": "SHIPMENT_LINE_ID"
+    }
+  ],
+  "columns": [
+    {
+      "name": "TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier for the receiving transaction."
+    },
+    {
+      "name": "TRANSACTION_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Type of receiving transaction (e.g., RECEIVE, RETURN TO VENDOR, CORRECT)."
+    },
+    {
+      "name": "TRANSACTION_DATE",
+      "type": "DATE",
+      "desc": "Date when the transaction was recorded."
+    },
+    {
+      "name": "QUANTITY",
+      "type": "NUMBER",
+      "desc": "Transaction quantity in the specified unit of measure."
+    },
+    {
+      "name": "UNIT_OF_MEASURE",
+      "type": "VARCHAR2",
+      "desc": "Unit of measure used for the transaction."
+    },
+    {
+      "name": "SHIPMENT_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "FK to RCV_SHIPMENT_HEADERS; identifies the shipment header."
+    },
+    {
+      "name": "SHIPMENT_LINE_ID",
+      "type": "NUMBER",
+      "desc": "FK to RCV_SHIPMENT_LINES; identifies the shipment line."
+    },
+    {
+      "name": "USER_ENTERED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether the transaction was user-entered (Y/N)."
+    },
+    {
+      "name": "INTERFACE_SOURCE_CODE",
+      "type": "VARCHAR2",
+      "desc": "Source code of the interface transaction (e.g., Inventory, Purchasing)."
+    },
+    {
+      "name": "INTERFACE_SOURCE_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Line ID of the source interface transaction."
+    },
+    {
+      "name": "INV_TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "FK to Inventory transaction (INV) that links this transaction to inventory movement."
+    },
+    {
+      "name": "SOURCE_DOCUMENT_CODE",
+      "type": "VARCHAR2",
+      "desc": "Type of source document (PO, RMA, etc.)."
+    },
+    {
+      "name": "DESTINATION_TYPE_CODE",
+      "type": "VARCHAR2",
+      "desc": "Type of destination (INVENTORY, EXPENSE, SHOP FLOOR, etc.)."
+    },
+    {
+      "name": "PRIMARY_QUANTITY",
+      "type": "NUMBER",
+      "desc": "Transaction quantity in the item's primary unit of measure."
+    },
+    {
+      "name": "PRIMARY_UNIT_OF_MEASURE",
+      "type": "VARCHAR2",
+      "desc": "Primary unit of measure of the item."
+    },
+    {
+      "name": "UOM_CODE",
+      "type": "VARCHAR2",
+      "desc": "Abbreviation for the unit of measure (e.g., EA, KG)."
+    },
+    {
+      "name": "EMPLOYEE_ID",
+      "type": "NUMBER",
+      "desc": "FK to PER_ALL_PEOPLE_F; receiver of the goods."
+    },
+    {
+      "name": "PARENT_TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "FK to the parent transaction (for corrections/returns)."
+    },
+    {
+      "name": "PO_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "FK to PO_HEADERS_ALL; purchase order header ID."
+    },
+    {
+      "name": "PO_RELEASE_ID",
+      "type": "NUMBER",
+      "desc": "FK to PO_RELEASES_ALL; release ID if applicable (for blanket orders)."
+    },
+    {
+      "name": "PO_LINE_ID",
+      "type": "NUMBER",
+      "desc": "FK to PO_LINES_ALL; purchase order line ID."
+    },
+    {
+      "name": "PO_LINE_LOCATION_ID",
+      "type": "NUMBER",
+      "desc": "FK to PO_LINE_LOCATIONS_ALL; shipment line ID."
+    },
+    {
+      "name": "PO_DISTRIBUTION_ID",
+      "type": "NUMBER",
+      "desc": "FK to PO_DISTRIBUTIONS_ALL; distribution ID."
+    },
+    {
+      "name": "PO_REVISION_NUM",
+      "type": "NUMBER",
+      "desc": "Revision number of the purchase order at the time of receipt."
+    },
+    {
+      "name": "REQUISITION_LINE_ID",
+      "type": "NUMBER",
+      "desc": "FK to requisition line (REQ_LINES_ALL) if sourced via requisition."
+    },
+    {
+      "name": "PO_UNIT_PRICE",
+      "type": "NUMBER",
+      "desc": "Unit price from the PO at the time of receipt."
+    },
+    {
+      "name": "CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Foreign currency code for the transaction (if applicable)."
+    },
+    {
+      "name": "CURRENCY_CONVERSION_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Type of currency conversion used (User, Spot, Corporate, etc.)."
+    },
+    {
+      "name": "CURRENCY_CONVERSION_RATE",
+      "type": "NUMBER",
+      "desc": "Rate applied to convert foreign currency to base currency."
+    },
+    {
+      "name": "CURRENCY_CONVERSION_DATE",
+      "type": "DATE",
+      "desc": "Date when the currency conversion was applied."
+    },
+    {
+      "name": "ROUTING_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "FK to receiving routing header (RCV_ROUTING_HEADERS)."
+    },
+    {
+      "name": "ROUTING_STEP_ID",
+      "type": "NUMBER",
+      "desc": "Not currently used; reserved for future enhancements."
+    },
+    {
+      "name": "DELIVER_TO_PERSON_ID",
+      "type": "NUMBER",
+      "desc": "FK to requester receiving the item."
+    },
+    {
+      "name": "DELIVER_TO_LOCATION_ID",
+      "type": "NUMBER",
+      "desc": "Location ID where the goods were delivered."
+    },
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "FK to AP_SUPPLIERS; supplier ID."
+    },
+    {
+      "name": "VENDOR_SITE_ID",
+      "type": "NUMBER",
+      "desc": "FK to AP_SUPPLIER_SITES_ALL; supplier site ID."
+    },
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Destination organization ID (inventory org)."
+    },
+    {
+      "name": "SUBINVENTORY",
+      "type": "VARCHAR2",
+      "desc": "Name of the destination subinventory."
+    },
+    {
+      "name": "INSPECTION_STATUS_CODE",
+      "type": "VARCHAR2",
+      "desc": "Status of quality inspection (e.g., ACCEPTED, REJECTED)."
+    },
+    {
+      "name": "ACCRUAL_STATUS_CODE",
+      "type": "VARCHAR2",
+      "desc": "Accrual status for accounting (e.g., ACCRUED, NOT ACCRUED)."
+    },
+    {
+      "name": "REASON_ID",
+      "type": "NUMBER",
+      "desc": "FK to reason codes; explains the reason for the transaction (e.g., damaged goods)."
+    },
+    {
+      "name": "COMMENTS",
+      "type": "VARCHAR2",
+      "desc": "Receiver's comments for the transaction."
+    },
+    {
+      "name": "SECONDARY_QUANTITY",
+      "type": "NUMBER",
+      "desc": "Quantity in the item's secondary unit of measure (if applicable)."
+    },
+    {
+      "name": "SECONDARY_UNIT_OF_MEASURE",
+      "type": "VARCHAR2",
+      "desc": "Secondary unit of measure (e.g., CASES, BOXES)."
+    },
+    {
+      "name": "AMOUNT",
+      "type": "NUMBER",
+      "desc": "Amount value (useful for service-based transactions)."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "FK to AP_SUPPLIERS; supplier ID."
+    },
+    {
+      "name": "VENDOR_SITE_ID",
+      "type": "NUMBER",
+      "desc": "FK to AP_SUPPLIER_SITES_ALL; supplier site ID."
+    },
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Destination organization ID (inventory org)."
+    },
+    {
+      "name": "CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Foreign currency code for the transaction (if applicable)."
+    },
+    {
+      "name": "PO_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "FK to PO_HEADERS_ALL; purchase order header ID."
+    },
+    {
+      "name": "PO_LINE_ID",
+      "type": "NUMBER",
+      "desc": "FK to PO_LINES_ALL; purchase order line ID."
+    },
+    {
+      "name": "QUANTITY",
+      "type": "NUMBER",
+      "desc": "Transaction quantity in the specified unit of measure."
+    },
+    {
+      "name": "TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier for the receiving transaction."
+    },
+    {
+      "name": "TRANSACTION_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Type of receiving transaction (e.g., RECEIVE, RETURN TO VENDOR, CORRECT)."
+    },
+    {
+      "name": "TRANSACTION_DATE",
+      "type": "DATE",
+      "desc": "Date when the transaction was recorded."
+    },
+    {
+      "name": "UNIT_OF_MEASURE",
+      "type": "VARCHAR2",
+      "desc": "Unit of measure used for the transaction."
+    },
+    {
+      "name": "SHIPMENT_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "FK to RCV_SHIPMENT_HEADERS; identifies the shipment header."
+    },
+    {
+      "name": "SHIPMENT_LINE_ID",
+      "type": "NUMBER",
+      "desc": "FK to RCV_SHIPMENT_LINES; identifies the shipment line."
+    },
+    {
+      "name": "USER_ENTERED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether the transaction was user-entered (Y/N)."
+    }
+  ],
+  "notes": "rcv_transactions logs all receiving and delivery transactions, tracking goods receipt, returns, and delivery. rcv_transactions records all receiving transactions related to goods received from or returned to suppliers, uniquely identified by transaction_id. Important transaction types include RECEIVE (goods received at staging), DELIVER (goods moved to warehouse), RETURN TO RECEIVING (back to staging), and RETURN TO SUPPLIER (goods sent back). For goods in staging, calculate: Received - Delivered + Return to Receiving - Return to Supplier quantities, summed by po_distribution_id. For net received/supplied quantities, consider only RECEIVE and RETURN TO SUPPLIER, ignoring internal moves.",
+  "join_hints": [
+    "RCV_TRANSACTIONS.SHIPMENT_LINE_ID = RCV_SHIPMENT_LINES.SHIPMENT_LINE_ID"
+  ]
+}

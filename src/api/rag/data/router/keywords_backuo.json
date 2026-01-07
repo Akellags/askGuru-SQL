@@ -1,0 +1,388 @@
+{
+  "\\btrial\\s*balance\\b": [
+    "GL_BALANCES",
+    "GL_LEDGERS",
+    "GL_PERIODS",
+    "GL_CODE_COMBINATIONS"
+  ],
+  "\\bending\\s*balance\\b|\\bclosing\\s*balance\\b|\\beop\\b": [
+    "GL_BALANCES",
+    "GL_LEDGERS",
+    "GL_PERIODS"
+  ],
+  "\\bjournal|je\\s*lines?|je\\s*headers?\\b": [
+    "GL_JE_HEADERS",
+    "GL_JE_LINES",
+    "GL_LEDGERS"
+  ],
+  "\\bledger\\b": [
+    "GL_LEDGERS"
+  ],
+  "\\boperating\\s+unit\\b|\\bou\\b": [
+    "HR_OPERATING_UNITS"
+  ],
+  "\\binvoice(s)?\\b": [
+    "AP_INVOICES_ALL",
+    "AP_INVOICE_DISTRIBUTIONS_ALL",
+    "AP_SUPPLIERS",
+    "AP_SUPPLIER_SITES_ALL"
+  ],
+  "\\bsupplier|vendor\\b": [
+    "AP_SUPPLIERS",
+    "AP_SUPPLIER_SITES_ALL"
+  ],
+  "\\bpurchase\\s+order\\b|\\bpo\\b": [
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL",
+    "PO_LINE_LOCATIONS_ALL",
+    "PO_DISTRIBUTIONS_ALL"
+  ],
+  "\\breceipt|grn\\b": [
+    "RCV_TRANSACTIONS",
+    "RCV_SHIPMENT_HEADERS",
+    "PO_DISTRIBUTIONS_ALL",
+    "PO_LINES_ALL",
+    "PO_HEADERS_ALL"
+  ],
+  "\\bitem(s)?\\b|\\bitem\\s*code\\b": [
+    "MTL_SYSTEM_ITEMS_B"
+  ],
+  "\\bheader\\b|\\bjournal header\\b|\\bjournal\\b|\\blines\\b": [
+    "GL_CODE_COMBINATIONS",
+    "GL_JE_HEADERS",
+    "GL_JE_LINES",
+    "GL_LEDGERS"
+  ],
+  "\\baccount ledger\\b|\\baccount\\b|\\baccounts\\b|\\bactua\\b|\\bactuals\\b|\\ball\\b|\\bany\\b|\\bapr all\\b|\\bapr\\b|\\bbalance mar\\b|\\bbalance\\b|\\bbalances\\b|\\bcan\\b|\\bclosing balance\\b|\\bclosing\\b|\\bcolumns0\\b|\\bcurrency\\b|\\bend\\b|\\bexpense march\\b|\\bexpense\\b|\\bfollowing\\b|\\bfollows\\b|\\bgiven\\b|\\bgrowth\\b|\\bid\\b|\\bjan mar\\b|\\bjan\\b|\\bledger currency\\b|\\bledger id\\b|\\bledger period\\b|\\bledger vision\\b|\\bledger\\b|\\bledgers when\\b|\\bledgers\\b|\\bleger\\b|\\blevel ledger\\b|\\blevel\\b|\\bmar along\\b|\\bmar apr\\b|\\bmar vision\\b|\\bmar\\b|\\bmarch following\\b|\\bmarch\\b|\\bmeans\\b|\\bmovement\\b|\\bmovment\\b|\\bmultiple ledgers\\b|\\bmultiple\\b|\\bnames\\b|\\bopening\\b|\\boperations jan\\b|\\boperations ledger\\b|\\boperations ledgers\\b|\\bper\\b|\\bperiod ledger\\b|\\bperiod\\b|\\bpivoted\\b|\\bprovided\\b|\\bquery\\b|\\brange\\b|\\bretsults\\b|\\brows\\b|\\bsay mar\\b|\\bsay\\b|\\bsegment2\\b|\\bsegment3\\b|\\bshort\\b|\\bsingle\\b|\\bstart\\b|\\btb jan\\b|\\btb\\b|\\btrial balance\\b|\\btrial balances\\b|\\btrial\\b|\\btype\\b|\\busa\\b|\\bwhen\\b|\\bwise\\b|\\byou\\b": [
+    "GL_BALANCES",
+    "GL_CODE_COMBINATIONS",
+    "GL_LEDGERS",
+    "GL_PERIODS"
+  ],
+  "\\bconverted\\b|\\boperations\\b|\\bvision\\b": [
+    "GL_CODE_COMBINATIONS",
+    "GL_LEDGERS",
+    "HR_OPERATING_UNITS",
+    "PO_DISTRIBUTIONS_ALL"
+  ],
+  "\\bagsinst po\\b|\\bagsinst\\b|\\bas54888\\b|\\bbeyond\\b|\\bbut\\b|\\bcalculate\\b|\\bdelivered\\b|\\bitem as54888\\b|\\bitem lying\\b|\\bitem\\b|\\bless\\b|\\blocation\\b|\\blocatoins\\b|\\blong\\b|\\blying\\b|\\bmade\\b|\\bnet\\b|\\bnever\\b|\\bnot\\b|\\bnumber\\b|\\border quantity\\b|\\borders where\\b|\\bpo number\\b|\\bpo\\b|\\bpromised\\b|\\bpurchase beyond\\b|\\bpurchase item\\b|\\bpurchase\\b|\\bquantity\\b|\\bquery purchase\\b|\\breceipts made\\b|\\breceipts\\b|\\breceived\\b|\\breceiving\\b|\\breceivng\\b|\\brecepits\\b|\\breturn supplier\\b|\\breturn\\b|\\breturned vendor\\b|\\breturned\\b|\\bstaging\\b|\\bsupplier long\\b|\\bsupplier\\b|\\btime\\b|\\btotal purchase\\b|\\btotal\\b|\\bwhere purchase\\b|\\bwhere\\b|\\bwithout\\b|\\byou receipts\\b": [
+    "MTL_SYSTEM_ITEMS_B",
+    "PO_DISTRIBUTIONS_ALL",
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\balong\\b": [
+    "HR_OPERATING_UNITS",
+    "MTL_SYSTEM_ITEMS_B",
+    "PO_DISTRIBUTIONS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\bdifferent\\b|\\bexample\\b|\\bggp\\b|\\btranslated\\b|\\busd\\b": [
+    "GL_BALANCES",
+    "GL_CODE_COMBINATIONS",
+    "GL_DAILY_RATES",
+    "GL_LEDGERS"
+  ],
+  "\\bchild\\b|\\bone\\b|\\bparent\\b": [
+    "FND_FLEX_VALUE_CHILDREN_V",
+    "FND_ID_FLEX_SEGMENTS",
+    "FND_ID_FLEX_STRUCTURES",
+    "GL_LEDGERS"
+  ],
+  "\\bledger specified\\b|\\bspecified\\b|\\bvalue ledger\\b": [
+    "ACCOUNTHIERARCHY",
+    "BALANCES",
+    "FND_FLEX_VALUE_CHILDREN_V",
+    "FND_ID_FLEX_SEGMENTS"
+  ],
+  "\\bvalue\\b": [
+    "AP_SUPPLIERS",
+    "GL_LEDGERS",
+    "PO_DISTRIBUTIONS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\baccounting\\b|\\bbalancing\\b|\\bcentre\\b|\\bchart\\b|\\bcost\\b|\\beach\\b|\\bfields\\b|\\bflex\\b|\\bgiven ledger\\b|\\bhave\\b|\\bhow\\b|\\bledger say\\b|\\blike\\b|\\bqualifier\\b|\\bsegment\\b|\\bsegments\\b|\\bstructure\\b|\\bwill\\b": [
+    "FND_FLEX_VALUE_SETS",
+    "FND_ID_FLEX_SEGMENTS",
+    "FND_ID_FLEX_STRUCTURES",
+    "FND_SEGMENT_ATTRIBUTE_VALUES"
+  ],
+  "\\bmeasure\\b|\\bprimary\\b|\\bquanity\\b": [
+    "HR_OPERATING_UNITS",
+    "MTL_SYSTEM_ITEMS_B",
+    "MTL_UOM_CONVERSIONS",
+    "PO_DISTRIBUTIONS_ALL"
+  ],
+  "\\bunit\\b": [
+    "HR_OPERATING_UNITS",
+    "MTL_SYSTEM_ITEMS_B",
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\balong po\\b|\\bgete receipt\\b|\\bgete\\b|\\breceipt item\\b|\\breceipt\\b": [
+    "HR_OPERATING_UNITS",
+    "MTL_SYSTEM_ITEMS_B",
+    "ORG_ORGANIZATION_DEFINITIONS",
+    "PO_DISTRIBUTIONS_ALL"
+  ],
+  "\\bcode\\b|\\bitem code\\b|\\bitems purchase\\b|\\bname\\b|\\border items\\b|\\bpurchaes order\\b|\\bpurchase qty\\b|\\bqty\\b|\\brate item\\b|\\brate\\b|\\bwarehouse\\b": [
+    "AP_SUPPLIERS",
+    "HR_OPERATING_UNITS",
+    "MTL_SYSTEM_ITEMS_B",
+    "ORG_ORGANIZATION_DEFINITIONS"
+  ],
+  "\\bitems\\b|\\bpurchaes\\b": [
+    "AP_SUPPLIERS",
+    "HR_OPERATING_UNITS",
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\border\\b": [
+    "GL_LEDGERS",
+    "HR_OPERATING_UNITS",
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\bpurchases expense\\b|\\bpurchases\\b|\\btotal purchases\\b": [
+    "GL_CODE_COMBINATIONS",
+    "GL_LEDGERS",
+    "HR_OPERATING_UNITS",
+    "MTL_SYSTEM_ITEMS_B"
+  ],
+  "\\borders\\b|\\bpurchase orders\\b": [
+    "HR_OPERATING_UNITS",
+    "PO_DISTRIBUTIONS_ALL",
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\bexpenses\\b|\\borders sum\\b|\\bsum\\b|\\buse purchase\\b|\\buse\\b|\\bvendor wise\\b|\\bwise vendor\\b": [
+    "AP_SUPPLIERS",
+    "CREATION_DATE",
+    "GL_CODE_COMBINATIONS",
+    "GL_LEDGERS"
+  ],
+  "\\bpurchased\\b|\\bthan\\b|\\bvendor\\b": [
+    "AP_SUPPLIERS",
+    "PO_DISTRIBUTIONS_ALL",
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\bgrn po\\b|\\bgrn\\b": [
+    "AP_SUPPLIERS",
+    "HR_OPERATING_UNITS",
+    "MTL_SYSTEM_ITEMS_B",
+    "PO_DISTRIBUTIONS_ALL"
+  ],
+  "\\bconverted purchase\\b|\\bdistributions\\b|\\bitems requisition\\b|\\bline items\\b|\\bline\\b|\\bnumbers\\b|\\borders vision\\b|\\brequisition\\b|\\bstill\\b": [
+    "HR_OPERATING_UNITS",
+    "PO_DISTRIBUTIONS_ALL",
+    "PO_REQUISITION_HEADERS_ALL",
+    "PO_REQUISITION_LINES_ALL"
+  ],
+  "\\bno\\b|\\border no\\b|\\bpurhcase order\\b|\\bpurhcase\\b": [
+    "FND_USER",
+    "PO_ACTION_HISTORY",
+    "PO_HEADERS_ALL"
+  ],
+  "\\bapprovers\\b": [
+    "AP_INVOICES_ALL",
+    "AP_INV_APRVL_HIST_ALL",
+    "FND_USER",
+    "PO_ACTION_HISTORY"
+  ],
+  "\\bclosed\\b|\\bitem vendor\\b|\\bshipments item\\b|\\bshipments\\b": [
+    "AP_SUPPLIERS",
+    "MTL_SYSTEM_ITEMS_B",
+    "PO_DISTRIBUTIONS_ALL",
+    "PO_HEADERS_ALL"
+  ],
+  "\\bincluding po\\b|\\bincluding\\b|\\brequistion\\b": [
+    "FND_USER",
+    "GL_CODE_COMBINATIONS",
+    "GL_LEDGERS",
+    "HR_OPERATING_UNITS"
+  ],
+  "\\bif\\b": [
+    "FND_USER",
+    "GL_CODE_COMBINATIONS",
+    "HR_OPERATING_UNITS",
+    "MTL_SYSTEM_ITEMS_B"
+  ],
+  "\\bamounts\\b|\\binclude\\b|\\bpurchase amounts\\b|\\bquantities item\\b|\\bquantities\\b": [
+    "HR_OPERATING_UNITS",
+    "MTL_SYSTEM_ITEMS_B",
+    "PO_DISTRIBUTIONS_ALL",
+    "PO_HEADERS_ALL"
+  ],
+  "\\bpurchased value\\b|\\btop vendors\\b|\\btop\\b|\\btotal purchased\\b|\\bvendors as54888\\b|\\bvendors\\b": [
+    "AP_SUPPLIERS",
+    "MTL_SYSTEM_ITEMS_B",
+    "PO_DISTRIBUTIONS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\balong purchase\\b|\\bmost mar\\b|\\bmost\\b|\\bpurchase value\\b|\\bpurchased most\\b|\\bvendors whom\\b|\\bwe purchased\\b|\\bwe\\b|\\bwhom\\b": [
+    "AP_SUPPLIERS",
+    "GL_LEDGERS",
+    "GL_PERIODS",
+    "HR_OPERATING_UNITS"
+  ],
+  "\\bitem same\\b|\\bpuchases\\b|\\brecurring\\b|\\bsame item\\b|\\bsame vendor\\b|\\bsame\\b|\\btimes\\b|\\bvendor more\\b": [
+    "AP_SUPPLIERS",
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\bmore\\b": [
+    "AP_SUPPLIERS",
+    "AP_SUPPLIER_SITES_ALL",
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\bgetting ledger\\b|\\bledger them\\b|\\border tables\\b|\\bpuchase order\\b|\\bpuchase\\b|\\btables\\b|\\bthem\\b": [
+    "GL_LEDGERS",
+    "HR_OPERATING_UNITS",
+    "PO_HEADERS_ALL"
+  ],
+  "\\bdealing\\b": [
+    "GL_LEDGERS",
+    "GL_PERIODS",
+    "HR_OPERATING_UNITS",
+    "PO_HEADERS_ALL"
+  ],
+  "\\bgetting\\b": [
+    "GL_LEDGERS",
+    "HR_OPERATING_UNITS",
+    "PO_DISTRIBUTIONS_ALL",
+    "PO_HEADERS_ALL"
+  ],
+  "\\bdate\\b|\\bdays\\b": [
+    "AP_CHECKS_ALL",
+    "AP_INVOICES_ALL",
+    "AP_PAYMENT_SCHEDULES_ALL",
+    "AP_SUPPLIERS"
+  ],
+  "\\bconnected ledgers\\b|\\bconnected\\b|\\bendate\\b": [
+    "GL_LEDGERS",
+    "GL_PERIODS"
+  ],
+  "\\bconnecting gl_ledgers\\b|\\bconnecting\\b|\\bgetting subledger\\b|\\bgl_ledgers\\b|\\bhaving\\b|\\border two\\b|\\borg_id\\b|\\bperiods\\b|\\bsubledger having\\b|\\bsubledger\\b|\\btwo\\b": [
+    "GL_LEDGERS",
+    "GL_PERIODS",
+    "HR_OPERATING_UNITS",
+    "PO_DISTRIBUTIONS_ALL"
+  ],
+  "\\bpurchase order\\b|\\bselected\\b": [
+    "GL_LEDGERS",
+    "PO_DISTRIBUTIONS_ALL",
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\bafter\\b|\\bcertain\\b|\\bdeliverd\\b|\\bsdyas\\b": [
+    "DELIVERED_TXNS",
+    "MTL_SYSTEM_ITEMS_B",
+    "PO_DISTRIBUTIONS_ALL",
+    "PO_HEADERS_ALL"
+  ],
+  "\\bbefore jan\\b|\\bitems previous\\b|\\bjan where\\b|\\bprevious purchase\\b|\\bprevious\\b|\\bprice\\b|\\bpurchase before\\b|\\bpurchased jan\\b|\\bsame items\\b": [
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\bbefore\\b|\\bdue\\b|\\binvoices not\\b|\\binvoices paid\\b|\\bpaid\\b|\\bsuppllier invoices\\b|\\bsuppllier\\b": [
+    "AP_CHECKS_ALL",
+    "AP_INVOICES_ALL",
+    "AP_INVOICE_PAYMENTS_ALL",
+    "AP_PAYMENT_SCHEDULES_ALL"
+  ],
+  "\\batleast\\b|\\bcolumns\\b|\\bconsider\\b|\\bdec purchased\\b|\\bfrequently\\b|\\bitems purchased\\b|\\bjan07 dec\\b|\\bjan07\\b|\\bonce\\b|\\bone purchase\\b|\\border one\\b|\\borders separate\\b|\\bpurchaes orders\\b|\\bpurchase approved\\b|\\bpurchased frequently\\b|\\bpurchased jan07\\b|\\bseparate\\b|\\btwice\\b": [
+    "FREQUENT_ITEMS",
+    "MONTHLY_PURCHASE_COUNT",
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL"
+  ],
+  "\\bapproved\\b": [
+    "AP_INVOICES_ALL",
+    "AP_INV_APRVL_HIST_ALL",
+    "FREQUENT_ITEMS",
+    "MONTHLY_PURCHASE_COUNT"
+  ],
+  "\\bdec\\b": [
+    "FREQUENT_ITEMS",
+    "HR_OPERATING_UNITS",
+    "MONTHLY_PURCHASE_COUNT",
+    "PO_HEADERS_ALL"
+  ],
+  "\\bbilled\\b|\\bcases\\b|\\border value\\b|\\bthan purchase\\b": [
+    "AP_SUPPLIERS",
+    "AP_SUPPLIER_SITES_ALL",
+    "EBS_INV_ITEMS",
+    "GL_LEDGERS"
+  ],
+  "\\bcrac apr\\b|\\bcrac\\b|\\binvoice number\\b|\\bpayment invoice\\b": [
+    "AP_CHECKS_ALL",
+    "AP_INVOICES_ALL",
+    "AP_INVOICE_PAYMENTS_ALL"
+  ],
+  "\\badjustments\\b|\\badvance\\b|\\binvoice abc123\\b|\\binvoice\\b|\\bpayment\\b|\\bpayments\\b": [
+    "AP_CHECKS_ALL",
+    "AP_INVOICES_ALL",
+    "AP_INVOICE_DISTRIBUTIONS_ALL",
+    "AP_INVOICE_PAYMENTS_ALL"
+  ],
+  "\\bconsolidated\\b|\\bcurrent\\b|\\bincluding vendor\\b|\\binvoices consolidated\\b|\\binvoices days\\b|\\binvoices\\b|\\blatest\\b|\\boperating unit\\b|\\boperating\\b|\\boutstanding invoices\\b|\\boutstanding\\b|\\boverdue invoices\\b|\\boverdue\\b|\\bsupplies\\b|\\bsystem\\b|\\btoday\\b|\\bvendor operating\\b": [
+    "AP_INVOICES_ALL",
+    "AP_PAYMENT_SCHEDULES_ALL",
+    "AP_SUPPLIERS",
+    "HR_OPERATING_UNITS"
+  ],
+  "\\binvoice provided\\b|\\bprovided po\\b|\\bsay po\\b|\\bselected invoice\\b|\\bsome\\b": [
+    "AP_INVOICES_ALL",
+    "AP_INVOICE_DISTRIBUTIONS_ALL",
+    "AP_SUPPLIERS",
+    "PO_DISTRIBUTIONS_ALL"
+  ],
+  "\\bagainst invoice\\b|\\bapplied\\b|\\bprepayments\\b": [
+    "AP_INVOICES_ALL",
+    "AP_INVOICE_DISTRIBUTIONS_ALL",
+    "AP_SUPPLIERS"
+  ],
+  "\\bagainst\\b": [
+    "AP_INVOICES_ALL",
+    "AP_INVOICE_DISTRIBUTIONS_ALL",
+    "AP_INV_APRVL_HIST_ALL",
+    "AP_SUPPLIERS"
+  ],
+  "\\bbackdate\\b|\\bdec vision\\b|\\binvoices dec\\b|\\boustanding invoices\\b|\\boustanding\\b": [
+    "AP_INVOICES_ALL",
+    "AP_INVOICE_DISTRIBUTIONS_ALL",
+    "AP_PAYMENT_SCHEDULES_ALL",
+    "HR_OPERATING_UNITS"
+  ],
+  "\\babc123\\b|\\binvoie\\b|\\bstatus\\b": [
+    "AP_INVOICES_ALL",
+    "AP_INVOICE_DISTRIBUTIONS_ALL",
+    "AP_INVOICE_PAYMENTS_ALL",
+    "AP_PAYMENT_SCHEDULES_ALL"
+  ],
+  "\\bspecific invoice\\b|\\bspecific\\b": [
+    "AP_CHECKS_ALL",
+    "AP_INVOICES_ALL",
+    "AP_INVOICE_DISTRIBUTIONS_ALL",
+    "AP_INV_APRVL_HIST_ALL"
+  ],
+  "\\bactions\\b|\\bapproval\\b": [
+    "AP_INV_APRVL_HIST_ALL"
+  ],
+  "\\bapprov\\b|\\binvoce\\b|\\bwho\\b": [
+    "AP_INVOICES_ALL",
+    "AP_INV_APRVL_HIST_ALL"
+  ],
+  "\\bcreation\\b|\\beven\\b": [
+    "AP_INVOICES_ALL",
+    "AP_INV_APRVL_HIST_ALL",
+    "Q1",
+    "Q2"
+  ],
+  "\\bhas\\b|\\binference\\b|\\bparams\\b|\\bvalidate\\b": [
+    "HR_OPERATING_UNITS",
+    "MTL_SYSTEM_ITEMS_B"
+  ]
+}

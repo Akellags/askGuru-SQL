@@ -1,0 +1,89 @@
+{
+  "(?i)(?:\\bjournal\\s*details?\\b|\\bjournal\\s*entry\\s*details?\\b)": [
+    "GL_JE_HEADERS",
+    "GL_JE_LINES",
+    "GL_LEDGERS",
+    "GL_CODE_COMBINATIONS"
+  ],
+  "(?i)(?:\\bjournal\\b|\\bjournal\\s*entry\\b|\\bje\\s*lines?\\b|\\bje\\s*headers?\\b)": [
+    "GL_JE_HEADERS",
+    "GL_JE_LINES",
+    "GL_LEDGERS",
+    "GL_CODE_COMBINATIONS"
+  ],
+  "(?i)(?:\\btrial\\s*balance\\b|\\btb\\b|\\bending\\s*balance\\b|\\bclosing\\s*balances?\\b|\\bend\\s*balance\\b|\\beop\\b)": [
+    "GL_BALANCES",
+    "GL_LEDGERS",
+    "GL_PERIODS",
+    "GL_CODE_COMBINATIONS"
+  ],
+  "(?i)(?:\\bmonth[-\\s]*on[-\\s]*month\\b|\\bmom\\b|\\bgrowth\\b|\\bvariance\\b|\\bperiod\\s*movement\\b|\\bmovement\\b)": [
+    "GL_BALANCES",
+    "GL_LEDGERS",
+    "GL_PERIODS",
+    "GL_CODE_COMBINATIONS"
+  ],
+  "(?i)(?:\\bpivot(ed)?\\b|\\btranspose\\b|\\bcolumns\\s+as\\s+months?\\b)": [
+    "GL_BALANCES",
+    "GL_LEDGERS",
+    "GL_PERIODS",
+    "GL_CODE_COMBINATIONS"
+  ],
+  "(?i)(?:\\bgl[_\\s-]?balances?\\b|\\bgeneral\\s+ledger\\b|\\bledger\\s+balances?\\b|\\bchart\\s+of\\s+accounts?\\b)": [
+    "GL_BALANCES",
+    "GL_LEDGERS",
+    "GL_PERIODS",
+    "GL_CODE_COMBINATIONS"
+  ],
+  "(?i)(?:\\b(ap|accounts?\\s*payable)\\b.*\\binvoices?\\b|\\bvoucher\\b|\\binvoice\\b)": [
+    "AP_INVOICES_ALL",
+    "AP_INVOICE_DISTRIBUTIONS_ALL",
+    "AP_SUPPLIERS",
+    "AP_SUPPLIER_SITES_ALL"
+  ],
+  "(?i)(?:\\bsuppliers?\\b|\\bvendors?\\b|\\bvendor\\s+sites?\\b|\\bsupplier\\s+sites?\\b)": [
+    "AP_SUPPLIERS",
+    "AP_SUPPLIER_SITES_ALL"
+  ],
+  "(?i)(?:\\bpurchase\\s*orders?\\b|\\bpo\\b(?:\\s*number)?|\\bpo\\s*details?\\b|\\bpo\\s*(items?|qty|quantity|rate|price))": [
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL",
+    "PO_LINE_LOCATIONS_ALL",
+    "PO_DISTRIBUTIONS_ALL",
+    "MTL_SYSTEM_ITEMS_B"
+  ],
+  "(?i)(?:\\bgrn\\b|\\bgoods\\s*receipt\\b|\\breceiv(?:ed|ing)\\b|\\brcv\\b|\\breceipt\\s+details?\\b)": [
+    "RCV_TRANSACTIONS",
+    "RCV_SHIPMENT_HEADERS",
+    "PO_HEADERS_ALL",
+    "PO_LINES_ALL",
+    "PO_LINE_LOCATIONS_ALL",
+    "PO_DISTRIBUTIONS_ALL",
+    "MTL_SYSTEM_ITEMS_B"
+  ],
+  "(?i)(?:\\bitems?\\b|\\bitem\\s*(code|name|desc|description)\\b|\\bsku\\b|\\bitem\\s+master\\b)": [
+    "MTL_SYSTEM_ITEMS_B",
+    "ORG_ORGANIZATION_DEFINITIONS"
+  ],
+  "(?i)(?:\\boperating\\s*units?\\b|\\bou\\b|\\bhr_operating_units\\b|\\bledger\\s*name\\b|\\bvision\\s+operations\\b)": [
+    "HR_OPERATING_UNITS",
+    "GL_LEDGERS",
+    "ORG_ORGANIZATION_DEFINITIONS"
+  ],
+  "(?i)(?:\\bcode\\s*combinations?\\b|\\baccount\\s*segments?\\b|\\bsegment[1-9]\\b|\\bcoa\\b)": [
+    "GL_CODE_COMBINATIONS",
+    "GL_LEDGERS"
+  ],
+  "(?i)(?:\\bcurrency\\b|\\brate(s)?\\b|\\bexchange\\s*rate\\b)": [
+    "GL_DAILY_RATES",
+    "GL_LEDGERS"
+  ],
+  "(?i)(?:\\bperiods?\\b|\\bfiscal\\b|\\baccounting\\s*period\\b)": [
+    "GL_PERIODS",
+    "GL_LEDGERS"
+  ],
+  "(?i)(?:\\bledgers?\\b|\\bset\\s*of\\s*books?\\b)": [
+    "GL_LEDGERS",
+    "GL_PERIODS"
+  ]
+}

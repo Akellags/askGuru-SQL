@@ -1,0 +1,282 @@
+{
+  "table": "PO_LINES_ALL",
+  "purpose": "Business-use subset of PO_LINES_ALL.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "PO_HEADER_ID",
+      "ref_table": "PO_HEADERS_ALL",
+      "ref_column": "PO_HEADER_ID"
+    },
+    {
+      "column": "ITEM_ID",
+      "ref_table": "MTL_SYSTEM_ITEMS_B",
+      "ref_column": "INVENTORY_ITEM_ID"
+    }
+  ],
+  "columns": [
+    {
+      "name": "AMOUNT",
+      "type": "NUMBER",
+      "desc": "Budget amount for temporary labor standard PO lines."
+    },
+    {
+      "name": "BASE_QTY",
+      "type": "NUMBER",
+      "desc": "OPM: Ordered quantity converted from transaction UOM to base UOM."
+    },
+    {
+      "name": "BASE_UNIT_PRICE",
+      "type": "NUMBER",
+      "desc": "Base unit price for the item."
+    },
+    {
+      "name": "BASE_UOM",
+      "type": "VARCHAR2",
+      "desc": "OPM: Base unit of measure (UOM) for the item ordered."
+    },
+    {
+      "name": "CANCEL_DATE",
+      "type": "DATE",
+      "desc": "Date the PO line was cancelled."
+    },
+    {
+      "name": "CANCEL_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the line is cancelled (Y/N)."
+    },
+    {
+      "name": "CANCEL_REASON",
+      "type": "VARCHAR2",
+      "desc": "Reason for cancellation provided by employee."
+    },
+    {
+      "name": "CATEGORY_ID",
+      "type": "NUMBER",
+      "desc": "Item category unique identifier."
+    },
+    {
+      "name": "CLOSED_CODE",
+      "type": "VARCHAR2",
+      "desc": "Closure status of the line (e.g., CLOSED, FINALLY CLOSED)."
+    },
+    {
+      "name": "CLOSED_DATE",
+      "type": "DATE",
+      "desc": "Date the line was closed."
+    },
+    {
+      "name": "CLOSED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the line is closed (Y/N)."
+    },
+    {
+      "name": "CLOSED_REASON",
+      "type": "VARCHAR2",
+      "desc": "Reason why the line was closed."
+    },
+    {
+      "name": "ITEM_DESCRIPTION",
+      "type": "VARCHAR2",
+      "desc": "Item description."
+    },
+    {
+      "name": "ITEM_ID",
+      "type": "NUMBER",
+      "desc": "Item unique identifier (FK to MTL_SYSTEM_ITEMS_B)."
+    },
+    {
+      "name": "ITEM_REVISION",
+      "type": "VARCHAR2",
+      "desc": "Item revision."
+    },
+    {
+      "name": "LINE_NUM",
+      "type": "NUMBER",
+      "desc": "Line number within the purchase order."
+    },
+    {
+      "name": "LINE_TYPE_ID",
+      "type": "NUMBER",
+      "desc": "Line type (expense item, goods, etc.)."
+    },
+    {
+      "name": "LIST_PRICE_PER_UNIT",
+      "type": "NUMBER",
+      "desc": "List price for the item on the line."
+    },
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier (multi-org)."
+    },
+    {
+      "name": "OVER_TOLERANCE_ERROR_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if receipts exceeding tolerance should be rejected."
+    },
+    {
+      "name": "PO_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Document header unique identifier (FK to PO_HEADERS_ALL)."
+    },
+    {
+      "name": "PO_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; document line unique identifier."
+    },
+    {
+      "name": "PURCHASE_BASIS",
+      "type": "VARCHAR2",
+      "desc": "Purchase basis of the line type."
+    },
+    {
+      "name": "QTY_RCV_TOLERANCE",
+      "type": "NUMBER",
+      "desc": "Quantity received tolerance percentage."
+    },
+    {
+      "name": "QUANTITY",
+      "type": "NUMBER",
+      "desc": "Quantity ordered for the line item."
+    },
+    {
+      "name": "SECONDARY_QTY",
+      "type": "NUMBER",
+      "desc": "OPM: Converted quantity from base UOM to dual UOM for the item."
+    },
+    {
+      "name": "SECONDARY_QUANTITY",
+      "type": "NUMBER",
+      "desc": "OPM: Secondary quantity ordered on the line."
+    },
+    {
+      "name": "SECONDARY_UNIT_OF_MEASURE",
+      "type": "VARCHAR2",
+      "desc": "OPM: Secondary unit of measure for the ordered quantity."
+    },
+    {
+      "name": "SECONDARY_UOM",
+      "type": "VARCHAR2",
+      "desc": "OPM: Dual unit of measure for the ordered item."
+    },
+    {
+      "name": "START_DATE",
+      "type": "DATE",
+      "desc": "Assignment start date for the contingent worker (if applicable)."
+    },
+    {
+      "name": "TAX_CODE_ID",
+      "type": "NUMBER",
+      "desc": "Unique identifier for the tax code."
+    },
+    {
+      "name": "TAX_NAME",
+      "type": "VARCHAR2",
+      "desc": "Tax code applying to the line."
+    },
+    {
+      "name": "TAXABLE_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether the line is taxable (Y/N)."
+    },
+    {
+      "name": "UN_NUMBER_ID",
+      "type": "NUMBER",
+      "desc": "UN number unique identifier."
+    },
+    {
+      "name": "UNIT_MEAS_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Unit of measure for the quantity ordered."
+    },
+    {
+      "name": "UNIT_PRICE",
+      "type": "NUMBER",
+      "desc": "Unit price for the line item."
+    },
+    {
+      "name": "UNORDERED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the line was created from unordered receipts (Y/N)."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier (multi-org)."
+    },
+    {
+      "name": "PO_HEADER_ID",
+      "type": "NUMBER",
+      "desc": "Document header unique identifier (FK to PO_HEADERS_ALL)."
+    },
+    {
+      "name": "PO_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; document line unique identifier."
+    },
+    {
+      "name": "ITEM_ID",
+      "type": "NUMBER",
+      "desc": "Item unique identifier (FK to MTL_SYSTEM_ITEMS_B)."
+    },
+    {
+      "name": "QUANTITY",
+      "type": "NUMBER",
+      "desc": "Quantity ordered for the line item."
+    },
+    {
+      "name": "UNIT_PRICE",
+      "type": "NUMBER",
+      "desc": "Unit price for the line item."
+    },
+    {
+      "name": "AMOUNT",
+      "type": "NUMBER",
+      "desc": "Budget amount for temporary labor standard PO lines."
+    },
+    {
+      "name": "BASE_QTY",
+      "type": "NUMBER",
+      "desc": "OPM: Ordered quantity converted from transaction UOM to base UOM."
+    },
+    {
+      "name": "BASE_UNIT_PRICE",
+      "type": "NUMBER",
+      "desc": "Base unit price for the item."
+    },
+    {
+      "name": "BASE_UOM",
+      "type": "VARCHAR2",
+      "desc": "OPM: Base unit of measure (UOM) for the item ordered."
+    },
+    {
+      "name": "CANCEL_DATE",
+      "type": "DATE",
+      "desc": "Date the PO line was cancelled."
+    },
+    {
+      "name": "CANCEL_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if the line is cancelled (Y/N)."
+    },
+    {
+      "name": "CANCEL_REASON",
+      "type": "VARCHAR2",
+      "desc": "Reason for cancellation provided by employee."
+    },
+    {
+      "name": "CATEGORY_ID",
+      "type": "NUMBER",
+      "desc": "Item category unique identifier."
+    }
+  ],
+  "notes": "The PO_LINES_ALL table is a core component of the Purchasing module in Oracle EBS. It captures detailed, line-level information for each purchase order, covering the items/services being purchased, ordered quantities, prices, and tax-related details. Each PO can have multiple lines, with each line representing a unique item or service. It provides full traceability for procurement transactions and integrates with downstream processes such as receiving, invoicing, and accounting. Key columns include PO_LINE_ID (primary key), ITEM_ID (FK to item master), QUANTITY, UNIT_PRICE, UOM fields, PROMISED_DATE (supplier commitment), and TAX-related attributes. The table links closely with PO_HEADERS_ALL (header-level info), PO_LINE_LOCATIONS_ALL (delivery details), PO_DISTRIBUTIONS_ALL (accounting), and MTL_SYSTEM_ITEMS_B (item master).",
+  "join_hints": [
+    "PO_LINES_ALL.PO_HEADER_ID = PO_HEADERS_ALL.PO_HEADER_ID",
+    "PO_LINES_ALL.PO_LINE_ID = PO_LINE_LOCATIONS_ALL.PO_LINE_ID",
+    "PO_LINES_ALL.ITEM_ID = MTL_SYSTEM_ITEMS_B.INVENTORY_ITEM_ID"
+  ]
+}

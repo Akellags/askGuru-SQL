@@ -1,0 +1,349 @@
+{
+  "table": "AP_INVOICES_ALL",
+  "purpose": "Business-use subset of AP_INVOICES_ALL.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "VENDOR_ID",
+      "ref_table": "AP_SUPPLIERS",
+      "ref_column": "VENDOR_ID"
+    },
+    {
+      "column": "VENDOR_SITE_ID",
+      "ref_table": "AP_SUPPLIER_SITES_ALL",
+      "ref_column": "VENDOR_SITE_ID"
+    },
+    {
+      "column": "CREATED_BY",
+      "ref_table": "FND_USER",
+      "ref_column": "USER_ID"
+    }
+  ],
+  "essential_columns": [
+    {
+      "name": "TERMS_ID",
+      "reason": "Payment terms id"
+    }
+  ],
+  "columns": [
+    {
+      "name": "ACCTS_PAY_CODE_COMBINATION_ID",
+      "type": "NUMBER",
+      "desc": "Accounting Flexfield identifier for accounts payable liability account."
+    },
+    {
+      "name": "AMOUNT_APPLICABLE_TO_DISCOUNT",
+      "type": "NUMBER",
+      "desc": "Amount of invoice applicable to a discount."
+    },
+    {
+      "name": "AMOUNT_PAID",
+      "type": "NUMBER",
+      "desc": "Amount paid."
+    },
+    {
+      "name": "APPROVAL_DESCRIPTION",
+      "type": "VARCHAR2",
+      "desc": "Description of manual authorization invoice approval (for reference only)."
+    },
+    {
+      "name": "APPROVAL_ITERATION",
+      "type": "NUMBER",
+      "desc": "Number of times invoice passed through approval workflow."
+    },
+    {
+      "name": "APPROVAL_READY_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Indicates if invoice is ready for approval workflow (Y/N)."
+    },
+    {
+      "name": "APPROVAL_STATUS",
+      "type": "VARCHAR2",
+      "desc": "Status of manual authorization invoice approval."
+    },
+    {
+      "name": "APPROVED_AMOUNT",
+      "type": "NUMBER",
+      "desc": "Amount approved via manual authorization (reference only)."
+    },
+    {
+      "name": "ATTRIBUTE_CATEGORY",
+      "type": "VARCHAR2",
+      "desc": "Descriptive flexfield structure definition column."
+    },
+    {
+      "name": "AWT_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag for Automatic Withholding Tax: A (auto), M (manual)."
+    },
+    {
+      "name": "AWT_GROUP_ID",
+      "type": "NUMBER",
+      "desc": "Withholding tax group identifier."
+    },
+    {
+      "name": "BASE_AMOUNT",
+      "type": "NUMBER",
+      "desc": "User-entered base amount for currency conversion rate calculation."
+    },
+    {
+      "name": "BATCH_ID",
+      "type": "NUMBER",
+      "desc": "Invoice batch identifier."
+    },
+    {
+      "name": "CANCELLED_AMOUNT",
+      "type": "NUMBER",
+      "desc": "Original amount of cancelled invoice."
+    },
+    {
+      "name": "CANCELLED_BY",
+      "type": "NUMBER",
+      "desc": "User ID of person who cancelled the invoice."
+    },
+    {
+      "name": "CANCELLED_DATE",
+      "type": "DATE",
+      "desc": "Date invoice was cancelled."
+    },
+    {
+      "name": "CREATED_BY",
+      "type": "NUMBER",
+      "desc": "User who created the record (FND_USER.USER_ID)."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Date the record was created."
+    },
+    {
+      "name": "CREDITED_INVOICE_ID",
+      "type": "NUMBER",
+      "desc": "ID of the invoice reversed by Credit/Debit Memo."
+    },
+    {
+      "name": "DESCRIPTION",
+      "type": "VARCHAR2",
+      "desc": "Invoice description."
+    },
+    {
+      "name": "DISPUTE_REASON",
+      "type": "VARCHAR2",
+      "desc": "Reason for dispute (price, short deliveries, etc.)."
+    },
+    {
+      "name": "DOC_CATEGORY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Document category (voucher number)."
+    },
+    {
+      "name": "DOC_SEQUENCE_ID",
+      "type": "NUMBER",
+      "desc": "Document sequence identifier."
+    },
+    {
+      "name": "DOC_SEQUENCE_VALUE",
+      "type": "NUMBER",
+      "desc": "Voucher number (Sequential Numbering)."
+    },
+    {
+      "name": "DOCUMENT_SUB_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Document sub-type."
+    },
+    {
+      "name": "EXCHANGE_DATE",
+      "type": "DATE",
+      "desc": "Effective date of exchange rate."
+    },
+    {
+      "name": "EXCHANGE_RATE",
+      "type": "NUMBER",
+      "desc": "Exchange rate for foreign currency invoice."
+    },
+    {
+      "name": "EXCHANGE_RATE_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Exchange rate type for foreign currency invoice."
+    },
+    {
+      "name": "GL_DATE",
+      "type": "DATE",
+      "desc": "Accounting date default for invoice distributions."
+    },
+    {
+      "name": "INVOICE_AMOUNT",
+      "type": "NUMBER",
+      "desc": "Invoice total amount."
+    },
+    {
+      "name": "INVOICE_CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Currency code of invoice."
+    },
+    {
+      "name": "INVOICE_DATE",
+      "type": "DATE",
+      "desc": "Invoice date."
+    },
+    {
+      "name": "INVOICE_ID",
+      "type": "NUMBER",
+      "desc": "Invoice identifier (Primary key)."
+    },
+    {
+      "name": "INVOICE_NUM",
+      "type": "VARCHAR2",
+      "desc": "Invoice number."
+    },
+    {
+      "name": "INVOICE_RECEIVED_DATE",
+      "type": "DATE",
+      "desc": "Date invoice was received."
+    },
+    {
+      "name": "INVOICE_TYPE_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Type of invoice."
+    },
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier (multi-org support)."
+    },
+    {
+      "name": "PAYMENT_AMOUNT_TOTAL",
+      "type": "NUMBER",
+      "desc": "Total amount of invoice that has been paid."
+    },
+    {
+      "name": "PAYMENT_STATUS_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Payment status (Y=Paid, N=Unpaid, P=Partial)."
+    },
+    {
+      "name": "SET_OF_BOOKS_ID",
+      "type": "NUMBER",
+      "desc": "Set of books identifier."
+    },
+    {
+      "name": "TERMS_DATE",
+      "type": "DATE",
+      "desc": "Date for calculating scheduled payment of invoice."
+    },
+    {
+      "name": "TERMS_ID",
+      "type": "NUMBER",
+      "desc": "Payment terms identifier."
+    },
+    {
+      "name": "VALIDATION_REQUEST_ID",
+      "type": "NUMBER",
+      "desc": "Invoice Validation concurrent request ID."
+    },
+    {
+      "name": "VAT_CODE",
+      "type": "VARCHAR2",
+      "desc": "No longer used."
+    },
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "Supplier identifier."
+    },
+    {
+      "name": "VENDOR_SITE_ID",
+      "type": "NUMBER",
+      "desc": "Supplier site identifier."
+    },
+    {
+      "name": "VOUCHER_NUM",
+      "type": "VARCHAR2",
+      "desc": "Voucher number."
+    },
+    {
+      "name": "WFAPPROVAL_STATUS",
+      "type": "VARCHAR2",
+      "desc": "Status of invoice in the Invoice Approval Workflow process."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "INVOICE_NUM",
+      "type": "VARCHAR2",
+      "desc": "Invoice number."
+    },
+    {
+      "name": "INVOICE_DATE",
+      "type": "DATE",
+      "desc": "Invoice date."
+    },
+    {
+      "name": "INVOICE_AMOUNT",
+      "type": "NUMBER",
+      "desc": "Invoice total amount."
+    },
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "Supplier identifier."
+    },
+    {
+      "name": "VENDOR_SITE_ID",
+      "type": "NUMBER",
+      "desc": "Supplier site identifier."
+    },
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier (multi-org support)."
+    },
+    {
+      "name": "PAYMENT_STATUS_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Payment status (Y=Paid, N=Unpaid, P=Partial)."
+    },
+    {
+      "name": "GL_DATE",
+      "type": "DATE",
+      "desc": "Accounting date default for invoice distributions."
+    },
+    {
+      "name": "SET_OF_BOOKS_ID",
+      "type": "NUMBER",
+      "desc": "Set of books identifier."
+    },
+    {
+      "name": "CREATION_DATE",
+      "type": "DATE",
+      "desc": "Date the record was created."
+    },
+    {
+      "name": "CREATED_BY",
+      "type": "NUMBER",
+      "desc": "User who created the record (FND_USER.USER_ID)."
+    },
+    {
+      "name": "ACCTS_PAY_CODE_COMBINATION_ID",
+      "type": "NUMBER",
+      "desc": "Accounting Flexfield identifier for accounts payable liability account."
+    },
+    {
+      "name": "AMOUNT_APPLICABLE_TO_DISCOUNT",
+      "type": "NUMBER",
+      "desc": "Amount of invoice applicable to a discount."
+    },
+    {
+      "name": "AMOUNT_PAID",
+      "type": "NUMBER",
+      "desc": "Amount paid."
+    }
+  ],
+  "notes": "ap_invoices_all is the master header table for supplier invoices in Oracle EBS Accounts Payable module. It tracks invoice amount, type, vendor, and payment status. It integrates with AP invoice lines, payments, distributions, and GL accounting entries. Key invoice types: STANDARD, CREDIT, DEBIT, PREPAYMENT, AWT. Used to validate, approve, schedule, and pay invoices.",
+  "join_hints": [
+    "AP_INVOICES_ALL.INVOICE_ID = AP_INVOICE_LINES_ALL.INVOICE_ID",
+    "AP_INVOICES_ALL.VENDOR_ID = AP_SUPPLIERS.VENDOR_ID",
+    "AP_INVOICES_ALL.VENDOR_SITE_ID = AP_SUPPLIER_SITES_ALL.VENDOR_SITE_ID",
+    "AP_INVOICES_ALL.INVOICE_ID = AP_INV_APRVL_HIST_ALL.INVOICE_ID"
+  ]
+}

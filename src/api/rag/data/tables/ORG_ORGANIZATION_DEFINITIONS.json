@@ -1,0 +1,137 @@
+{
+  "table": "ORG_ORGANIZATION_DEFINITIONS",
+  "purpose": "Business-use subset of ORG_ORGANIZATION_DEFINITIONS.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "OPERATING_UNIT",
+      "ref_table": "HR_OPERATING_UNITS",
+      "ref_column": "ORGANIZATION_ID"
+    },
+    {
+      "column": "SET_OF_BOOKS_ID",
+      "ref_table": "GL_LEDGERS",
+      "ref_column": "LEDGER_ID"
+    }
+  ],
+  "columns": [
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; organization identifier."
+    },
+    {
+      "name": "BUSINESS_GROUP_ID",
+      "type": "NUMBER",
+      "desc": "Identifier of the business group the organization belongs to."
+    },
+    {
+      "name": "USER_DEFINITION_ENABLE_DATE",
+      "type": "DATE",
+      "desc": "Date when this organization becomes enabled."
+    },
+    {
+      "name": "DISABLE_DATE",
+      "type": "DATE",
+      "desc": "Date when this organization is disabled."
+    },
+    {
+      "name": "ORGANIZATION_CODE",
+      "type": "VARCHAR2",
+      "desc": "Abbreviation/code of the organization."
+    },
+    {
+      "name": "ORGANIZATION_NAME",
+      "type": "VARCHAR2",
+      "desc": "Name of the organization."
+    },
+    {
+      "name": "SET_OF_BOOKS_ID",
+      "type": "NUMBER",
+      "desc": "Identifier of the set of books (ledger) used by the organization."
+    },
+    {
+      "name": "CHART_OF_ACCOUNTS_ID",
+      "type": "NUMBER",
+      "desc": "Identifier of the chart of accounts linked to the set of books."
+    },
+    {
+      "name": "INVENTORY_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating whether inventory is enabled for this organization (Y/N)."
+    },
+    {
+      "name": "OPERATING_UNIT",
+      "type": "NUMBER",
+      "desc": "Operating unit identifier (org_id) linked to this organization."
+    },
+    {
+      "name": "LEGAL_ENTITY",
+      "type": "NUMBER",
+      "desc": "Legal entity identifier associated with this organization."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; organization identifier."
+    },
+    {
+      "name": "SET_OF_BOOKS_ID",
+      "type": "NUMBER",
+      "desc": "Identifier of the set of books (ledger) used by the organization."
+    },
+    {
+      "name": "BUSINESS_GROUP_ID",
+      "type": "NUMBER",
+      "desc": "Identifier of the business group the organization belongs to."
+    },
+    {
+      "name": "USER_DEFINITION_ENABLE_DATE",
+      "type": "DATE",
+      "desc": "Date when this organization becomes enabled."
+    },
+    {
+      "name": "DISABLE_DATE",
+      "type": "DATE",
+      "desc": "Date when this organization is disabled."
+    },
+    {
+      "name": "ORGANIZATION_CODE",
+      "type": "VARCHAR2",
+      "desc": "Abbreviation/code of the organization."
+    },
+    {
+      "name": "ORGANIZATION_NAME",
+      "type": "VARCHAR2",
+      "desc": "Name of the organization."
+    },
+    {
+      "name": "CHART_OF_ACCOUNTS_ID",
+      "type": "NUMBER",
+      "desc": "Identifier of the chart of accounts linked to the set of books."
+    },
+    {
+      "name": "INVENTORY_ENABLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating whether inventory is enabled for this organization (Y/N)."
+    },
+    {
+      "name": "OPERATING_UNIT",
+      "type": "NUMBER",
+      "desc": "Operating unit identifier (org_id) linked to this organization."
+    },
+    {
+      "name": "LEGAL_ENTITY",
+      "type": "NUMBER",
+      "desc": "Legal entity identifier associated with this organization."
+    }
+  ],
+  "notes": "The ORG_ORGANIZATION_DEFINITIONS table is a key part of the organizational structure definitions in Oracle E-Business Suite. It stores details of all inventory/warehouse organizations along with their associated operating units (org_id), ledgers (set of books), charts of accounts, and legal entities. org_organization_definitions is part of the organizational structure setup in Oracle E-Business Suite, storing definitions for warehouse and inventory organizations along with their associated operating units and ledgers (set of books). Each record is uniquely identified by organization_id. Key columns include business_group_id (business group association), organization_code (short name), organization_name, set_of_books_id (ledger ID), chart_of_accounts_id (chart of accounts ID), inventory_enabled_flag (whether inventory is enabled), operating_unit (org_id reference), and legal_entity (legal entity association). This table is critical for linking inventory organizations to financial structures within multi-org environments. It enables proper mapping of warehouses and inventory locations in the multi-org environment and ensures that transactions are tracked and accounted for under the correct business and legal framework. This table is essential for modules such as Inventory, Purchasing, and Costing, as well as compliance reporting across business/legal structures.",
+  "join_hints": [
+    "ORG_ORGANIZATION_DEFINITIONS.ORGANIZATION_ID = MTL_SYSTEM_ITEMS_B.ORGANIZATION_ID",
+    "ORG_ORGANIZATION_DEFINITIONS.OPERATING_UNIT = HR_OPERATING_UNITS.ORGANIZATION_ID",
+    "ORG_ORGANIZATION_DEFINITIONS.SET_OF_BOOKS_ID = GL_LEDGERS.LEDGER_ID"
+  ]
+}

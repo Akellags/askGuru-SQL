@@ -1,0 +1,292 @@
+{
+  "edges": [
+    {
+      "left": "AP_INVOICES_ALL",
+      "right": "AP_INVOICE_DISTRIBUTIONS_ALL",
+      "on": [
+        "INVOICE_ID=INVOICE_ID"
+      ]
+    },
+    {
+      "left": "AP_INVOICES_ALL",
+      "right": "AP_INVOICE_LINES_ALL",
+      "on": [
+        "INVOICE_ID=INVOICE_ID"
+      ]
+    },
+    {
+      "left": "AP_INVOICES_ALL",
+      "right": "AP_INV_APRVL_HIST_ALL",
+      "on": [
+        "INVOICE_ID=INVOICE_ID"
+      ]
+    },
+    {
+      "left": "AP_INVOICES_ALL",
+      "right": "AP_PAYMENT_SCHEDULES_ALL",
+      "on": [
+        "INVOICE_ID=INVOICE_ID"
+      ]
+    },
+    {
+      "left": "AP_INVOICES_ALL",
+      "right": "AP_SUPPLIERS",
+      "on": [
+        "VENDOR_ID=VENDOR_ID"
+      ]
+    },
+    {
+      "left": "AP_INVOICES_ALL",
+      "right": "AP_SUPPLIER_SITES_ALL",
+      "on": [
+        "VENDOR_SITE_ID=VENDOR_SITE_ID"
+      ]
+    },
+    {
+      "left": "AP_INVOICES_ALL",
+      "right": "HR_OPERATING_UNITS",
+      "on": [
+        "ORG_ID=ORGANIZATION_ID"
+      ]
+    },
+    {
+      "left": "AP_INVOICE_DISTRIBUTIONS_ALL",
+      "right": "AP_PAYMENT_SCHEDULES_ALL",
+      "on": [
+        "INVOICE_ID=INVOICE_ID"
+      ]
+    },
+    {
+      "left": "AP_INVOICE_DISTRIBUTIONS_ALL",
+      "right": "GL_CODE_COMBINATIONS",
+      "on": [
+        "DIST_CODE_COMBINATION_ID=CODE_COMBINATION_ID"
+      ]
+    },
+    {
+      "left": "AP_INVOICE_DISTRIBUTIONS_ALL",
+      "right": "PO_DISTRIBUTIONS_ALL",
+      "on": [
+        "PO_DISTRIBUTION_ID=PO_DISTRIBUTION_ID"
+      ]
+    },
+    {
+      "left": "AP_SUPPLIERS",
+      "right": "AP_SUPPLIER_SITES_ALL",
+      "on": [
+        "VENDOR_ID=VENDOR_ID"
+      ]
+    },
+    {
+      "left": "AP_SUPPLIERS",
+      "right": "PO_HEADERS_ALL",
+      "on": [
+        "VENDOR_ID=VENDOR_ID"
+      ]
+    },
+    {
+      "left": "AP_SUPPLIER_SITES_ALL",
+      "right": "PO_HEADERS_ALL",
+      "on": [
+        "VENDOR_SITE_ID=VENDOR_SITE_ID"
+      ]
+    },
+    {
+      "left": "GL_BALANCES",
+      "right": "GL_CODE_COMBINATIONS",
+      "on": [
+        "CODE_COMBINATION_ID=CODE_COMBINATION_ID"
+      ]
+    },
+    {
+      "left": "GL_BALANCES",
+      "right": "GL_LEDGERS",
+      "on": [
+        "LEDGER_ID=LEDGER_ID"
+      ]
+    },
+    {
+      "left": "GL_BALANCES",
+      "right": "GL_PERIODS",
+      "on": [
+        "PERIOD_NAME=PERIOD_NAME"
+      ]
+    },
+    {
+      "left": "GL_CODE_COMBINATIONS",
+      "right": "PO_DISTRIBUTIONS_ALL",
+      "on": [
+        "CODE_COMBINATION_ID=CODE_COMBINATION_ID"
+      ]
+    },
+    {
+      "left": "GL_LEDGERS",
+      "right": "GL_PERIODS",
+      "on": [
+        "ACCOUNTED_PERIOD_TYPE=PERIOD_TYPE",
+        "PERIOD_SET_NAME=PERIOD_SET_NAME"
+      ]
+    },
+    {
+      "left": "GL_LEDGERS",
+      "right": "HR_OPERATING_UNITS",
+      "on": [
+        "LEDGER_ID=SET_OF_BOOKS_ID"
+      ]
+    },
+    {
+      "left": "GL_LEDGERS",
+      "right": "ORG_ORGANIZATION_DEFINITIONS",
+      "on": [
+        "LEDGER_ID=SET_OF_BOOKS_ID"
+      ]
+    },
+    {
+      "left": "HR_OPERATING_UNITS",
+      "right": "ORG_ORGANIZATION_DEFINITIONS",
+      "on": [
+        "ORGANIZATION_ID=OPERATING_UNIT"
+      ]
+    },
+    {
+      "left": "HR_OPERATING_UNITS",
+      "right": "PO_HEADERS_ALL",
+      "on": [
+        "ORGANIZATION_ID=ORG_ID"
+      ]
+    },
+    {
+      "left": "MTL_MATERIAL_TRANSACTIONS",
+      "right": "MTL_SYSTEM_ITEMS_B",
+      "on": [
+        "INVENTORY_ITEM_ID=INVENTORY_ITEM_ID"
+      ]
+    },
+    {
+      "left": "MTL_MATERIAL_TRANSACTIONS",
+      "right": "MTL_TRANSACTION_ACCOUNTS",
+      "on": [
+        "TRANSACTION_ID=TRANSACTION_ID"
+      ]
+    },
+    {
+      "left": "MTL_MATERIAL_TRANSACTIONS",
+      "right": "ORG_ORGANIZATION_DEFINITIONS",
+      "on": [
+        "ORGANIZATION_ID=ORGANIZATION_ID"
+      ]
+    },
+    {
+      "left": "MTL_SYSTEM_ITEMS_B",
+      "right": "MTL_UOM_CONVERSIONS",
+      "on": [
+        "INVENTORY_ITEM_ID=INVENTORY_ITEM_ID"
+      ]
+    },
+    {
+      "left": "MTL_SYSTEM_ITEMS_B",
+      "right": "ORG_ORGANIZATION_DEFINITIONS",
+      "on": [
+        "ORGANIZATION_ID=ORGANIZATION_ID"
+      ]
+    },
+    {
+      "left": "MTL_SYSTEM_ITEMS_B",
+      "right": "PO_LINES_ALL",
+      "on": [
+        "INVENTORY_ITEM_ID=ITEM_ID"
+      ]
+    },
+    {
+      "left": "MTL_SYSTEM_ITEMS_B",
+      "right": "RCV_SHIPMENT_LINES",
+      "on": [
+        "INVENTORY_ITEM_ID=ITEM_ID"
+      ]
+    },
+    {
+      "left": "ORG_ORGANIZATION_DEFINITIONS",
+      "right": "PO_DISTRIBUTIONS_ALL",
+      "on": [
+        "ORGANIZATION_ID=DESTINATION_ORGANIZATION_ID"
+      ]
+    },
+    {
+      "left": "PO_DISTRIBUTIONS_ALL",
+      "right": "PO_HEADERS_ALL",
+      "on": [
+        "PO_HEADER_ID=PO_HEADER_ID"
+      ]
+    },
+    {
+      "left": "PO_DISTRIBUTIONS_ALL",
+      "right": "PO_LINES_ALL",
+      "on": [
+        "PO_LINE_ID=PO_LINE_ID"
+      ]
+    },
+    {
+      "left": "PO_DISTRIBUTIONS_ALL",
+      "right": "PO_LINE_LOCATIONS_ALL",
+      "on": [
+        "LINE_LOCATION_ID=LINE_LOCATION_ID"
+      ]
+    },
+    {
+      "left": "PO_DISTRIBUTIONS_ALL",
+      "right": "RCV_SHIPMENT_LINES",
+      "on": [
+        "PO_DISTRIBUTION_ID=PO_DISTRIBUTION_ID"
+      ]
+    },
+    {
+      "left": "PO_HEADERS_ALL",
+      "right": "PO_LINES_ALL",
+      "on": [
+        "PO_HEADER_ID=PO_HEADER_ID"
+      ]
+    },
+    {
+      "left": "PO_HEADERS_ALL",
+      "right": "PO_LINE_LOCATIONS_ALL",
+      "on": [
+        "PO_HEADER_ID=PO_HEADER_ID"
+      ]
+    },
+    {
+      "left": "PO_HEADERS_ALL",
+      "right": "RCV_SHIPMENT_LINES",
+      "on": [
+        "PO_HEADER_ID=PO_HEADER_ID"
+      ]
+    },
+    {
+      "left": "PO_LINES_ALL",
+      "right": "PO_LINE_LOCATIONS_ALL",
+      "on": [
+        "PO_LINE_ID=PO_LINE_ID"
+      ]
+    },
+    {
+      "left": "PO_LINES_ALL",
+      "right": "RCV_SHIPMENT_LINES",
+      "on": [
+        "PO_LINE_ID=PO_LINE_ID"
+      ]
+    },
+    {
+      "left": "PO_LINE_LOCATIONS_ALL",
+      "right": "RCV_SHIPMENT_LINES",
+      "on": [
+        "LINE_LOCATION_ID=PO_LINE_LOCATION_ID"
+      ]
+    },
+    {
+      "left": "RCV_SHIPMENT_LINES",
+      "right": "RCV_TRANSACTIONS",
+      "on": [
+        "SHIPMENT_LINE_ID=SHIPMENT_LINE_ID"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "table": "AP_SUPPLIER_SITES_ALL",
+  "purpose": "Business-use subset of AP_SUPPLIER_SITES_ALL.",
+  "pk": [],
+  "fks": [],
+  "columns": [
+    {
+      "name": "VENDOR_SITE_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier for the supplier site."
+    },
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "Foreign key linking to AP_SUPPLIERS; associates the site with a supplier."
+    },
+    {
+      "name": "VENDOR_SITE_CODE",
+      "type": "VARCHAR2",
+      "desc": "Site code name (e.g., 'HQ', 'Warehouse')."
+    },
+    {
+      "name": "ADDRESS_LINE1",
+      "type": "VARCHAR2",
+      "desc": "First line of the supplier address."
+    },
+    {
+      "name": "ADDRESS_LINE2",
+      "type": "VARCHAR2",
+      "desc": "Second line of the supplier address."
+    },
+    {
+      "name": "ADDRESS_LINE3",
+      "type": "VARCHAR2",
+      "desc": "Third line of the supplier address."
+    },
+    {
+      "name": "ADDRESS_LINE4",
+      "type": "VARCHAR2",
+      "desc": "Fourth line of the supplier address (if applicable)."
+    },
+    {
+      "name": "ADDRESS_STYLE",
+      "type": "VARCHAR2",
+      "desc": "Format/style of the address as per regional conventions."
+    },
+    {
+      "name": "INVOICE_CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Default currency used for invoices from this site."
+    },
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Operating unit identifier for multi-org support."
+    },
+    {
+      "name": "PARTY_SITE_ID",
+      "type": "NUMBER",
+      "desc": "TCA Party Site ID; links to Trading Community Architecture (TCA)."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "VENDOR_ID",
+      "type": "NUMBER",
+      "desc": "Foreign key linking to AP_SUPPLIERS; associates the site with a supplier."
+    },
+    {
+      "name": "VENDOR_SITE_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier for the supplier site."
+    },
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Operating unit identifier for multi-org support."
+    },
+    {
+      "name": "VENDOR_SITE_CODE",
+      "type": "VARCHAR2",
+      "desc": "Site code name (e.g., 'HQ', 'Warehouse')."
+    },
+    {
+      "name": "ADDRESS_LINE1",
+      "type": "VARCHAR2",
+      "desc": "First line of the supplier address."
+    },
+    {
+      "name": "ADDRESS_LINE2",
+      "type": "VARCHAR2",
+      "desc": "Second line of the supplier address."
+    },
+    {
+      "name": "ADDRESS_LINE3",
+      "type": "VARCHAR2",
+      "desc": "Third line of the supplier address."
+    },
+    {
+      "name": "ADDRESS_LINE4",
+      "type": "VARCHAR2",
+      "desc": "Fourth line of the supplier address (if applicable)."
+    },
+    {
+      "name": "ADDRESS_STYLE",
+      "type": "VARCHAR2",
+      "desc": "Format/style of the address as per regional conventions."
+    },
+    {
+      "name": "INVOICE_CURRENCY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Default currency used for invoices from this site."
+    },
+    {
+      "name": "PARTY_SITE_ID",
+      "type": "NUMBER",
+      "desc": "TCA Party Site ID; links to Trading Community Architecture (TCA)."
+    }
+  ],
+  "notes": "ap_supplier_sites_all stores all site-level details of a supplier (like addresses, payment terms).",
+  "join_hints": [
+    "AP_SUPPLIER_SITES_ALL.VENDOR_SITE_ID = PO_HEADERS_ALL.VENDOR_SITE_ID"
+  ]
+}

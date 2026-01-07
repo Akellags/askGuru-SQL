@@ -1,0 +1,6 @@
+{
+    "dump_prompt": true,
+    "save_prompt": "rag/debug/prompts/last_api_prompt.txt",
+    "print_plan": true,
+    "include_fewshots": "brief"
+}

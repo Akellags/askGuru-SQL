@@ -1,0 +1,104 @@
+{
+  "trial_balance": {
+    "match_regex": "(?i)\\btrial\\s*balance\\b|\\bending\\s*balance\\b|\\bclosing\\s*balance\\b|\\bMoM\\b|\\bmonth[-\\s]*on[-\\s]*month\\b|\\bgrowth\\b|\\bpivot(ed)?\\b",
+    "recipe": "Compute closing_balance as:\nNVL(BEGIN_BALANCE_DR,0) - NVL(BEGIN_BALANCE_CR,0)\n+ NVL(PERIOD_NET_DR,0) - NVL(PERIOD_NET_CR,0).\nJoin alignment: GL_BALANCES.PERIOD_NAME = GL_PERIODS.PERIOD_NAME\nand GL_PERIODS.PERIOD_SET_NAME = GL_LEDGERS.PERIOD_SET_NAME\nand GL_PERIODS.PERIOD_TYPE = GL_LEDGERS.ACCOUNTED_PERIOD_TYPE.\nFilter: GL_BALANCES.ACTUAL_FLAG = 'A'; BAL.TEMPLATE_ID IS NULL; BAL.TRANSLATED_FLAG IS NULL.\nPrefer CASE pivot on PERIOD_NAME (e.g., 'Jan-03','Feb-03',...) and guard all divisions with NULLIF(ABS(den),0).\nUse ledger filter by name and align currency to ledger if needed.",
+    "must_tables": [
+      "GL_BALANCES",
+      "GL_PERIODS",
+      "GL_LEDGERS"
+    ],
+    "should_tables": [
+      "GL_CODE_COMBINATIONS"
+    ]
+  },
+  "period_movement": {
+    "match_regex": "(?i)\\bperiod\\s*movement\\b|\\bmovement\\b|\\bvariance\\b|\\bdelta\\b",
+    "recipe": "Use PERIOD_NET_DR/CR to compute movement; consider opening = BEGIN_BALANCE_DR-CR; closing = opening + movement. Prefer conditional aggregation and date range via GL_PERIODS.",
+    "must_tables": [
+      "GL_BALANCES",
+      "GL_PERIODS",
+      "GL_LEDGERS"
+    ]
+  },
+  "journal": {
+    "match_regex": "(?i)\\bjournal\\b|\\bje(_|\\s*)lines?\\b|\\bje(_|\\s*)headers?\\b",
+    "recipe": "Join GL_JE_HEADERS and GL_JE_LINES on JE_HEADER_ID; optional join to GL_LEDGERS on LEDGER_ID. Include status/date filters and avoid unposted if not requested.",
+    "must_tables": [
+      "GL_JE_HEADERS",
+      "GL_JE_LINES"
+    ],
+    "should_tables": [
+      "GL_LEDGERS"
+    ]
+  },
+  "invoice": {
+    "match_regex": "(?i)\\binvoice\\b|supplier invoice|vendor invoice|ap invoice",
+    "recipe": "Use AP_INVOICES_ALL (header) with AP_INVOICE_DISTRIBUTIONS_ALL for lines; join AP_SUPPLIERS and AP_SUPPLIER_SITES_ALL as needed. Filter by INVOICE_DATE, INVOICE_TYPE_LOOKUP_CODE, PAYMENT_STATUS_FLAG.",
+    "must_tables": [
+      "AP_INVOICES_ALL"
+    ],
+    "should_tables": [
+      "AP_INVOICE_DISTRIBUTIONS_ALL",
+      "AP_SUPPLIERS",
+      "AP_SUPPLIER_SITES_ALL"
+    ]
+  },
+  "po_details": {
+    "match_regex": "(?i)\\bpurchase\\s*order\\b|\\bpo\\b.*(details|items|qty|rate)|\\bpo\\s*number\\b",
+    "recipe": "Use PO_HEADERS_ALL \u2192 PO_LINES_ALL \u2192 PO_LINE_LOCATIONS_ALL; join PO_DISTRIBUTIONS_ALL for accounting link; optional join to MTL_SYSTEM_ITEMS_B for item code/desc.",
+    "must_tables": [
+      "PO_HEADERS_ALL",
+      "PO_LINES_ALL",
+      "PO_LINE_LOCATIONS_ALL"
+    ],
+    "should_tables": [
+      "PO_DISTRIBUTIONS_ALL",
+      "MTL_SYSTEM_ITEMS_B"
+    ]
+  },
+  "po_receipts": {
+    "match_regex": "(?i)\\bgrn\\b|goods\\s*receipt|receiv(ed|ing)|rcv\\b",
+    "recipe": "Use RCV_TRANSACTIONS joined to RCV_SHIPMENT_HEADERS and PO_HEADERS_ALL/PO_LINES_ALL/PO_LINE_LOCATIONS_ALL. Include operating unit or org filters as needed.",
+    "must_tables": [
+      "RCV_TRANSACTIONS",
+      "RCV_SHIPMENT_HEADERS"
+    ],
+    "should_tables": [
+      "PO_HEADERS_ALL",
+      "PO_LINES_ALL",
+      "PO_LINE_LOCATIONS_ALL",
+      "PO_DISTRIBUTIONS_ALL"
+    ]
+  },
+  "item_lookup": {
+    "match_regex": "(?i)\\bitem\\s*(code|name|desc|description)|\\bsku\\b",
+    "recipe": "Use MTL_SYSTEM_ITEMS_B (limit to relevant business columns); optional join to ORG_ORGANIZATION_DEFINITIONS for org context.",
+    "must_tables": [
+      "MTL_SYSTEM_ITEMS_B"
+    ],
+    "should_tables": [
+      "ORG_ORGANIZATION_DEFINITIONS"
+    ]
+  },
+  "suppliers": {
+    "match_regex": "(?i)\\bsupplier\\b|\\bvendor\\b",
+    "recipe": "Use AP_SUPPLIERS and AP_SUPPLIER_SITES_ALL. Join to AP_INVOICES_ALL if invoice context needed.",
+    "must_tables": [
+      "AP_SUPPLIERS"
+    ],
+    "should_tables": [
+      "AP_SUPPLIER_SITES_ALL",
+      "AP_INVOICES_ALL"
+    ]
+  },
+  "operating_units": {
+    "match_regex": "(?i)\\boperating\\s*unit\\b|\\bou\\b|\\bhr_operating_units\\b",
+    "recipe": "Join HR_OPERATING_UNITS to scope results (e.g., Vision Operations). Use ORG_ORGANIZATION_DEFINITIONS when org_id vs. organization_id context matters.",
+    "must_tables": [
+      "HR_OPERATING_UNITS"
+    ],
+    "should_tables": [
+      "ORG_ORGANIZATION_DEFINITIONS"
+    ]
+  }
+}

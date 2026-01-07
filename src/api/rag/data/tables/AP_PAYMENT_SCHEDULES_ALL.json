@@ -1,0 +1,85 @@
+{
+  "table": "AP_PAYMENT_SCHEDULES_ALL",
+  "purpose": "Business-use subset of AP_PAYMENT_SCHEDULES_ALL.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "INVOICE_ID",
+      "ref_table": "AP_INVOICES_ALL",
+      "ref_column": "INVOICE_ID"
+    }
+  ],
+  "essential_columns": [
+    {
+      "name": "PAYMENT_SCHEDULE_ID",
+      "reason": "primary key"
+    },
+    {
+      "name": "DUE_DATE",
+      "reason": "scheduled payment date"
+    },
+    {
+      "name": "AMOUNT_REMAINING",
+      "reason": "unpaid balance for outstanding payment analysis"
+    }
+  ],
+  "columns": [
+    {
+      "name": "PAYMENT_SCHEDULE_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier of the payment schedule."
+    },
+    {
+      "name": "INVOICE_ID",
+      "type": "NUMBER",
+      "desc": "Links to ap_invoices_all.invoice_id."
+    },
+    {
+      "name": "DUE_DATE",
+      "type": "DATE",
+      "desc": "Scheduled payment due date."
+    },
+    {
+      "name": "AMOUNT_DUE_ORIGINAL",
+      "type": "NUMBER",
+      "desc": "Original amount due on the invoice."
+    },
+    {
+      "name": "AMOUNT_REMAINING",
+      "type": "NUMBER",
+      "desc": "Remaining unpaid balance on the invoice, this column should be used to report on unpaid invoices or balance payble"
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "PAYMENT_SCHEDULE_ID",
+      "type": "NUMBER",
+      "desc": "Primary key; unique identifier of the payment schedule."
+    },
+    {
+      "name": "INVOICE_ID",
+      "type": "NUMBER",
+      "desc": "Links to ap_invoices_all.invoice_id."
+    },
+    {
+      "name": "DUE_DATE",
+      "type": "DATE",
+      "desc": "Scheduled payment due date."
+    },
+    {
+      "name": "AMOUNT_DUE_ORIGINAL",
+      "type": "NUMBER",
+      "desc": "Original amount due on the invoice."
+    },
+    {
+      "name": "AMOUNT_REMAINING",
+      "type": "NUMBER",
+      "desc": "Remaining unpaid balance on the invoice, this column should be used to report on unpaid invoices or balance payble"
+    }
+  ],
+  "notes": "The AP_PAYMENT_SCHEDULES_ALL table defines the scheduled payments for each invoice in the Accounts Payable module. It is a child of AP_INVOICES_ALL and records payment due dates, remaining balances, and supports payment aging, cash flow forecasting, and due invoice reporting. Key fields include amount_remaining, due_date, and payment_status_flag. Typically used for outstanding payment analysis and payment scheduling across multiple organizations using ORG_ID.",
+  "join_hints": [
+    "AP_PAYMENT_SCHEDULES_ALL.INVOICE_ID = AP_INVOICES_ALL.INVOICE_ID",
+    "AP_PAYMENT_SCHEDULES_ALL.INVOICE_ID = AP_INVOICE_DISTRIBUTIONS_ALL.INVOICE_ID"
+  ]
+}

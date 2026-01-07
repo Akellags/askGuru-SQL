@@ -13,9 +13,11 @@ from .utils import (
     get_filtered_schema, 
     build_llama_prompt, 
     build_sqlcoder_prompt,
-    build_critic_prompt
+    build_critic_prompt,
+    get_filtered_schema_from_rag
 )
 from .db_connector import validate_sql_with_oracle
+from .rag import RAGEngine
 
 # Import guardrails
 import sys
@@ -25,6 +27,17 @@ from custom_oracle_llama.inference.sql_guardrail import clean_sql, is_unsafe
 from custom_oracle_sqlcoder.sqlcoder_join_validator import validate_sql_joins
 
 app = FastAPI(title=settings.PROJECT_NAME)
+
+# RAG Engine Initialization
+RAG_ENGINE = None
+if settings.ENABLE_RAG:
+    try:
+        with open(settings.RAG_CONFIG_PATH, 'r') as f:
+            rag_config = json.load(f)
+        RAG_ENGINE = RAGEngine(rag_config)
+        print("DONE: RAG Engine initialized successfully")
+    except Exception as e:
+        print(f"ERROR: Failed to initialize RAG Engine: {e}")
 
 # Structured Logging Setup
 logging.basicConfig(level=logging.INFO)
@@ -102,9 +115,9 @@ async def call_model(url: str, prompt: str) -> str:
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Model call failed at {endpoint}: {str(e)}")
 
-async def run_fallback_strategy(request: SQLRequest, schema_text: str) -> SQLResponse:
+async def run_fallback_strategy(request: SQLRequest, schema_text: str, rag_context: Optional[dict] = None) -> SQLResponse:
     # 1. Initial Generation (LLaMA)
-    llama_prompt = build_llama_prompt(request, MSCHEMA_CACHE, schema_text)
+    llama_prompt = build_llama_prompt(request, MSCHEMA_CACHE, schema_text, rag_context)
     generated_text = await call_model(settings.PRIMARY_MODEL_URL, llama_prompt)
     final_sql = clean_sql(generated_text)
     model_used = "LLaMA-3.1-70B (Fallback)"
@@ -148,9 +161,9 @@ async def run_fallback_strategy(request: SQLRequest, schema_text: str) -> SQLRes
         error=db_error
     )
 
-async def run_voting_strategy(request: SQLRequest, schema_text: str) -> SQLResponse:
+async def run_voting_strategy(request: SQLRequest, schema_text: str, rag_context: Optional[dict] = None) -> SQLResponse:
     # 1. Parallel Generation
-    llama_prompt = build_llama_prompt(request, MSCHEMA_CACHE, schema_text)
+    llama_prompt = build_llama_prompt(request, MSCHEMA_CACHE, schema_text, rag_context)
     sqlcoder_prompt = build_sqlcoder_prompt(request, MSCHEMA_CACHE, schema_text)
     
     tasks = [
@@ -206,16 +219,28 @@ async def run_voting_strategy(request: SQLRequest, schema_text: str) -> SQLRespo
 async def generate_sql(request: SQLRequest):
     print(f"\n{'='*20} Incoming Request {'='*20}")
     print(f"Question: {request.question}")
-    print(f"Tables: {request.tables}")
-    if request.filters: print(f"Filters: {request.filters}")
     
-    # Prepare Schema
-    schema_text = get_filtered_schema(MSCHEMA_CACHE, request.tables)
+    # 1. RAG Context Retrieval (Optional)
+    rag_context = None
+    schema_text = ""
+    
+    if settings.ENABLE_RAG and RAG_ENGINE:
+        try:
+            rag_context = RAG_ENGINE.get_dynamic_context(request.question)
+            schema_text = get_filtered_schema_from_rag(rag_context)
+            print(f"RAG Tables: {rag_context['tables']}")
+        except Exception as e:
+            print(f"RAG retrieval failed, falling back to static schema: {e}")
+    
+    # Fallback to static schema if RAG failed or is disabled
+    if not schema_text:
+        schema_text = get_filtered_schema(MSCHEMA_CACHE, request.tables)
+        print(f"Static Tables: {request.tables}")
     
     if settings.ENSEMBLE_STRATEGY == "voting" and settings.ENABLE_SECONDARY_MODEL:
-        return await run_voting_strategy(request, schema_text)
+        return await run_voting_strategy(request, schema_text, rag_context)
     else:
-        return await run_fallback_strategy(request, schema_text)
+        return await run_fallback_strategy(request, schema_text, rag_context)
 
 @app.get("/health")
 async def health():

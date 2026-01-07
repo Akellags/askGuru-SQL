@@ -45,8 +45,8 @@ def get_join_hints(mschema: List[Dict[str, Any]], requested_tables: List[str]) -
         return ""
     return "\nJOIN HINTS:\n" + "\n".join(list(set(hints)))
 
-def build_llama_prompt(request: Any, mschema: List[Dict[str, Any]], schema_text: str) -> str:
-    """Build the prompt for LLaMA-3.1 model matching test_script_with_full_prompt.py format."""
+def build_llama_prompt(request: Any, mschema: List[Dict[str, Any]], schema_text: str, rag_context: Optional[Dict[str, Any]] = None) -> str:
+    """Build the prompt for LLaMA-3.1 model."""
     enriched_question = build_enriched_question(
         request.question, 
         request.filters, 
@@ -54,8 +54,21 @@ def build_llama_prompt(request: Any, mschema: List[Dict[str, Any]], schema_text:
         request.columns_list
     )
     
-    join_hints = get_join_hints(mschema, request.tables or [])
-    
+    # Use RAG evidence if available, otherwise fallback to static join hints
+    if rag_context and rag_context.get("evidence"):
+        reference_info = f"[Evidence]\n{rag_context['evidence']}\n"
+    else:
+        join_hints = get_join_hints(mschema, request.tables or [])
+        reference_info = f"{join_hints}\n"
+
+    # Format few-shots from RAG
+    fewshot_text = ""
+    if rag_context and rag_context.get("fewshots"):
+        fewshot_text = "\n[Few-Shot Examples]\n"
+        for fs in rag_context["fewshots"]:
+            fewshot_text += f"Question: {fs.get('intent')}\n"
+            fewshot_text += f"SQL: {fs.get('sql')}\n\n"
+
     return f"""You are a Oracle EBS expert. Generate executable SQL based on the user's question.
 Only output SQL query. Do not invent columns - use only those in the schema.
 CRITICAL: Columns marked with **[ESSENTIAL]** are mandatory for proper joins and aggregations - prioritize them.
@@ -65,7 +78,8 @@ CRITICAL: Columns marked with **[ESSENTIAL]** are mandatory for proper joins and
 
 [Database Schema]
 {schema_text}
-{join_hints}
+{reference_info}
+{fewshot_text}
 
 [Reference Information]
 [Rules]
@@ -88,6 +102,33 @@ Follow JOIN HINTS. Do not invent columns. Guard divisions with NULLIF.
 
 Return **Oracle SQL only**. No markdown. No explanation.
 ```sql"""
+
+def get_filtered_schema_from_rag(rag_context: Dict[str, Any]) -> str:
+    """Format M-Schema based on RAG selected tables and columns."""
+    lines = []
+    tables = rag_context.get("tables", [])
+    columns = rag_context.get("columns", {})
+    
+    for table_name in tables:
+        lines.append(f"{table_name} (")
+        table_cols = columns.get(table_name, [])
+        for col in table_cols:
+            # Note: We don't have full type info here from RAG output yet, 
+            # but we can assume it's retrieved or just list names.
+            # In a real scenario, we'd look up types in MSCHEMA.
+            lines.append(f"  {col}")
+        lines.append(")")
+        lines.append("")
+    
+    return "\n".join(lines)
+
+def build_enriched_question(question: str, filters: Optional[List[str]] = None, group_columns: Optional[List[str]] = None, columns_list: Optional[List[str]] = None) -> str:
+    """Helper to build a detailed question string."""
+    parts = [question]
+    if filters: parts.append(f"Filters: {', '.join(filters)}")
+    if group_columns: parts.append(f"Group by: {', '.join(group_columns)}")
+    if columns_list: parts.append(f"Required columns: {', '.join(columns_list)}")
+    return " | ".join(parts)
 
 def build_sqlcoder_prompt(request: Any, mschema: List[Dict[str, Any]], schema_text: str) -> str:
     """Build the prompt for SQLCoder-70B model."""

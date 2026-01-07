@@ -1,0 +1,276 @@
+{
+  "table": "AP_INVOICE_DISTRIBUTIONS_ALL",
+  "purpose": "Business-use subset of AP_INVOICE_DISTRIBUTIONS_ALL.",
+  "pk": [],
+  "fks": [
+    {
+      "column": "INVOICE_ID",
+      "ref_table": "AP_INVOICES_ALL",
+      "ref_column": "INVOICE_ID"
+    },
+    {
+      "column": "PO_DISTRIBUTION_ID",
+      "ref_table": "PO_DISTRIBUTIONS_ALL",
+      "ref_column": "PO_DISTRIBUTION_ID"
+    }
+  ],
+  "columns": [
+    {
+      "name": "ACCOUNTING_DATE",
+      "type": "DATE",
+      "desc": "Accounting date."
+    },
+    {
+      "name": "ACCOUNTING_EVENT_ID",
+      "type": "NUMBER",
+      "desc": "Accounting event identifier (refers to the event that accounted the distribution)."
+    },
+    {
+      "name": "ACCRUAL_POSTED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Accrual accounting status (Y/N)."
+    },
+    {
+      "name": "ADJUSTMENT_REASON",
+      "type": "VARCHAR2",
+      "desc": "Reason for expense adjustment."
+    },
+    {
+      "name": "AMOUNT",
+      "type": "NUMBER",
+      "desc": "Invoice distribution amount."
+    },
+    {
+      "name": "AMOUNT_VARIANCE",
+      "type": "NUMBER",
+      "desc": "Amount variance in entered currency (for matched service/receipt)."
+    },
+    {
+      "name": "ASSET_BOOK_TYPE_CODE",
+      "type": "VARCHAR2",
+      "desc": "Asset book type (defaults from invoice line)."
+    },
+    {
+      "name": "ASSET_CATEGORY_ID",
+      "type": "NUMBER",
+      "desc": "Asset category (defaults from invoice line)."
+    },
+    {
+      "name": "ASSETS_ADDITION_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if distribution transferred into Oracle Assets (U, Y, or N)."
+    },
+    {
+      "name": "ASSETS_TRACKING_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if distribution is tracked in Oracle Assets (Y/N)."
+    },
+    {
+      "name": "BASE_AMOUNT",
+      "type": "NUMBER",
+      "desc": "Invoice amount in functional currency (for foreign currency invoices)."
+    },
+    {
+      "name": "CANCELLATION_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating whether distribution has been cancelled."
+    },
+    {
+      "name": "CANCELLED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if distribution line was cancelled."
+    },
+    {
+      "name": "DESCRIPTION",
+      "type": "VARCHAR2",
+      "desc": "Description."
+    },
+    {
+      "name": "DIST_CODE_COMBINATION_ID",
+      "type": "NUMBER",
+      "desc": "Accounting Flexfield identifier for distribution account."
+    },
+    {
+      "name": "DIST_MATCH_TYPE",
+      "type": "VARCHAR2",
+      "desc": "Type of distribution match (validated via lookup)."
+    },
+    {
+      "name": "DISTRIBUTION_CLASS",
+      "type": "VARCHAR2",
+      "desc": "Indicates whether the distribution is permanent or candidate (validated via lookup)."
+    },
+    {
+      "name": "DISTRIBUTION_LINE_NUMBER",
+      "type": "NUMBER",
+      "desc": "Distribution line number."
+    },
+    {
+      "name": "FINAL_MATCH_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Final match indicator for PO-matched distributions."
+    },
+    {
+      "name": "INVOICE_DISTRIBUTION_ID",
+      "type": "NUMBER",
+      "desc": "Primary key for the distribution."
+    },
+    {
+      "name": "INVOICE_ID",
+      "type": "NUMBER",
+      "desc": "Invoice identifier (FK to AP_INVOICES_ALL)."
+    },
+    {
+      "name": "INVOICE_LINE_NUMBER",
+      "type": "NUMBER",
+      "desc": "Invoice line number for parent line."
+    },
+    {
+      "name": "LINE_TYPE_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "Distribution type (validated via lookup)."
+    },
+    {
+      "name": "MATCH_STATUS_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Validation status of the match."
+    },
+    {
+      "name": "MATCHED_UOM_LOOKUP_CODE",
+      "type": "VARCHAR2",
+      "desc": "UOM used during distribution matching."
+    },
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier."
+    },
+    {
+      "name": "PERIOD_NAME",
+      "type": "VARCHAR2",
+      "desc": "Accounting period name."
+    },
+    {
+      "name": "PO_DISTRIBUTION_ID",
+      "type": "NUMBER",
+      "desc": "PO distribution identifier for matched invoice distributions."
+    },
+    {
+      "name": "POSTED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if the distribution has been accounted (posted)."
+    },
+    {
+      "name": "PREPAY_AMOUNT_REMAINING",
+      "type": "NUMBER",
+      "desc": "Remaining amount of prepayment that can be applied."
+    },
+    {
+      "name": "PREPAY_DISTRIBUTION_ID",
+      "type": "NUMBER",
+      "desc": "Distribution ID for the originating prepayment application."
+    },
+    {
+      "name": "PREPAY_TAX_DIFF_AMOUNT",
+      "type": "NUMBER",
+      "desc": "Tax difference amount between Prepayment and Standard invoice dates."
+    },
+    {
+      "name": "QUANTITY_INVOICED",
+      "type": "NUMBER",
+      "desc": "Quantity invoiced (for matched POs or receipts)."
+    },
+    {
+      "name": "RCV_TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "Receipt identifier for receipt-matched invoice distributions."
+    },
+    {
+      "name": "SET_OF_BOOKS_ID",
+      "type": "NUMBER",
+      "desc": "Set of books identifier."
+    },
+    {
+      "name": "UNIT_PRICE",
+      "type": "NUMBER",
+      "desc": "Unit price (for PO/receipt matched distributions and corrections)."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "ORG_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier."
+    },
+    {
+      "name": "SET_OF_BOOKS_ID",
+      "type": "NUMBER",
+      "desc": "Set of books identifier."
+    },
+    {
+      "name": "UNIT_PRICE",
+      "type": "NUMBER",
+      "desc": "Unit price (for PO/receipt matched distributions and corrections)."
+    },
+    {
+      "name": "ACCOUNTING_DATE",
+      "type": "DATE",
+      "desc": "Accounting date."
+    },
+    {
+      "name": "ACCOUNTING_EVENT_ID",
+      "type": "NUMBER",
+      "desc": "Accounting event identifier (refers to the event that accounted the distribution)."
+    },
+    {
+      "name": "ACCRUAL_POSTED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Accrual accounting status (Y/N)."
+    },
+    {
+      "name": "ADJUSTMENT_REASON",
+      "type": "VARCHAR2",
+      "desc": "Reason for expense adjustment."
+    },
+    {
+      "name": "AMOUNT",
+      "type": "NUMBER",
+      "desc": "Invoice distribution amount."
+    },
+    {
+      "name": "AMOUNT_VARIANCE",
+      "type": "NUMBER",
+      "desc": "Amount variance in entered currency (for matched service/receipt)."
+    },
+    {
+      "name": "ASSET_BOOK_TYPE_CODE",
+      "type": "VARCHAR2",
+      "desc": "Asset book type (defaults from invoice line)."
+    },
+    {
+      "name": "ASSET_CATEGORY_ID",
+      "type": "NUMBER",
+      "desc": "Asset category (defaults from invoice line)."
+    },
+    {
+      "name": "ASSETS_ADDITION_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if distribution transferred into Oracle Assets (U, Y, or N)."
+    },
+    {
+      "name": "ASSETS_TRACKING_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Flag indicating if distribution is tracked in Oracle Assets (Y/N)."
+    },
+    {
+      "name": "BASE_AMOUNT",
+      "type": "NUMBER",
+      "desc": "Invoice amount in functional currency (for foreign currency invoices)."
+    }
+  ],
+  "notes": "ap_invoice_distributions_all breaks down invoice lines into detailed accounting distributions. It supports various expense types like ITEM, FREIGHT, TAX, and AWT. Links to PO distributions and receipts for accruals and matching logic.",
+  "join_hints": [
+    "AP_INVOICE_DISTRIBUTIONS_ALL.INVOICE_ID = AP_INVOICES_ALL.INVOICE_ID",
+    "AP_INVOICE_DISTRIBUTIONS_ALL.PO_DISTRIBUTION_ID = PO_DISTRIBUTIONS_ALL.PO_DISTRIBUTION_ID"
+  ]
+}

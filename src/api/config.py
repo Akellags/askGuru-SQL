@@ -30,6 +30,10 @@ class Settings(BaseModel):
     # Security
     API_KEY: str = os.getenv("API_KEY", "")
 
+    # RAG Settings
+    RAG_CONFIG_PATH: str = os.getenv("RAG_CONFIG_PATH", "config/minimal.json")
+    ENABLE_RAG: bool = os.getenv("ENABLE_RAG", "true").lower() == "true"
+
     # Logic Settings
     MAX_TOKENS: int = int(os.getenv("MAX_TOKENS", "512"))
     TEMPERATURE: float = float(os.getenv("TEMPERATURE", "0.0"))

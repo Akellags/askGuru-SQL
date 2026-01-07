@@ -1,0 +1,301 @@
+{
+  "table": "MTL_MATERIAL_TRANSACTIONS",
+  "purpose": "Business-use subset of MTL_MATERIAL_TRANSACTIONS.",
+  "pk": [],
+  "fks": [],
+  "columns": [
+    {
+      "name": "TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "Transaction identifier."
+    },
+    {
+      "name": "INVENTORY_ITEM_ID",
+      "type": "NUMBER",
+      "desc": "Inventory item identifier."
+    },
+    {
+      "name": "REVISION",
+      "type": "VARCHAR2",
+      "desc": "Inventory item revision."
+    },
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier."
+    },
+    {
+      "name": "SUBINVENTORY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Transaction secondary inventory."
+    },
+    {
+      "name": "TRANSACTION_TYPE_ID",
+      "type": "NUMBER",
+      "desc": "Transaction type identifier."
+    },
+    {
+      "name": "TRANSACTION_ACTION_ID",
+      "type": "NUMBER",
+      "desc": "Transaction action identifier."
+    },
+    {
+      "name": "TRANSACTION_SOURCE_TYPE_ID",
+      "type": "NUMBER",
+      "desc": "Transaction source type identifier."
+    },
+    {
+      "name": "TRANSACTION_SOURCE_ID",
+      "type": "NUMBER",
+      "desc": "Transaction source identifier."
+    },
+    {
+      "name": "TRANSACTION_SOURCE_NAME",
+      "type": "VARCHAR2",
+      "desc": "Transaction source identifier."
+    },
+    {
+      "name": "TRANSACTION_QUANTITY",
+      "type": "NUMBER",
+      "desc": "Transaction quantity."
+    },
+    {
+      "name": "TRANSACTION_UOM",
+      "type": "VARCHAR2",
+      "desc": "Transaction unit of measure."
+    },
+    {
+      "name": "PRIMARY_QUANTITY",
+      "type": "NUMBER",
+      "desc": "Transaction quantity in primary UOM of the item."
+    },
+    {
+      "name": "TRANSACTION_DATE",
+      "type": "DATE",
+      "desc": "Transaction date."
+    },
+    {
+      "name": "TRANSACTION_REFERENCE",
+      "type": "VARCHAR2",
+      "desc": "Transaction reference code."
+    },
+    {
+      "name": "REASON_ID",
+      "type": "NUMBER",
+      "desc": "Transaction reason identifier."
+    },
+    {
+      "name": "DISTRIBUTION_ACCOUNT_ID",
+      "type": "NUMBER",
+      "desc": "Distribution account identifier."
+    },
+    {
+      "name": "COST_UPDATE_ID",
+      "type": "NUMBER",
+      "desc": "Cost identifier."
+    },
+    {
+      "name": "COSTED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Costed flag to mark if the transactions are costed or not."
+    },
+    {
+      "name": "TRANSACTION_GROUP_ID",
+      "type": "NUMBER",
+      "desc": "Transaction group identifier for distribution processing."
+    },
+    {
+      "name": "INVOICED_FLAG",
+      "type": "VARCHAR2",
+      "desc": "Invoiced flag to mark if the transactions are invoiced."
+    },
+    {
+      "name": "ACTUAL_COST",
+      "type": "NUMBER",
+      "desc": "Actual cost."
+    },
+    {
+      "name": "TRANSACTION_COST",
+      "type": "NUMBER",
+      "desc": "Cost entered by the user during a transaction."
+    },
+    {
+      "name": "PRIOR_COST",
+      "type": "NUMBER",
+      "desc": "Item cost before the transaction."
+    },
+    {
+      "name": "NEW_COST",
+      "type": "NUMBER",
+      "desc": "Item cost after the transaction processing."
+    },
+    {
+      "name": "RECEIVING_DOCUMENT",
+      "type": "VARCHAR2",
+      "desc": "Receiving document."
+    },
+    {
+      "name": "PICKING_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Picking line ID."
+    },
+    {
+      "name": "TRX_SOURCE_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Transaction source line ID."
+    },
+    {
+      "name": "TRX_SOURCE_DELIVERY_ID",
+      "type": "NUMBER",
+      "desc": "Sales order delivery identifier."
+    },
+    {
+      "name": "RMA_LINE_ID",
+      "type": "NUMBER",
+      "desc": "RMA line identifier."
+    },
+    {
+      "name": "TRANSFER_TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "Opposing transfer transaction ID."
+    },
+    {
+      "name": "TRANSACTION_SET_ID",
+      "type": "NUMBER",
+      "desc": "Transaction group identifier."
+    },
+    {
+      "name": "RCV_TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "Receiving transaction cross-reference."
+    },
+    {
+      "name": "MOVE_TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "Move transaction cross-reference."
+    },
+    {
+      "name": "COMPLETION_TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "Completion transaction cross-reference."
+    },
+    {
+      "name": "SHORTAGE_PROCESS_CODE",
+      "type": "NUMBER",
+      "desc": "Workflow notification flag for shortages."
+    },
+    {
+      "name": "SOURCE_CODE",
+      "type": "VARCHAR2",
+      "desc": "User-entered source code for outside transactions."
+    },
+    {
+      "name": "SHIPMENT_NUMBER",
+      "type": "VARCHAR2",
+      "desc": "In-transit shipment identifier."
+    },
+    {
+      "name": "MOVE_ORDER_LINE_ID",
+      "type": "NUMBER",
+      "desc": "Move order line linked to this transaction."
+    },
+    {
+      "name": "SECONDARY_UOM_CODE",
+      "type": "VARCHAR2",
+      "desc": "Secondary UOM used in the material transaction."
+    },
+    {
+      "name": "SECONDARY_TRANSACTION_QUANTITY",
+      "type": "NUMBER",
+      "desc": "Secondary quantity."
+    },
+    {
+      "name": "PARENT_TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "Parent transaction identifier."
+    },
+    {
+      "name": "MATERIAL_EXPENSE_ACCOUNT",
+      "type": "NUMBER",
+      "desc": "Specifies the material expense account."
+    }
+  ],
+  "key_columns": [
+    {
+      "name": "ORGANIZATION_ID",
+      "type": "NUMBER",
+      "desc": "Organization identifier."
+    },
+    {
+      "name": "INVENTORY_ITEM_ID",
+      "type": "NUMBER",
+      "desc": "Inventory item identifier."
+    },
+    {
+      "name": "TRANSACTION_ID",
+      "type": "NUMBER",
+      "desc": "Transaction identifier."
+    },
+    {
+      "name": "REVISION",
+      "type": "VARCHAR2",
+      "desc": "Inventory item revision."
+    },
+    {
+      "name": "SUBINVENTORY_CODE",
+      "type": "VARCHAR2",
+      "desc": "Transaction secondary inventory."
+    },
+    {
+      "name": "TRANSACTION_TYPE_ID",
+      "type": "NUMBER",
+      "desc": "Transaction type identifier."
+    },
+    {
+      "name": "TRANSACTION_ACTION_ID",
+      "type": "NUMBER",
+      "desc": "Transaction action identifier."
+    },
+    {
+      "name": "TRANSACTION_SOURCE_TYPE_ID",
+      "type": "NUMBER",
+      "desc": "Transaction source type identifier."
+    },
+    {
+      "name": "TRANSACTION_SOURCE_ID",
+      "type": "NUMBER",
+      "desc": "Transaction source identifier."
+    },
+    {
+      "name": "TRANSACTION_SOURCE_NAME",
+      "type": "VARCHAR2",
+      "desc": "Transaction source identifier."
+    },
+    {
+      "name": "TRANSACTION_QUANTITY",
+      "type": "NUMBER",
+      "desc": "Transaction quantity."
+    },
+    {
+      "name": "TRANSACTION_UOM",
+      "type": "VARCHAR2",
+      "desc": "Transaction unit of measure."
+    },
+    {
+      "name": "PRIMARY_QUANTITY",
+      "type": "NUMBER",
+      "desc": "Transaction quantity in primary UOM of the item."
+    },
+    {
+      "name": "TRANSACTION_DATE",
+      "type": "DATE",
+      "desc": "Transaction date."
+    }
+  ],
+  "notes": "mtl_material_transactions records detailed material movement transactions in Oracle Inventory, uniquely identified by transaction_id. It captures item-level transactions such as inventory receipts, issues, transfers, and adjustments. Key columns include inventory_item_id (item reference), organization_id (inventory organization), subinventory_code, transaction_type_id, transaction_source_type_id, transaction_source_id, transaction_quantity, transaction_uom, primary_quantity, transaction_date, reason_id, distribution_account_id, actual_cost, transaction_cost, prior_cost, new_cost, and various cross-references like rcv_transaction_id and move_order_line_id. Flags like costed_flag and invoiced_flag track costing and invoicing statuses. This table is essential for inventory valuation, financial reconciliation, and operational reporting across supply chain and manufacturing modules.",
+  "join_hints": [
+    "MTL_MATERIAL_TRANSACTIONS.TRANSACTION_ID = MTL_TRANSACTION_ACCOUNTS.TRANSACTION_ID",
+    "MTL_MATERIAL_TRANSACTIONS.INVENTORY_ITEM_ID = MTL_SYSTEM_ITEMS_B.INVENTORY_ITEM_ID",
+    "MTL_MATERIAL_TRANSACTIONS.ORGANIZATION_ID = ORG_ORGANIZATION_DEFINITIONS.ORGANIZATION_ID"
+  ]
+}
