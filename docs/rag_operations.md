@@ -15,6 +15,12 @@ The RAG system is consolidated within `src/api/rag/`:
 
 Whenever you add new table cards or update `fewshots.jsonl`, you **must** rebuild the indices.
 
+**Note on Permissions**: To avoid permission errors (e.g., trying to write to `/root` or `/mnt`), ensure you set the `HF_HOME` environment variable before running indexing:
+```bash
+export HF_HOME=/llamaSFT/hf_home
+export TRANSFORMERS_CACHE=/llamaSFT/hf_home
+```
+
 ### **Step 2.1: BM25 (Lexical) Indexing**
 Run this command to build the keyword-based index:
 ```bash
@@ -26,7 +32,7 @@ python3 src/api/rag/build_bm25.py \
 ```
 
 ### **Step 2.2: Vector (Semantic) Indexing**
-Run this command to build the dense vector index (requires GPU or takes ~5-10 mins on CPU):
+Run this command to build the dense vector index:
 ```bash
 # Add RAG package to PYTHONPATH
 export PYTHONPATH=$PYTHONPATH:$(pwd)/src/api/rag

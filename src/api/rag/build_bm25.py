@@ -1,4 +1,4 @@
-import json, argparse, re, math
+import json, argparse, re, math, os
 from pathlib import Path
 from typing import Dict, List, Any
 
@@ -73,6 +73,10 @@ def main():
     ap.add_argument("--out-dir", required=True)
     ap.add_argument("--hf-home", help="Ignored (for consistency with build_vectors.py)")
     args = ap.parse_args()
+
+    if args.hf_home:
+        os.environ["HF_HOME"] = args.hf_home
+        os.environ["TRANSFORMERS_CACHE"] = args.hf_home
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)

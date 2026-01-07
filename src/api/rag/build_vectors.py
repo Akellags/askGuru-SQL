@@ -51,6 +51,12 @@ def main():
     ap.add_argument("--hf-home", help="HF_HOME / Cache directory for transformer models")
     args = ap.parse_args()
 
+    # Set environment variables for HF to ensure no permission issues on root
+    if args.hf_home:
+        os.environ["HF_HOME"] = args.hf_home
+        os.environ["TRANSFORMERS_CACHE"] = args.hf_home
+        os.environ["SENTENCE_TRANSFORMERS_HOME"] = args.hf_home
+
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     
