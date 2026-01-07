@@ -138,7 +138,8 @@ async def run_fallback_strategy(request: SQLRequest, schema_text: str, rag_conte
     
     if not is_valid:
         # Critic Loop: Ask the model to fix the error once
-        critic_prompt = build_critic_prompt(request, MSCHEMA_CACHE, schema_text, final_sql, db_error)
+        print(f"\n[DEBUG] final_sql passed to critic: {final_sql}")
+        critic_prompt = build_critic_prompt(request, schema_text, final_sql, db_error)
         generated_text = await call_model(settings.PRIMARY_MODEL_URL, critic_prompt)
         final_sql = clean_sql(generated_text)
         
