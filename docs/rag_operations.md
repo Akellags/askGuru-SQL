@@ -19,20 +19,22 @@ Whenever you add new table cards or update `fewshots.jsonl`, you **must** rebuil
 Run this command to build the keyword-based index:
 ```bash
 python3 src/api/rag/build_bm25.py \
-  --tables-dir /llamaSFT/askGuru-SQL/src/api/rag/data/tables \
-  --fewshots /llamaSFT/askGuru-SQL/src/api/rag/data/fewshots.jsonl \
-  --out-dir /llamaSFT/askGuru-SQL/src/api/rag/index/bm25
+  --tables-dir src/api/rag/data/tables \
+  --fewshots src/api/rag/data/fewshots.jsonl \
+  --out-dir src/api/rag/index/bm25 \
+  --hf-home /llamaSFT/hf_home
 ```
 
 ### **Step 2.2: Vector (Semantic) Indexing**
 Run this command to build the dense vector index (requires GPU or takes ~5-10 mins on CPU):
 ```bash
 # Add RAG package to PYTHONPATH
-export PYTHONPATH=$PYTHONPATH:/llamaSFT/askGuru-SQL/src/api/rag
+export PYTHONPATH=$PYTHONPATH:$(pwd)/src/api/rag
 python3 src/api/rag/build_vectors.py \
-  --tables-dir /llamaSFT/askGuru-SQL/src/api/rag/data/tables \
-  --fewshots /llamaSFT/askGuru-SQL/src/api/rag/data/fewshots.jsonl \
-  --out-dir /llamaSFT/askGuru-SQL/src/api/rag/index/vectors \
+  --tables-dir src/api/rag/data/tables \
+  --fewshots src/api/rag/data/fewshots.jsonl \
+  --out-dir src/api/rag/index/vectors \
+  --model BAAI/bge-en-icl \
   --hf-home /llamaSFT/hf_home
 ```
 

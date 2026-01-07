@@ -48,12 +48,17 @@ def main():
     ap.add_argument("--fewshots", required=True)
     ap.add_argument("--out-dir", required=True)
     ap.add_argument("--model", default="BAAI/bge-en-icl")
+    ap.add_argument("--hf-home", help="HF_HOME / Cache directory for transformer models")
     args = ap.parse_args()
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     
-    embedder = EmbedderManager(model_name=args.model)
+    embedder = EmbedderManager(
+        model_name=args.model,
+        index_dir=str(out_dir),
+        cache_dir=args.hf_home
+    )
     
     # Tables
     cards = load_table_cards(Path(args.tables_dir))
