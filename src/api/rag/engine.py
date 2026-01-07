@@ -43,8 +43,17 @@ class RAGEngine:
         self.fewshots_bm25 = BM25Index.load(self.index_dir / "fewshots_bm25.json")
         
         # Load Vector Indices
-        self.table_index, self.table_ids = self.embedder.load_index("tables")
-        self.fewshot_index, self.fewshot_ids = self.embedder.load_index("fewshots")
+        try:
+            self.table_index, self.table_ids = self.embedder.load_index("tables")
+        except FileNotFoundError:
+            self.table_index, self.table_ids = None, []
+            print("Warning: Table vector index not found. Dense search for tables disabled.")
+
+        try:
+            self.fewshot_index, self.fewshot_ids = self.embedder.load_index("fewshots")
+        except FileNotFoundError:
+            self.fewshot_index, self.fewshot_ids = None, []
+            print("Warning: Fewshot vector index not found. Dense search for fewshots disabled.")
 
     def _load_cards(self) -> Dict[str, Dict]:
         out = {}
@@ -56,11 +65,13 @@ class RAGEngine:
 
     def get_dynamic_context(self, question: str, top_tables: int = 8, top_fewshots: int = 4) -> Dict[str, Any]:
         # 1. Hybrid Table Search
-        bm25_hits = [h["doc_id"] for h in self.tables_bm25.search(question, topk=50)]
+        bm25_hits = [h["doc_id"] for h in self.tables_bm25.search(question, topk=50)] if self.tables_bm25 else []
         
-        q_vec = self.embedder.embed_query(question)
-        D, I = self.table_index.search(np.array([q_vec]).astype("float32"), 50)
-        dense_hits = [self.table_ids[i] for i in I[0] if i != -1]
+        dense_hits = []
+        if self.table_index:
+            q_vec = self.embedder.embed_query(question)
+            D, I = self.table_index.search(np.array([q_vec]).astype("float32"), 50)
+            dense_hits = [self.table_ids[i] for i in I[0] if i != -1]
         
         merged_tables = [t for t, _ in merge_rrf(bm25_hits, dense_hits)[:top_tables]]
         
@@ -70,9 +81,13 @@ class RAGEngine:
         join_conds = self.planner.get_join_conds(connected)
         
         # 3. Hybrid Few-shot Search
-        fs_bm25 = [h["doc_id"] for h in self.fewshots_bm25.search(question, topk=30)]
-        D_fs, I_fs = self.fewshot_index.search(np.array([q_vec]).astype("float32"), 30)
-        fs_dense = [self.fewshot_ids[i] for i in I_fs[0] if i != -1]
+        fs_bm25 = [h["doc_id"] for h in self.fewshots_bm25.search(question, topk=30)] if self.fewshots_bm25 else []
+        
+        fs_dense = []
+        if self.fewshot_index:
+            q_vec = self.embedder.embed_query(question) if not self.table_index else q_vec # Reuse q_vec if already computed
+            D_fs, I_fs = self.fewshot_index.search(np.array([q_vec]).astype("float32"), 30)
+            fs_dense = [self.fewshot_ids[i] for i in I_fs[0] if i != -1]
         
         merged_fs = merge_rrf(fs_bm25, fs_dense)
         

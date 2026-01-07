@@ -13,22 +13,21 @@ class EmbedderManager:
                  model_name: str = "BAAI/bge-en-icl",
                  index_dir: str = None,
                  cache_dir: str = None,
-                 token: str = None):
+                 token: str = None,
+                 device: str = "cpu"):
         self.model_name = model_name
         self.index_dir = Path(index_dir) if index_dir else Path.cwd() / "rag" / "index" / "vectors"
         self.index_dir.mkdir(parents=True, exist_ok=True)
         self.cache_dir = cache_dir
         
-        print(f"Loading BGE embedder: {model_name}")
-        # Use CPU for embedding to save VRAM for the large LLM
-        device = "cpu"
+        print(f"Loading BGE embedder: {model_name} on {device}")
         
-        # Try loading locally first to avoid 401/expired token issues
+        # We explicitly pass token=False for public models if we don't have a specific token
+        # to prevent HF from using an expired token from the environment.
+        hf_token = token if token else False
+        
         try:
-            # We explicitly pass token=False for public models if we don't have a specific token
-            # to prevent HF from using an expired token from the environment.
-            hf_token = token if token else False
-            
+            # Try loading with requested device (e.g., cuda)
             self.model = SentenceTransformer(
                 model_name, 
                 cache_folder=cache_dir, 
@@ -36,15 +35,25 @@ class EmbedderManager:
                 token=hf_token,
                 model_kwargs={"local_files_only": True}
             )
-            print("Successfully loaded model from local cache.")
+            print(f"Successfully loaded model from local cache on {device}.")
         except Exception as e:
-            print(f"Local load failed or model not found in {cache_dir}. Attempting download...")
-            self.model = SentenceTransformer(
-                model_name, 
-                cache_folder=cache_dir, 
-                device=device,
-                token=token if token else False
-            )
+            if device != "cpu":
+                print(f"Failed to load on {device} ({e}), falling back to cpu...")
+                device = "cpu"
+            
+            try:
+                # Attempt to load/download on fallback device
+                self.model = SentenceTransformer(
+                    model_name, 
+                    cache_folder=cache_dir, 
+                    device=device,
+                    token=hf_token
+                )
+                print(f"Successfully loaded model on {device}.")
+            except Exception as e2:
+                print(f"Failed to load model: {e2}")
+                raise e2
+
         self.embedding_dim = self.model.get_sentence_embedding_dimension()
         print(f"Embedding dimension: {self.embedding_dim}")
     
@@ -104,7 +113,9 @@ class EmbedderManager:
             
             full_text = " | ".join(text_parts)
             texts.append(full_text)
-            example_ids.append(f"example_{i}")
+            # Use 'id' if present, else fallback to index
+            eid = example.get('id', i)
+            example_ids.append(f"example_{eid}")
         
         embeddings = self.model.encode(texts, show_progress_bar=False, convert_to_numpy=True, normalize_embeddings=True)
         return embeddings, example_ids

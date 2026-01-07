@@ -36,6 +36,7 @@ def adapt_fewshots(fewshots_path: Path) -> List[Dict[str, Any]]:
         if not line.strip(): continue
         ex = json.loads(line)
         adapted.append({
+            "id": ex.get("id"),
             "question": ex.get("intent", ""),
             "sql": ex.get("sql", ""),
             "db_info": " ".join(ex.get("tables", [])),
@@ -67,11 +68,17 @@ def main():
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     
+    # For build_vectors, we prefer GPU if available to speed up indexing.
+    # The EmbedderManager now has a built-in fallback to CPU if GPU fails.
+    import torch
+    pref_device = "cuda" if torch.cuda.is_available() else "cpu"
+
     embedder = EmbedderManager(
         model_name=args.model,
         index_dir=str(out_dir),
         cache_dir=args.hf_home,
-        token=args.hf_token
+        token=args.hf_token,
+        device=pref_device
     )
     
     # Tables
