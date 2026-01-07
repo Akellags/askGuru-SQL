@@ -22,12 +22,24 @@ class EmbedderManager:
         print(f"Loading BGE embedder: {model_name}")
         # Use CPU for embedding to save VRAM for the large LLM
         device = "cpu"
-        self.model = SentenceTransformer(
-            model_name, 
-            cache_folder=cache_dir, 
-            device=device,
-            token=token
-        )
+        
+        # Try loading locally first to avoid 401/expired token issues
+        try:
+            self.model = SentenceTransformer(
+                model_name, 
+                cache_folder=cache_dir, 
+                device=device,
+                model_kwargs={"local_files_only": True}
+            )
+            print("Successfully loaded model from local cache.")
+        except Exception as e:
+            print(f"Local load failed or model not found in {cache_dir}. Attempting download...")
+            self.model = SentenceTransformer(
+                model_name, 
+                cache_folder=cache_dir, 
+                device=device,
+                token=token
+            )
         self.embedding_dim = self.model.get_sentence_embedding_dimension()
         print(f"Embedding dimension: {self.embedding_dim}")
     
