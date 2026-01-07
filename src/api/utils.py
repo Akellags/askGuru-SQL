@@ -103,6 +103,19 @@ Follow JOIN HINTS. Do not invent columns. Guard divisions with NULLIF.
 Return **Oracle SQL only**. No markdown. No explanation.
 ```sql"""
 
+def get_filtered_schema(mschema: List[Dict[str, Any]], requested_tables: List[str]) -> str:
+    """Filter the M-Schema for requested tables and format as text."""
+    if not requested_tables:
+        return "No tables requested for static filtering."
+    
+    table_names = [t.upper().strip() for t in requested_tables]
+    filtered_data = [t for t in mschema if t['table_name'].upper().strip() in table_names]
+    
+    if not filtered_data:
+        return f"Warning: None of the requested tables {requested_tables} found in schema."
+    
+    return format_mschema_text(filtered_data)
+
 def get_filtered_schema_from_rag(rag_context: Dict[str, Any]) -> str:
     """Format M-Schema based on RAG selected tables and columns."""
     lines = []
