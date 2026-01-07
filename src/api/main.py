@@ -228,7 +228,7 @@ async def generate_sql(request: SQLRequest):
     if settings.ENABLE_RAG and RAG_ENGINE:
         try:
             rag_context = RAG_ENGINE.get_dynamic_context(request.question)
-            schema_text = get_filtered_schema_from_rag(rag_context)
+            schema_text = get_filtered_schema_from_rag(rag_context, MSCHEMA_CACHE)
             print(f"RAG Tables: {rag_context['tables']}")
         except Exception as e:
             print(f"RAG retrieval failed, falling back to static schema: {e}")

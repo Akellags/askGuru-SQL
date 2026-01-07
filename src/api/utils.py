@@ -116,31 +116,41 @@ def get_filtered_schema(mschema: List[Dict[str, Any]], requested_tables: List[st
     
     return format_mschema_text(filtered_data)
 
-def get_filtered_schema_from_rag(rag_context: Dict[str, Any]) -> str:
-    """Format M-Schema based on RAG selected tables and columns."""
-    lines = []
-    tables = rag_context.get("tables", [])
-    columns = rag_context.get("columns", {})
+def get_filtered_schema_from_rag(rag_context: Dict[str, Any], mschema: List[Dict[str, Any]]) -> str:
+    """Format M-Schema based on RAG selected tables and columns, using MSCHEMA for full details."""
+    selected_tables = [t.upper() for t in rag_context.get("tables", [])]
+    if not selected_tables:
+        return "No tables identified by RAG for this question."
+        
+    selected_cols_map = rag_context.get("columns", {})
     
-    for table_name in tables:
-        lines.append(f"{table_name} (")
-        table_cols = columns.get(table_name, [])
-        for col in table_cols:
-            # Note: We don't have full type info here from RAG output yet, 
-            # but we can assume it's retrieved or just list names.
-            # In a real scenario, we'd look up types in MSCHEMA.
-            lines.append(f"  {col}")
-        lines.append(")")
-        lines.append("")
-    
-    return "\n".join(lines)
+    # Filter mschema to only include RAG-selected tables
+    filtered_mschema = []
+    for table_card in mschema:
+        tname = table_card['table_name'].upper()
+        if tname in selected_tables:
+            # Optionally further filter columns based on RAG selected columns
+            # but usually it's better to provide all columns from the selected tables
+            # or at least the ones RAG thinks are important + ESSENTIAL ones.
+            filtered_mschema.append(table_card)
+            
+    if not filtered_mschema:
+        return f"Warning: RAG selected tables {selected_tables} but they were not found in MSCHEMA."
+        
+    return format_mschema_text(filtered_mschema)
 
 def build_enriched_question(question: str, filters: Optional[List[str]] = None, group_columns: Optional[List[str]] = None, columns_list: Optional[List[str]] = None) -> str:
     """Helper to build a detailed question string."""
     parts = [question]
-    if filters: parts.append(f"Filters: {', '.join(filters)}")
-    if group_columns: parts.append(f"Group by: {', '.join(group_columns)}")
-    if columns_list: parts.append(f"Required columns: {', '.join(columns_list)}")
+    if filters:
+        f_str = filters if isinstance(filters, str) else ", ".join(filters)
+        parts.append(f"Filters: {f_str}")
+    if group_columns:
+        g_str = group_columns if isinstance(group_columns, str) else ", ".join(group_columns)
+        parts.append(f"Group by: {g_str}")
+    if columns_list:
+        c_str = columns_list if isinstance(columns_list, str) else ", ".join(columns_list)
+        parts.append(f"Required columns: {c_str}")
     return " | ".join(parts)
 
 def build_sqlcoder_prompt(request: Any, mschema: List[Dict[str, Any]], schema_text: str) -> str:
