@@ -18,6 +18,7 @@ class RAGEngine:
         # Initialize Embedder
         self.embedder = EmbedderManager(
             model_name=config.get("embedder", {}).get("model_name", "BAAI/bge-en-icl"),
+            index_dir=str(self.vectors_dir),
             cache_dir=config.get("embedder", {}).get("cache_dir")
         )
         
@@ -35,7 +36,7 @@ class RAGEngine:
         self.planner = RAGPlanner(self.cards, external_joins=ext_joins)
         
         # Initialize Evidence Composer
-        self.composer = EvidenceComposer(Path(config.get("evidence_policies", "rag/data/evidence_policies.json")))
+        self.composer = EvidenceComposer(Path(config.get("evidence_policies", "src/api/rag/data/evidence_policies.json")))
         
         # Load Indices
         self.tables_bm25 = BM25Index.load(self.index_dir / "tables_bm25.json")
