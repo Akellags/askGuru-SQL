@@ -49,6 +49,7 @@ def main():
     ap.add_argument("--out-dir", required=True)
     ap.add_argument("--model", default="BAAI/bge-en-icl")
     ap.add_argument("--hf-home", help="HF_HOME / Cache directory for transformer models")
+    ap.add_argument("--hf-token", help="HuggingFace API Token")
     args = ap.parse_args()
 
     # Set environment variables for HF to ensure no permission issues on root
@@ -56,6 +57,9 @@ def main():
         os.environ["HF_HOME"] = args.hf_home
         os.environ["TRANSFORMERS_CACHE"] = args.hf_home
         os.environ["SENTENCE_TRANSFORMERS_HOME"] = args.hf_home
+    
+    if args.hf_token:
+        os.environ["HF_TOKEN"] = args.hf_token
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -63,7 +67,8 @@ def main():
     embedder = EmbedderManager(
         model_name=args.model,
         index_dir=str(out_dir),
-        cache_dir=args.hf_home
+        cache_dir=args.hf_home,
+        token=args.hf_token
     )
     
     # Tables

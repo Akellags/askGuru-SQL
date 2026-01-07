@@ -12,7 +12,8 @@ class EmbedderManager:
     def __init__(self, 
                  model_name: str = "BAAI/bge-en-icl",
                  index_dir: str = None,
-                 cache_dir: str = None):
+                 cache_dir: str = None,
+                 token: str = None):
         self.model_name = model_name
         self.index_dir = Path(index_dir) if index_dir else Path.cwd() / "rag" / "index" / "vectors"
         self.index_dir.mkdir(parents=True, exist_ok=True)
@@ -21,7 +22,12 @@ class EmbedderManager:
         print(f"Loading BGE embedder: {model_name}")
         # Use CPU for embedding to save VRAM for the large LLM
         device = "cpu"
-        self.model = SentenceTransformer(model_name, cache_folder=cache_dir, device=device)
+        self.model = SentenceTransformer(
+            model_name, 
+            cache_folder=cache_dir, 
+            device=device,
+            token=token
+        )
         self.embedding_dim = self.model.get_sentence_embedding_dimension()
         print(f"Embedding dimension: {self.embedding_dim}")
     

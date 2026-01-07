@@ -15,10 +15,11 @@ The RAG system is consolidated within `src/api/rag/`:
 
 Whenever you add new table cards or update `fewshots.jsonl`, you **must** rebuild the indices.
 
-**Note on Permissions**: To avoid permission errors (e.g., trying to write to `/root` or `/mnt`), ensure you set the `HF_HOME` environment variable before running indexing:
+**Note on Permissions and Auth**: To avoid permission errors or authentication issues (e.g., expired tokens), ensure you set the necessary environment variables:
 ```bash
 export HF_HOME=/llamaSFT/hf_home
 export TRANSFORMERS_CACHE=/llamaSFT/hf_home
+export HF_TOKEN="your_valid_huggingface_token_here"
 ```
 
 ### **Step 2.1: BM25 (Lexical) Indexing**
@@ -28,7 +29,8 @@ python3 src/api/rag/build_bm25.py \
   --tables-dir src/api/rag/data/tables \
   --fewshots src/api/rag/data/fewshots.jsonl \
   --out-dir src/api/rag/index/bm25 \
-  --hf-home /llamaSFT/hf_home
+  --hf-home /llamaSFT/hf_home \
+  --hf-token $HF_TOKEN
 ```
 
 ### **Step 2.2: Vector (Semantic) Indexing**
@@ -41,7 +43,8 @@ python3 src/api/rag/build_vectors.py \
   --fewshots src/api/rag/data/fewshots.jsonl \
   --out-dir src/api/rag/index/vectors \
   --model BAAI/bge-en-icl \
-  --hf-home /llamaSFT/hf_home
+  --hf-home /llamaSFT/hf_home \
+  --hf-token $HF_TOKEN
 ```
 
 ## 3. Configuration

@@ -72,6 +72,7 @@ def main():
     ap.add_argument("--fewshots", required=True)
     ap.add_argument("--out-dir", required=True)
     ap.add_argument("--hf-home", help="Ignored (for consistency with build_vectors.py)")
+    ap.add_argument("--hf-token", help="Ignored (for consistency with build_vectors.py)")
     args = ap.parse_args()
 
     if args.hf_home:
