@@ -25,10 +25,15 @@ class EmbedderManager:
         
         # Try loading locally first to avoid 401/expired token issues
         try:
+            # We explicitly pass token=False for public models if we don't have a specific token
+            # to prevent HF from using an expired token from the environment.
+            hf_token = token if token else False
+            
             self.model = SentenceTransformer(
                 model_name, 
                 cache_folder=cache_dir, 
                 device=device,
+                token=hf_token,
                 model_kwargs={"local_files_only": True}
             )
             print("Successfully loaded model from local cache.")
@@ -38,7 +43,7 @@ class EmbedderManager:
                 model_name, 
                 cache_folder=cache_dir, 
                 device=device,
-                token=token
+                token=token if token else False
             )
         self.embedding_dim = self.model.get_sentence_embedding_dimension()
         print(f"Embedding dimension: {self.embedding_dim}")

@@ -58,8 +58,11 @@ def main():
         os.environ["TRANSFORMERS_CACHE"] = args.hf_home
         os.environ["SENTENCE_TRANSFORMERS_HOME"] = args.hf_home
     
-    if args.hf_token:
+    if args.hf_token and args.hf_token.strip():
         os.environ["HF_TOKEN"] = args.hf_token
+    elif "HF_TOKEN" in os.environ and not os.environ["HF_TOKEN"]:
+        # If it's an empty string in env, remove it to avoid 401s on public repos
+        del os.environ["HF_TOKEN"]
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
