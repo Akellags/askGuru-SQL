@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import logging
 import re
-from typing import Optional, Tuple
+from typing import Optional, Tuple, List, Dict
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +53,7 @@ def validate_sql_joins(sql: str, schema: str) -> Tuple[bool, Optional[str]]:
     return True, None
 
 
-def _validate_table_aliases(sql: str, schema: str) -> list[str]:
+def _validate_table_aliases(sql: str, schema: str) -> List[str]:
     """Validate table aliases are referenced correctly."""
     errors = []
     
@@ -83,7 +83,7 @@ def _validate_table_aliases(sql: str, schema: str) -> list[str]:
     return errors
 
 
-def _validate_join_syntax(sql: str) -> list[str]:
+def _validate_join_syntax(sql: str) -> List[str]:
     """Validate JOIN syntax."""
     errors = []
     
@@ -99,7 +99,7 @@ def _validate_join_syntax(sql: str) -> list[str]:
     return errors
 
 
-def _validate_from_clause(sql: str) -> list[str]:
+def _validate_from_clause(sql: str) -> List[str]:
     """Validate FROM clause exists."""
     errors = []
     
@@ -135,7 +135,7 @@ def suggest_join_fix(sql: str, schema: str) -> Optional[str]:
     return None
 
 
-def extract_tables_from_sql(sql: str) -> list[str]:
+def extract_tables_from_sql(sql: str) -> List[str]:
     """Extract table names referenced in SQL."""
     tables = []
     
@@ -150,7 +150,7 @@ def extract_tables_from_sql(sql: str) -> list[str]:
     return list(set(tables))
 
 
-def extract_joins_from_sql(sql: str) -> list[dict]:
+def extract_joins_from_sql(sql: str) -> List[Dict]:
     """Extract JOIN conditions from SQL."""
     joins = []
     

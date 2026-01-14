@@ -9,7 +9,7 @@ Run from askGuru-SQL/ directory.
 
 accelerate launch --config_file train/config/zero3.yaml \
   custom_oracle_llama/sft_oracle_llama70b_qlora.py \
-  --model_name_or_path /models/llama-3.1-70b-instruct \
+  --model_name_or_path /models/llama-3.3-70b-instruct \
   --data_path data/oracle_sft_conversations.json \
   --output_dir outputs/oracle_llama70b_qlora \
   --model_max_length 8192

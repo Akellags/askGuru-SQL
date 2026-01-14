@@ -1,6 +1,6 @@
 # Oracle EBS NL2SQL Inference with vLLM on 1×A100-80GB (Ubuntu 24)
 
-**Complete manual deployment guide for serving fine-tuned LLaMA-3.1-70B with vLLM**
+**Complete manual deployment guide for serving fine-tuned LLaMA-3.3-70B with vLLM**
 
 ---
 
@@ -220,8 +220,8 @@ cd /llamaSFT
 python3 << 'EOF'
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-model_id = "meta-llama/Llama-3.1-70B-Instruct"
-output_dir = "./models/llama-3.1-70b-instruct"
+model_id = "meta-llama/Llama-3.3-70B-Instruct"
+output_dir = "./models/llama-3.3-70b-instruct"
 
 # Download model
 model = AutoModelForCausalLM.from_pretrained(
@@ -244,7 +244,7 @@ EOF
 ```bash
 # Use the provided merge script
 python custom_oracle_llama/package_oracle_model.py \
-  --base_model ./models/llama-3.1-70b-instruct \
+  --base_model ./models/llama-3.3-70b-instruct \
   --lora_adapter ./models/oracle_llama70b_lora \
   --merged_out ./models/merged_oracle_llama70b \
   --quant_out ./models/merged_oracle_llama70b_awq4 \
@@ -253,7 +253,7 @@ python custom_oracle_llama/package_oracle_model.py \
 ```
 
 **What this does:**
-1. Loads base LLaMA-3.1-70B-Instruct
+1. Loads base LLaMA-3.3-70B-Instruct
 2. Merges LoRA adapter weights
 3. Quantizes to 4-bit using AWQ
 4. Saves merged quantized model
@@ -773,7 +773,7 @@ result = guardrail.validate(generated_sql)
 - **vLLM:** https://github.com/vllm-project/vllm
 - **OpenAI API Compatibility:** https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html
 - **AWQ Quantization:** https://github.com/mit-han-lab/awq
-- **LLaMA Model:** https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct
+- **LLaMA Model:** https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct
 
 ---
 

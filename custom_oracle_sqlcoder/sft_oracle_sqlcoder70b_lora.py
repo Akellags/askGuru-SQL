@@ -12,7 +12,8 @@ Run from askGuru-SQL/ directory, e.g.:
 accelerate launch --config_file train/config/zero3.yaml \
   custom_oracle_sqlcoder/sft_oracle_sqlcoder70b_lora.py \
   --model_name_or_path defog/sqlcoder-70b-alpha \
-  --data_path data/oracle_sft_conversations.json \
+  --data_path data/oracle_sqlcoder_sft_train.json \
+  --eval_data_path data/oracle_sqlcoder_sft_val.json \
   --output_dir outputs/oracle_sqlcoder70b_lora \
   --model_max_length 4096 \
   --use_lora True \
@@ -57,8 +58,12 @@ def train() -> None:
     if training_args.enable_dialect_router:
         logger.warning("enable_dialect_router=True. SQLCoder is SQL-only, set to False.")
 
+    # Path validation
     if not os.path.exists(data_args.data_path):
         raise FileNotFoundError(f"Training data not found: {data_args.data_path}")
+    
+    if getattr(data_args, "eval_data_path", None) and not os.path.exists(data_args.eval_data_path):
+        logger.warning(f"Eval data path provided but not found: {data_args.eval_data_path}")
     
     set_seed(training_args.seed)
     logger.info(f"Seed set to {training_args.seed}")
@@ -69,22 +74,22 @@ def train() -> None:
 
     set_caching_enabled(False)
     
-    dataset = load_dataset("json", data_files=data_args.data_path)
-    logger.info(f"Loaded dataset with splits: {dataset.keys()}")
+    train_raw = load_dataset("json", data_files=data_args.data_path)["train"]
+    logger.info(f"Loaded {len(train_raw)} training examples")
     
-    train_data = dataset.get("train")
-    eval_data = dataset.get("validation")
-    
-    if train_data is None:
-        raise ValueError("Dataset missing 'train' split")
-    
-    if eval_data is None:
-        logger.warning("No 'validation' split found; using 10% of train for eval")
-        split = train_data.train_test_split(test_size=0.1, seed=training_args.seed)
-        train_data = split["train"]
+    eval_data = None
+    if getattr(data_args, "eval_data_path", None):
+        eval_raw = load_dataset("json", data_files=data_args.eval_data_path)["train"]
+        logger.info(f"Loaded {len(eval_raw)} eval examples")
+        eval_data = eval_raw
+    else:
+        logger.warning("No eval_data_path found; using 10% of train for eval")
+        split = train_raw.train_test_split(test_size=0.1, seed=training_args.seed)
+        train_raw = split["train"]
         eval_data = split["test"]
     
-    logger.info(f"Train examples: {len(train_data)}, Eval examples: {len(eval_data)}")
+    train_data = train_raw
+    logger.info(f"Final Train examples: {len(train_data)}, Eval examples: {len(eval_data) if eval_data else 0}")
 
     preprocess_fn_train = make_preprocess_fn_sqlcoder(tokenizer, training_args, is_eval=False)
     preprocess_fn_eval = make_preprocess_fn_sqlcoder(tokenizer, training_args, is_eval=True)

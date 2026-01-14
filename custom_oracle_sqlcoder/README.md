@@ -2,7 +2,7 @@
 
 **SQLCoder-70B** as secondary backup model for Oracle EBS natural language to SQL conversion.
 
-> **⚠️ Status**: Secondary model only. Use **LLaMA-3.1-70B as primary**.
+> **⚠️ Status**: Secondary model only. Use **LLaMA-3.3-70B** as primary (or 3.1).
 >
 > Reasons:
 > - SQLCoder has 93% overall accuracy vs LLaMA's ~52%
@@ -24,43 +24,30 @@
 
 ### Training & Preprocessing
 
-- **`_preprocessing_sqlcoder.py`**: SQLCoder prompt format converter
-  - Converts askGuru `conversations` format → SQLCoder template
-  - SQLCoder template: `### Task\n...\n### Database Schema\n...\n### SQL Query\n...`
+- **`_sqlcoder_utils.py`**: Shared utilities for prompt formatting, SQL cleaning, and validation.
+- **`_preprocessing_sqlcoder.py`**: SQLCoder-specific dataset preprocessing for training.
+- **`build_oracle_sft_dataset_sqlcoder.py`**: Separate dataset generation script that outputs SQLCoder-native prompt formats.
+- **`sft_oracle_sqlcoder70b_lora.py`**: LoRA training entrypoint.
 
-- **`sft_oracle_sqlcoder70b_lora.py`**: Training entrypoint
-  - LoRA BF16 training (same as LLaMA variant)
-  - Uses askGuru framework (DeepCustomTrainer, LoraArguments)
-  - Supports distributed training with Accelerate
+### Inference & Validation
 
-### Inference
-
-- **`inference_oracle_sqlcoder.py`**: Inference engine
-  - Standalone inference script or importable module
-  - Supports base model or LoRA-merged variants
-  - Optional JOIN validation
-
-### Validation
-
-- **`sqlcoder_join_validator.py`**: POST-PROCESSING validator
-  - Validates generated SQL for JOIN correctness
-  - Detects missing ON clauses, bad table aliases
-  - Suggests fixes for common errors
+- **`inference_oracle_sqlcoder.py`**: High-level inference engine with integrated cleaning.
+- **`sqlcoder_join_validator.py`**: Post-processing validator for JOIN correctness.
 
 ## Quick Start
 
-### 1. Prepare Dataset
+### 1. Build SQLCoder-specific Dataset
 
-Use the same dataset as LLaMA training:
+Unlike the Llama model, SQLCoder performs best with its native `### Task` prompt format. We create a separate dataset to avoid mixing structures:
 
 ```bash
-python custom_oracle_sqlcoder/build_oracle_sft_dataset.py \
-  --input_raw data/oracle_raw.jsonl \
-  --output_sft data/oracle_sft_conversations.json \
-  --dataset_id oracle_ebs_v1
+python custom_oracle_sqlcoder/build_oracle_sft_dataset_sqlcoder.py \
+  --config data/oracle_sft_config.yaml
 ```
 
-Dataset is reused; no conversion needed.
+This will produce:
+- `data/oracle_sft_conversations/oracle_sqlcoder_sft_train.json`
+- `data/oracle_sft_conversations/oracle_sqlcoder_sft_val.json`
 
 ### 2. Fine-tuning
 
@@ -68,16 +55,12 @@ Dataset is reused; no conversion needed.
 accelerate launch --config_file train/config/zero3.yaml \
   custom_oracle_sqlcoder/sft_oracle_sqlcoder70b_lora.py \
   --model_name_or_path defog/sqlcoder-70b-alpha \
-  --data_path data/oracle_sft_conversations.json \
+  --data_path data/oracle_sft_conversations/oracle_sqlcoder_sft_train.json \
+  --eval_data_path data/oracle_sft_conversations/oracle_sqlcoder_sft_val.json \
   --output_dir outputs/oracle_sqlcoder70b_lora \
   --model_max_length 4096 \
   --use_lora True \
-  --q_lora False \
-  --num_train_epochs 3 \
-  --per_device_train_batch_size 4 \
-  --gradient_accumulation_steps 8 \
-  --learning_rate 2.0e-4 \
-  --warmup_steps 500
+  --q_lora False
 ```
 
 **Key differences from LLaMA:**
@@ -142,15 +125,15 @@ Preprocessing automatically handles conversion from askGuru format.
 
 ## Benchmark Comparison
 
-| Metric | SQLCoder-70B | LLaMA-3.1-70B | Winner |
+| Metric | SQLCoder-70B | LLaMA-3.3-70B | Winner |
 |--------|---|---|---|
-| Overall Accuracy | 93% | ~52-60% | ✅ SQLCoder |
+| Overall Accuracy | 93% | ~55-65% | ✅ SQLCoder |
 | GROUP BY | 96% | ? | ✅ SQLCoder |
 | WHERE | 97.1% | ? | ✅ SQLCoder |
 | **JOIN** | **85.7%** | ? | ⚠️ Weak |
 | ORDER BY | 91.4% | ? | ✅ SQLCoder |
 | Context Window | 16K | 128K | ✅ LLaMA |
-| General Reasoning | Unknown | Better | ✅ LLaMA |
+| General Reasoning | Unknown | Superior | ✅ LLaMA |
 
 **Verdict**: SQLCoder wins on pure SQL generation but **loses on complex JOINs**. For Oracle EBS (multi-table queries), LLaMA's general reasoning + fine-tuning on your data is safer.
 
@@ -204,7 +187,7 @@ SELECT * FROM suppliers s WHERE s.vendor_id = p.vendor_id
 
 ### Option A: Sequential (Recommended)
 
-1. Run query through **LLaMA-3.1-70B** (primary)
+1. Run query through **LLaMA-3.3-70B** (primary)
 2. If LLaMA confidence low, try **SQLCoder-70B** (secondary)
 3. Validate results with `sqlcoder_join_validator.py`
 

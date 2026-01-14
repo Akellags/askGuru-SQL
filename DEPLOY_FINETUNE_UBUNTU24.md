@@ -1,6 +1,6 @@
 # Oracle EBS NL2SQL Fine-tuning on 8×A100-80GB (Ubuntu 24)
 
-**Complete manual deployment guide for LLaMA-3.1-70B-Instruct LoRA fine-tuning**
+**Complete manual deployment guide for LLaMA-3.3-70B (or 3.1) LoRA fine-tuning**
 
 ---
 
@@ -26,7 +26,7 @@
 - **CPU:** 128+ cores recommended
 - **RAM:** 1TB+ system RAM
 - **Storage:** 
-  - 150GB for base model (LLaMA-3.1-70B)
+  - 150GB for base model (LLaMA-3.3-70B)
   - 200GB for training data (4,822 examples)
   - 400GB for LoRA weights + checkpoints
 
@@ -186,30 +186,23 @@ EOF
 
 ### 2. Install Core Dependencies
 
-```bash
-# Create requirements file or install directly
-pip install \
-  transformers \
-  datasets \
-  accelerate \
-  peft \
-  bitsandbytes \
-  numpy \
-  pandas \
-  protobuf \
-  sentencepiece \
-  swanlab \
-  wandb \
-  tensorboard \
-  huggingface-hub \
-  deepspeed==0.14.4
-  
-  For 
-  flash-attn
-  download it from here
-  https://github.com/Dao-AILab/flash-attention/releases
-  pip install flash_attn-2.8.3+cu12torch2.4cxx11abiFALSE-cp312-cp312-linux_x86_64.whl
+It is highly recommended to use the provided `req.txt` for fine-tuning as it contains the correct versions and optimized Flash-Attention wheels.
 
+```bash
+# Install from the comprehensive fine-tuning requirements file
+pip install -r req.txt
+
+# If you need to install manually or update specific packages:
+# pip install transformers datasets accelerate peft bitsandbytes deepspeed==0.14.4
+```
+
+### 3. Flash-Attention (Included in req.txt)
+
+If not using `req.txt`, you must download and install the correct Flash-Attention wheel:
+[Flash-Attention Releases](https://github.com/Dao-AILab/flash-attention/releases)
+
+```bash
+pip install flash_attn-2.8.3+cu12torch2.4cxx11abiFALSE-cp312-cp312-linux_x86_64.whl
 ```
 
 ### 3. Install Optional Monitoring & Logging
@@ -262,7 +255,7 @@ EOF
 
 ## Model Download
 
-### 1. Download LLaMA-3.1-70B-Instruct
+### 1. Download LLaMA-3.3-70B-Instruct
 
 ```bash
 # Install git-lfs for large file handling
@@ -279,8 +272,8 @@ huggingface-cli login
 mkdir -p /llamaSFT/models
 cd /llamaSFT/models
 
-huggingface-cli download meta-llama/Llama-3.1-70B-Instruct \
-  --local-dir ./llama-3.1-70b-instruct \
+huggingface-cli download meta-llama/Llama-3.3-70B-Instruct \
+  --local-dir ./llama-3.3-70b-instruct \
   --token <add your token here>
 ```
 
@@ -288,12 +281,12 @@ huggingface-cli download meta-llama/Llama-3.1-70B-Instruct \
 
 ```bash
 # Check model size and files
-ls -lh llama-3.1-70b-instruct/
+ls -lh llama-3.3-70b-instruct/
 
 # Verify tokenizer
 python3 << 'EOF'
 from transformers import AutoTokenizer
-tokenizer = AutoTokenizer.from_pretrained("./llama-3.1-70b-instruct")
+tokenizer = AutoTokenizer.from_pretrained("./llama-3.3-70b-instruct")
 print(f"✓ Model loaded successfully")
 print(f"  Vocab size: {len(tokenizer)}")
 print(f"  BOS token: {tokenizer.bos_token}")
@@ -451,7 +444,7 @@ EOF
 ```bash
 cat > train_config.yaml << 'EOF'
 # Model configuration
-model_name_or_path: /llamaSFT/models/llama-3.1-70b-instruct
+model_name_or_path: /llamaSFT/models/llama-3.3-70b-instruct
 model_max_length: 8192
 
 # Data configuration
@@ -517,7 +510,7 @@ source venv/bin/activate
 # Run training with DeepSpeed ZeRO-3
 accelerate launch --config_file train/config/zero3_a100.yaml \
   askGuru-SQL/custom_oracle_llama/sft_oracle_llama70b_lora.py \
-  --model_name_or_path /llamaSFT/models/llama-3.1-70b-instruct \
+  --model_name_or_path /llamaSFT/models/llama-3.3-70b-instruct \
   --data_path /llamaSFT/data/oracle_sft_conversations/oracle_sft_conversations_train.json \
   --eval_data_path /llamaSFT/data/oracle_sft_conversations/oracle_sft_conversations_val.json \
   --output_dir /llamaSFT/outputs/oracle_llama70b_lora \
@@ -691,7 +684,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 # Load base model
 base_model = AutoModelForCausalLM.from_pretrained(
-    "models/llama-3.1-70b-instruct",
+    "models/llama-3.3-70b-instruct",
     torch_dtype="auto",
     device_map="auto"
 )
@@ -727,7 +720,7 @@ sudo apt-get update && sudo apt-get install libaio-dev -y
 # Run merge script
 export PYTHONPATH=$PYTHONPATH:/llamaSFT/askGuru-SQL
 python askGuru-SQL/custom_oracle_llama/package_oracle_model.py \
-  --base_model models/llama-3.1-70b-instruct \
+  --base_model models/llama-3.3-70b-instruct \
   --lora_adapter outputs/oracle_llama70b_lora \
   --merged_out outputs/merged_oracle_llama70b \
   --quant_out outputs/merged_oracle_llama70b_awq4 \
@@ -745,7 +738,7 @@ from datetime import datetime
 
 report = {
     "timestamp": datetime.now().isoformat(),
-    "model": "LLaMA-3.1-70B-Instruct",
+    "model": "LLaMA-3.3-70B-Instruct",
     "training_type": "LoRA (BF16)",
     "hardware": "8× A100-80GB",
     "training_data": {
@@ -786,7 +779,7 @@ EOF
 
 ## References
 
-- **LLaMA Model:** https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct
+- **LLaMA Model:** https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct
 - **DeepSpeed:** https://github.com/microsoft/DeepSpeed
 - **PEFT/LoRA:** https://github.com/huggingface/peft
 - **Accelerate:** https://huggingface.co/docs/accelerate

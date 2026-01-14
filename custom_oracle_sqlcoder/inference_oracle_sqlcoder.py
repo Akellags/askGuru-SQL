@@ -26,9 +26,9 @@ from typing import Optional
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from custom_oracle_sqlcoder._preprocessing_sqlcoder import (
-    extract_question_and_schema,
-    make_sqlcoder_prompt
+from custom_oracle_sqlcoder._sqlcoder_utils import (
+    make_sqlcoder_prompt,
+    clean_sql
 )
 from custom_oracle_sqlcoder.sqlcoder_join_validator import validate_sql_joins
 
@@ -115,8 +115,7 @@ class SQLCoderInference:
         
         response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
         
-        sql = response.split("### SQL Query")[-1].strip()
-        sql = sql.split("```")[0].strip() if "```" in sql else sql
+        sql = clean_sql(response)
         
         if validate_joins:
             is_valid, errors = validate_sql_joins(sql, schema)

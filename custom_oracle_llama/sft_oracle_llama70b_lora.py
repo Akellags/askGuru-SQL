@@ -2,7 +2,7 @@
 """
 sft_oracle_llama70b_lora.py
 
-Oracle EBS NL2SQL SFT entrypoint for LLaMA-3.1-70B-Instruct using askGuru-SQL components,
+Oracle EBS NL2SQL SFT entrypoint for LLaMA-3.3-70B (and 3.1) using askGuru-SQL components,
 WITHOUT modifying existing askGuru code.
 
 This script is intentionally close to train/sft4askguru.py but:
@@ -14,7 +14,7 @@ Run from askGuru-SQL/ directory, e.g.
 
 accelerate launch --config_file train/config/zero3.yaml \
   custom_oracle_llama/sft_oracle_llama70b_lora.py \
-  --model_name_or_path /models/llama-3.1-70b-instruct \
+  --model_name_or_path /models/llama-3.3-70b-instruct \
   --data_path data/oracle_sft_conversations.json \
   --output_dir outputs/oracle_llama70b_lora \
   --model_max_length 8192 \
