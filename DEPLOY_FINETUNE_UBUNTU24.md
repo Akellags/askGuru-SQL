@@ -130,22 +130,33 @@ distribution=$(. /etc/os-release;echo $ID$VERSION_ID | sed -e 's/\.//g')
 wget https://developer.download.nvidia.com/compute/cuda/repos/$distribution/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
 
-# Update and install CUDA toolkit
+# Update package lists
 sudo apt-get update
-sudo apt-get install -y cuda-toolkit libaio-dev
 
-# Install cuDNN (required for training)
+# IMPORTANT: Fix missing libtinfo5 for Ubuntu 24.04 (required for nsight-systems/cuda-toolkit)
+wget http://azure.archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2ubuntu0.1_amd64.deb
+wget http://azure.archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libncurses5_6.3-2ubuntu0.1_amd64.deb
+sudo dpkg -i libtinfo5_6.3-2ubuntu0.1_amd64.deb
+sudo dpkg -i libncurses5_6.3-2ubuntu0.1_amd64.deb
+sudo apt-get install -f -y
+
+# Install CUDA toolkit 12.4 specifically
+sudo apt-get install -y cuda-toolkit-12-4 libaio-dev
+
+# Install cuDNN
 sudo apt-get install -y libcudnn8 libcudnn8-dev
 
-# Add CUDA to PATH
-echo 'export PATH=/usr/local/cuda/bin:$PATH' >> /home/ubuntu/.bashrc
-echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH' >> /home/ubuntu/.bashrc
+# Pin CUDA 12.4 in PATH and LD_LIBRARY_PATH (prevents conflicts with newer versions like 13.x)
+echo 'export PATH=/usr/local/cuda-12.4/bin:$PATH' >> /home/ubuntu/.bashrc
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda-12.4/lib64:$LD_LIBRARY_PATH' >> /home/ubuntu/.bashrc
+echo 'export LIBRARY_PATH=/usr/local/cuda-12.4/lib64:$LIBRARY_PATH' >> /home/ubuntu/.bashrc
+echo 'export CUDA_HOME=/usr/local/cuda-12.4' >> /home/ubuntu/.bashrc
 source /home/ubuntu/.bashrc
 
 # Verify installation
 # Note: If you see "Failed to initialize NVML: Driver/library version mismatch", reboot the system: sudo reboot
 nvidia-smi
-nvcc --version
+nvcc --version # Should show release 12.4
 ```
 
 ### 3. Verify CUDA & cuDNN
@@ -507,6 +518,7 @@ cd /llamaSFT/askGuru-SQL
 source venvSFT/bin/activate
 
 # Run training with DeepSpeed ZeRO-3
+export DS_SKIP_CUDA_CHECK=1
 accelerate launch --config_file /llamaSFT/train/config/zero3_a100.yaml \
   custom_oracle_llama/sft_oracle_llama70b_lora.py \
   --model_name_or_path /llamaSFT/models/llama-3.3-70b-instruct \
@@ -514,9 +526,9 @@ accelerate launch --config_file /llamaSFT/train/config/zero3_a100.yaml \
   --eval_data_path data/oracle_sft_conversations/oracle_sft_conversations_val.json \
   --output_dir /llamaSFT/outputs/oracle_llama70b_lora \
   --num_train_epochs 3 \
-  --per_device_train_batch_size 4 \
-  --per_device_eval_batch_size 8 \
-  --gradient_accumulation_steps 1 \
+  --per_device_train_batch_size 1 \
+  --per_device_eval_batch_size 1 \
+  --gradient_accumulation_steps 4 \
   --learning_rate 2.0e-4 \
   --warmup_steps 500 \
   --logging_steps 100 \
@@ -534,7 +546,7 @@ accelerate launch --config_file /llamaSFT/train/config/zero3_a100.yaml \
   --lora_target_modules q_proj,k_proj,v_proj,o_proj,up_proj,gate_proj,down_proj \
   --gradient_checkpointing true \
   --bf16 true \
-  --optim adamw_8bit \
+  --optim adamw_torch \
   --max_grad_norm 1.0 \
   --seed 42 \
   --logging_dir /llamaSFT/logs/ \

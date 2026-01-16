@@ -108,13 +108,24 @@ distribution=$(. /etc/os-release;echo $ID$VERSION_ID | sed -e 's/\.//g')
 wget https://developer.download.nvidia.com/compute/cuda/repos/$distribution/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
 
-# Install CUDA toolkit
+# Update package lists
 sudo apt-get update
-sudo apt-get install -y cuda-toolkit libcudnn8 libcudnn8-dev
 
-# Update PATH
-echo 'export PATH=/usr/local/cuda/bin:$PATH' >> /home/ubuntu/.bashrc
-echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH' >> /home/ubuntu/.bashrc
+# IMPORTANT: Fix missing libtinfo5 for Ubuntu 24.04 (required for nsight-systems/cuda-toolkit)
+wget http://azure.archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2ubuntu0.1_amd64.deb
+wget http://azure.archive.ubuntu.com/ubuntu/pool/universe/n/ncurses/libncurses5_6.3-2ubuntu0.1_amd64.deb
+sudo dpkg -i libtinfo5_6.3-2ubuntu0.1_amd64.deb
+sudo dpkg -i libncurses5_6.3-2ubuntu0.1_amd64.deb
+sudo apt-get install -f -y
+
+# Install CUDA toolkit 12.4 specifically
+sudo apt-get install -y cuda-toolkit-12-4 libcudnn8 libcudnn8-dev
+
+# Pin CUDA 12.4 in PATH and LD_LIBRARY_PATH (prevents conflicts with newer versions like 13.x)
+echo 'export PATH=/usr/local/cuda-12.4/bin:$PATH' >> /home/ubuntu/.bashrc
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda-12.4/lib64:$LD_LIBRARY_PATH' >> /home/ubuntu/.bashrc
+echo 'export LIBRARY_PATH=/usr/local/cuda-12.4/lib64:$LIBRARY_PATH' >> /home/ubuntu/.bashrc
+echo 'export CUDA_HOME=/usr/local/cuda-12.4' >> /home/ubuntu/.bashrc
 source /home/ubuntu/.bashrc
 
 # Set HuggingFace cache
@@ -124,7 +135,7 @@ echo 'export HF_HOME=/llamaSFT/hf_home' >> /home/ubuntu/.bashrc
 
 # Verify
 nvidia-smi
-nvcc --version
+nvcc --version # Should show release 12.4
 ```
 
 ### 2. Verify CUDA & GPU
