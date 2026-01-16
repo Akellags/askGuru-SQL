@@ -2,7 +2,7 @@
 """
 sft_oracle_llama70b_lora.py
 
-Oracle EBS NL2SQL SFT entrypoint for LLaMA-3.3-70B (and 3.1) using askGuru-SQL components,
+Oracle EBS NL2SQL SFT entrypoint for LLaMA-3.3-70B using askGuru-SQL components,
 WITHOUT modifying existing askGuru code.
 
 This script is intentionally close to train/sft4askguru.py but:

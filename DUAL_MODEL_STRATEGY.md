@@ -1,4 +1,4 @@
-# Dual-Model Strategy: LLaMA-3.1-70B + SQLCoder-70B
+# Dual-Model Strategy: LLaMA-3.3-70B + SQLCoder-70B
 
 **Framework for deploying and managing two complementary models for Oracle EBS NL2SQL**
 
@@ -10,7 +10,7 @@ You now have **two separate codebases** for fine-tuning and inference:
 
 | Model | Codebase | Best For | Accuracy | Context | Status |
 |-------|----------|----------|----------|---------|--------|
-| **LLaMA-3.1-70B** | `custom_oracle_llama/` | Complex multi-table joins, business logic | ~52-60% SQL | 128K | ✅ PRIMARY |
+| **LLaMA-3.3-70B** | `custom_oracle_llama/` | Complex multi-table joins, business logic | ~52-60% SQL | 128K | ✅ PRIMARY |
 | **SQLCoder-70B** | `custom_oracle_sqlcoder/` | Pure SQL, simple queries, date/GROUP BY | 93% SQL | 16K | 🔄 SECONDARY |
 
 ---
@@ -56,7 +56,7 @@ Both models train on **the same dataset** (4,822 examples). You can run sequenti
 
 ```
 Week 1:
-├─ Day 1-2: Train LLaMA-3.1-70B (10 hours)
+├─ Day 1-2: Train LLaMA-3.3-70B (10 hours)
 ├─ Day 3-4: Train SQLCoder-70B (10 hours)
 └─ Day 5: Evaluation & comparison
 
@@ -67,7 +67,7 @@ Total: ~5-6 days
 
 ```
 Week 1:
-├─ Cluster A: LLaMA-3.1-70B (10 hours)
+├─ Cluster A: LLaMA-3.3-70B (10 hours)
 ├─ Cluster B: SQLCoder-70B (10 hours)
 └─ Overlap: Day 1-2, evaluate results Day 3
 
@@ -80,7 +80,7 @@ Total: ~3 days
 
 ### Option 1: Primary Only (Recommended for MVP)
 
-Deploy **LLaMA-3.1-70B only**:
+Deploy **LLaMA-3.3-70B only**:
 - Single model endpoint
 - Simpler operations
 - ~52-60% accuracy on Oracle SQL
@@ -98,7 +98,7 @@ Deploy **LLaMA-3.1-70B only**:
 ### Option 2: Dual Model with Sequential Fallback
 
 Deploy **both models** with routing:
-1. First attempt: LLaMA-3.1-70B (primary, general reasoning)
+1. First attempt: LLaMA-3.3-70B (primary, general reasoning)
 2. If confidence < threshold, try SQLCoder-70B (specialist)
 3. Validate using `sqlcoder_join_validator.py`
 
@@ -170,12 +170,12 @@ def ensemble_vote(llama_sql: str, sqlcoder_sql: str, schema: str) -> str:
 
 ## Training Commands
 
-### LLaMA-3.1-70B
+### LLaMA-3.3-70B
 
 ```bash
 accelerate launch --config_file train/config/zero3.yaml \
   custom_oracle_llama/sft_oracle_llama70b_lora.py \
-  --model_name_or_path meta-llama/Llama-3.1-70b-instruct \
+  --model_name_or_path meta-llama/Llama-3.3-70B-Instruct \
   --data_path data/oracle_sft_conversations/oracle_sft_conversations_train.json \
   --output_dir outputs/oracle_llama70b_lora \
   --model_max_length 8192 \
@@ -252,7 +252,7 @@ sql = sqlcoder.generate(
 ### Recommendation
 
 **Start with LLaMA-only MVP:**
-1. Train & deploy LLaMA-3.1-70B
+1. Train & deploy LLaMA-3.3-70B
 2. Evaluate on test set (483 examples)
 3. Measure accuracy, latency, cost
 4. If accuracy < 70%, add SQLCoder as backup
@@ -296,7 +296,7 @@ print(f"Accuracy: {accuracy:.1%}")
 Test Set Evaluation (483 examples)
 ═══════════════════════════════════════════════════════════
 
-LLaMA-3.1-70B:
+LLaMA-3.3-70B:
   ✓ Overall Accuracy: XX%
   ✓ Correct: XXX / 483
   ✓ Avg Latency: XX ms
@@ -335,7 +335,7 @@ router_metrics = {
 
 # Per-request logging
 {
-    "timestamp": "2025-01-15T10:30:00Z",
+    "timestamp": "2026-01-15T10:30:00Z",
     "question": "List suppliers...",
     "routed_to": "llama",
     "confidence": 0.87,

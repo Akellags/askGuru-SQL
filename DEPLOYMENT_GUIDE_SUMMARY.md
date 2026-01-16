@@ -8,7 +8,7 @@ Complete deployment scripts and guides for Oracle EBS NL2SQL on Ubuntu 24
 
 This package includes **complete manual and automated deployment solutions** for:
 
-1. **Fine-tuning** LLaMA-3.1-70B on 8×A100-80GB GPUs
+1. **Fine-tuning** LLaMA-3.3-70B on 8×A100-80GB GPUs
 2. **Inference** with vLLM on 1×A100-80GB GPU
 
 ---
@@ -24,7 +24,7 @@ This package includes **complete manual and automated deployment solutions** for
   - System prerequisites and hardware requirements
   - NVIDIA driver & CUDA installation
   - Python environment setup
-  - PyTorch installation with CUDA 12.1
+  - PyTorch installation with CUDA 12.4+ (compatible with 12.8)
   - LLaMA model download from Hugging Face
   - Training data preparation and validation
   - DeepSpeed ZeRO-3 configuration
@@ -152,7 +152,7 @@ cat DEPLOY_FINETUNE_UBUNTU24.md
 # Start training
 accelerate launch --config_file train/config/zero3_a100.yaml \
   custom_oracle_llama/sft_oracle_llama70b_lora.py \
-  --model_name_or_path models/llama-3.1-70b-instruct \
+  --model_name_or_path models/llama-3.3-70b-instruct \
   --data_path data/oracle_sft_conversations/oracle_sft_conversations_train.json \
   --output_dir outputs/oracle_llama70b_lora
 ```
@@ -212,7 +212,7 @@ Inference (1×A100)
 ### Fine-tuning Parameters
 | Parameter | Value | Notes |
 |-----------|-------|-------|
-| **Model** | LLaMA-3.1-70B-Instruct | Base foundation model |
+| **Model** | LLaMA-3.3-70B-Instruct | Base foundation model |
 | **Hardware** | 8×A100-80GB | Recommended for production |
 | **Training Method** | LoRA BF16 | Lower memory than full FT |
 | **Batch Size** | 4 per GPU (32 total) | Adjust for OOM |
@@ -248,7 +248,7 @@ Inference (1×A100)
 - [ ] Ubuntu 24.04 LTS installed
 - [ ] 8× NVIDIA A100-80GB GPUs (or 8 compatible GPUs)
 - [ ] NVIDIA drivers installed (latest)
-- [ ] CUDA 12.1+ installed
+- [ ] CUDA 12.4+ installed
 - [ ] cuDNN installed
 - [ ] 1TB+ disk space available
 - [ ] High-bandwidth internet (for model download)
@@ -261,7 +261,7 @@ Inference (1×A100)
 - [ ] Ubuntu 24.04 LTS installed
 - [ ] 1× NVIDIA A100-80GB GPU
 - [ ] NVIDIA drivers installed (latest)
-- [ ] CUDA 12.1+ installed
+- [ ] CUDA 12.4+ installed
 - [ ] 200GB+ disk space available
 - [ ] Port 8000 available (or use --port)
 - [ ] Project repository cloned
@@ -407,7 +407,7 @@ curl http://localhost:8000/v1/models
 - `DATA_PIPELINE_PLAN.md` - Pipeline architecture
 
 ### External References
-- **LLaMA Model:** https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct
+- **LLaMA Model:** https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct
 - **vLLM:** https://github.com/vllm-project/vllm
 - **DeepSpeed:** https://github.com/microsoft/DeepSpeed
 - **PEFT/LoRA:** https://github.com/huggingface/peft

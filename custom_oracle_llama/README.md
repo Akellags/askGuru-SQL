@@ -2,7 +2,7 @@
 
 Oracle EBS NL2SQL training and inference adapters for **askGuru-SQL** (formerly askGuru-SQL).
 
-This folder contains **additive** scripts to fine-tune and deploy **LLaMA-3.3-70B** or **LLaMA-3.1-70B-Instruct** for Oracle EBS natural language to SQL conversion:
+This folder contains **additive** scripts to fine-tune and deploy **LLaMA-3.3-70B** for Oracle EBS natural language to SQL conversion:
 
 - **Training:** 8×A100-80GB (LoRA BF16 + Deepspeed ZeRO-3)
 - **Inference:** 1×A100-80GB (4-bit quantized, 4 concurrent users)
@@ -218,7 +218,7 @@ For serving:
 
 - **askGuru-SQL:** Original framework [link]
 - **askGuru-SQL:** Adapted project for Oracle EBS + Apache 2.0
-- **LLaMA-3.1-70B:** Base model [HuggingFace](https://huggingface.co/meta-llama/Llama-3.1-70B-Instruct)
+- **LLaMA-3.3-70B:** Base model [HuggingFace](https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct)
 - **vLLM:** [https://github.com/vllm-project/vllm](https://github.com/vllm-project/vllm)
 - **PEFT/LoRA:** [https://github.com/huggingface/peft](https://github.com/huggingface/peft)
 

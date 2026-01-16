@@ -14,7 +14,7 @@ Notes (air-gapped):
 - GPTQ: typically via auto-gptq
 Your environment must provide one of these offline.
 
-This folder contains **additive** scripts to fine-tune and deploy **LLaMA-3.3-70B** or **LLaMA-3.1-70B-Instruct** for Oracle EBS natural language to SQL conversion:
+This folder contains **additive** scripts to fine-tune and deploy **LLaMA-3.3-70B** for Oracle EBS natural language to SQL conversion:
 
 Examples:
 python custom_oracle_llama/package_oracle_model.py \

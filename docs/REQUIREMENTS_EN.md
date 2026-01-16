@@ -1,14 +1,14 @@
 # Requirements Document: Oracle EBS NL2SQL Ensemble System (FastAPI + vLLM)
 
 ## 1. Project Goal
-Develop and deploy a production-grade **Natural Language to SQL (NL2SQL)** ensemble system specialized for **Oracle E-Business Suite (EBS)**. The system will leverage fine-tuned LLaMA-3.1-70B and SQLCoder-70B models to provide high-accuracy SQL generation, served via FastAPI and optimized with vLLM.
+Develop and deploy a production-grade **Natural Language to SQL (NL2SQL)** ensemble system specialized for **Oracle E-Business Suite (EBS)**. The system will leverage fine-tuned LLaMA-3.3-70B and SQLCoder-70B models to provide high-accuracy SQL generation, served via FastAPI and optimized with vLLM.
 
 ---
 
 ## 2. Architecture Overview
 
 ### 2.1 Model Ensemble Strategy
-- **Primary Model**: Fine-tuned **LLaMA-3.1-70B-Instruct** (merged & 4-bit quantized). Specialized in complex reasoning and multi-table joins.
+- **Primary Model**: Fine-tuned **LLaMA-3.3-70B-Instruct** (merged & 4-bit quantized). Specialized in complex reasoning and multi-table joins.
 - **Secondary Model**: Fine-tuned **SQLCoder-70B** (merged & 4-bit quantized). Specialized in pure SQL generation and simple queries.
 - **Ensemble Control**:
   - **ENABLE_SECONDARY_MODEL**: A boolean flag (environment variable) to enable or disable the secondary model. When disabled, only the primary model is used.

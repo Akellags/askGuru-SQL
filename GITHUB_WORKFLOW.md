@@ -168,7 +168,7 @@ Untracked files:
 
 1. Go to https://github.com/new
 2. **Repository name**: `askGuru-SQL`
-3. **Description**: `Oracle EBS NL2SQL: LLaMA-3.1-70B + SQLCoder-70B Fine-tuning Framework`
+3. **Description**: `Oracle EBS NL2SQL: LLaMA-3.3-70B + SQLCoder-70B Fine-tuning Framework`
 4. **Visibility**: Private (recommended for proprietary code)
 5. **Initialize with**: 
    - ❌ Do NOT add README (we have one)
@@ -233,7 +233,7 @@ Or more detailed:
 ```bash
 git commit -m "Initial commit: Core framework and documentation
 
-- LLaMA-3.1-70B fine-tuning pipeline (custom_oracle_llama/)
+- LLaMA-3.3-70B fine-tuning pipeline (custom_oracle_llama/)
 - SQLCoder-70B secondary model (custom_oracle_sqlcoder/)
 - Dataset preprocessing and validation
 - Complete deployment guides for Ubuntu 24.04 + CUDA 12.8

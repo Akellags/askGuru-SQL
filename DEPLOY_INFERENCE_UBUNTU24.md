@@ -164,11 +164,11 @@ EOF
 
 ```bash
 pip install \
-  transformers==4.42.3 \
-  vllm==0.4.3 \
+  transformers==4.46.3 \
+  vllm==0.13.0 \
   peft==0.11.1 \
-  accelerate==0.31.0 \
-  bitsandbytes==0.43.1 \
+  accelerate==1.12.0 \
+  bitsandbytes==0.49.0 \
   numpy==1.26.4 \
   pandas==2.2.3 \
   protobuf==5.27.2 \

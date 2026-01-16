@@ -3,7 +3,7 @@
 This folder contains **additive** scripts to adapt XiYan-SQLTraining for:
 
 - Oracle EBS NL2SQL
-- LLaMA-3.1-70B-Instruct
+- LLaMA-3.3-70B-Instruct
 - 8×A100-80GB training (LoRA BF16)
 - 1×A100-80GB inference (4-bit quant, 4 concurrent)
 

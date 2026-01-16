@@ -145,7 +145,7 @@ python /llamaSFT/venv/bin/python3 -c "import torch; print(f'PyTorch: {torch.__ve
 │   ├── lib/python3.12/site-packages/
 │   └── ...
 │
-├── custom_oracle_llama/                    # LLaMA-3.1-70B training code
+├── custom_oracle_llama/                    # LLaMA-3.3-70B training code
 │   ├── _preprocessing_utils.py
 │   ├── sft_oracle_llama70b_lora.py
 │   └── ...
@@ -170,7 +170,7 @@ python /llamaSFT/venv/bin/python3 -c "import torch; print(f'PyTorch: {torch.__ve
 │   └── oracle_sft_config.json
 │
 ├── models/                                 # Large model files (>100GB)
-│   ├── llama-3.1-70b-instruct/           # Downloaded base model
+│   ├── llama-3.3-70b-instruct/           # Downloaded base model
 │   ├── oracle_llama70b_lora/             # LoRA weights
 │   ├── oracle_llama70b_merged/           # Merged model
 │   ├── oracle_llama70b_4bit/             # Quantized model

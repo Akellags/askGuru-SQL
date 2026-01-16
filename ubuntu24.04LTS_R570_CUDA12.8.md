@@ -122,7 +122,7 @@ pip install --upgrade pip
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 
 # Install transformers stack
-pip install transformers==4.46.0
+pip install transformers==4.46.3
 pip install accelerate==0.34.0
 pip install peft==0.13.0
 pip install bitsandbytes==0.44.0

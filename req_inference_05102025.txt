@@ -12,7 +12,7 @@ apache-tvm-ffi==0.1.7
 astor==0.8.1
 attrs==25.4.0
 auto_gptq @ git+https://github.com/AutoGPTQ/AutoGPTQ.git@9f7d37072917ab3a7545835f23e808294a542153
-autoawq==0.2.9
+autoawq==0.2.6
 banks==2.2.0
 beautifulsoup4==4.14.3
 bitsandbytes==0.49.0
@@ -219,7 +219,7 @@ torch==2.9.0
 torchaudio==2.9.0
 torchvision==0.24.0
 tqdm==4.67.1
-transformers==4.57.3
+transformers==4.46.3
 triton==3.5.0
 typer==0.21.0
 typing-inspect==0.9.0

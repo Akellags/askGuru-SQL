@@ -56,7 +56,7 @@ python custom_oracle_llama/build_oracle_sft_dataset.py \
 ```bash
 accelerate launch --config_file train/config/zero3.yaml \
   custom_oracle_llama/sft_oracle_llama70b_lora.py \
-  --model_name_or_path /models/llama-3.1-70b-instruct \
+  --model_name_or_path /models/llama-3.3-70b-instruct \
   --data_path data/oracle_sft_conversations.json \
   --output_dir outputs/oracle_llama70b_lora \
   --model_max_length 8192 \
@@ -69,7 +69,7 @@ accelerate launch --config_file train/config/zero3.yaml \
 
 ```bash
 python custom_oracle_llama/package_oracle_model.py \
-  --base_model /models/llama-3.1-70b-instruct \
+  --base_model /models/llama-3.3-70b-instruct \
   --lora_adapter outputs/oracle_llama70b_lora \
   --merged_out outputs/merged_oracle_llama70b \
   --quant_out outputs/merged_oracle_llama70b_awq4 \

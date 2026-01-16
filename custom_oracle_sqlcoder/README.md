@@ -2,7 +2,7 @@
 
 **SQLCoder-70B** as secondary backup model for Oracle EBS natural language to SQL conversion.
 
-> **⚠️ Status**: Secondary model only. Use **LLaMA-3.3-70B** as primary (or 3.1).
+> **⚠️ Status**: Secondary model only. Use **LLaMA-3.3-70B** as primary.
 >
 > Reasons:
 > - SQLCoder has 93% overall accuracy vs LLaMA's ~52%

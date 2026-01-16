@@ -2,11 +2,11 @@ Below is a **developer-ready requirement document** to adopt the “8×A100-80GB
 
 ---
 
-# Requirement Document: Oracle EBS NL2SQL Fine-tuning & Deployment (XiYan-SQLTraining + LLaMA-3.1-70B-Instruct)
+# Requirement Document: Oracle EBS NL2SQL Fine-tuning & Deployment (XiYan-SQLTraining + LLaMA-3.3-70B-Instruct)
 
 ## 1) Goal
 
-Fine-tune **LLaMA-3.1-70B-Instruct** for **Oracle EBS NL2SQL** using the XiYan-SQLTraining framework on **8×A100-80GB** (training), and deploy for inference on **1×A100-80GB** supporting **4 concurrent users at peak**, with **RAG prompt context ~6,500–16,000 chars**.
+Fine-tune **LLaMA-3.3-70B-Instruct** for **Oracle EBS NL2SQL** using the XiYan-SQLTraining framework on **8×A100-80GB** (training), and deploy for inference on **1×A100-80GB** supporting **4 concurrent users at peak**, with **RAG prompt context ~6,500–16,000 chars**.
 
 Key principles:
 
@@ -49,7 +49,7 @@ Key principles:
 
    * `conversations: [{role:user, content:...}, {role:assistant, content:...}]`
    * `assistant` content is **SQL only**
-2. Run **SFT with LoRA** on `LLaMA-3.1-70B-Instruct` using Deepspeed ZeRO-3.
+2. Run **SFT with LoRA** on `LLaMA-3.3-70B-Instruct` using Deepspeed ZeRO-3.
 3. Save LoRA adapters and training artifacts.
 
 ### Packaging Pipeline
@@ -103,7 +103,7 @@ Must:
 * accept the same CLI args as `train/sft4xiyan.py` (ModelArguments/TrainingArguments/DataArguments/LoraArguments)
 * set:
 
-  * `model_args.model_name_or_path` default to LLaMA-3.1-70B-Instruct path (internal)
+  * `model_args.model_name_or_path` default to LLaMA-3.3-70B-Instruct path (internal)
   * `training_args.model_max_length` default to 8192 (override allowed)
   * `training_args.use_lora=True`
   * `lora_args.q_lora=False` (LoRA, not QLoRA)
@@ -362,7 +362,7 @@ python custom_oracle_llama/build_oracle_sft_dataset.py \
 ```bash
 accelerate launch --config_file train/config/zero3.yaml \
   custom_oracle_llama/sft_oracle_llama70b_lora.py \
-  --model_name_or_path /models/llama-3.1-70b-instruct \
+  --model_name_or_path /models/llama-3.3-70b-instruct \
   --data_path data/oracle_sft_conversations.json \
   --output_dir outputs/oracle_llama70b_lora \
   --model_max_length 8192 \
@@ -374,7 +374,7 @@ accelerate launch --config_file train/config/zero3.yaml \
 
 ```bash
 python custom_oracle_llama/package_oracle_model.py \
-  --base_model /models/llama-3.1-70b-instruct \
+  --base_model /models/llama-3.3-70b-instruct \
   --lora_adapter outputs/oracle_llama70b_lora \
   --merged_out outputs/merged_oracle_llama70b \
   --quant_out outputs/merged_oracle_llama70b_awq4 \

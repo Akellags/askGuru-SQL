@@ -25,7 +25,7 @@ Create a `.env` file in the `src/api` directory or set the following environment
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `PRIMARY_MODEL_URL` | vLLM endpoint for LLaMA-3.1-70B | `http://localhost:8000/v1` |
+| `PRIMARY_MODEL_URL` | vLLM endpoint for LLaMA-3.3-70B | `http://localhost:8000/v1` |
 | `SECONDARY_MODEL_URL` | vLLM endpoint for SQLCoder-70B | `http://localhost:8001/v1` |
 | `ENABLE_SECONDARY_MODEL` | Enable fallback/voting to secondary model | `false` |
 | `ENSEMBLE_STRATEGY` | `fallback` or `voting` | `fallback` |
@@ -48,7 +48,7 @@ uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
 
 ## 5. Starting vLLM Servers (Reference)
 
-### Primary Model (LLaMA-3.1-70B)
+### Primary Model (LLaMA-3.3-70B)
 ```bash
 export PYTORCH_ALLOC_CONF=expandable_segments:True
 python -m vllm.entrypoints.openai.api_server \
@@ -94,7 +94,7 @@ curl -X POST http://localhost:8000/generate-sql \
 ```json
 {
   "sql": "SELECT ... FROM AP_INVOICES_ALL ...",
-  "model_used": "LLaMA-3.1-70B (Fallback)",
+  "model_used": "LLaMA-3.3-70B (Fallback)",
   "validation_passed": true,
   "error": null
 }

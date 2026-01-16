@@ -16,7 +16,7 @@ Your environment must provide one of these offline.
 
 Examples:
 python custom_oracle_llama/package_oracle_model.py \
-  --base_model /models/llama-3.1-70b-instruct \
+  --base_model /models/llama-3.3-70b-instruct \
   --lora_adapter outputs/oracle_llama70b_lora \
   --merged_out outputs/merged_oracle_llama70b \
   --quant_out outputs/merged_oracle_llama70b_awq4 \

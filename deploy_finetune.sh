@@ -41,7 +41,7 @@ CHECKPOINTS_DIR="/llamaSFT/checkpoints"
 export HF_HOME="/llamaSFT/hf_home"
 
 # Training parameters
-MODEL_NAME="llama-3.1-70b-instruct"
+MODEL_NAME="llama-3.3-70b-instruct"
 NUM_EPOCHS=3
 LR=2.0e-4
 WARMUP_STEPS=500
@@ -228,12 +228,11 @@ install_dependencies() {
     
     log_info "Installing core dependencies..."
     pip install \
-        transformers==4.42.3 \
-        datasets==2.18.0 \
-        accelerate==0.31.0 \
-        deepspeed==0.12.0 \
+        transformers==4.47.0 \
+        datasets==4.4.2 \
+        accelerate==1.12.0 \
+        deepspeed==0.14.4 \
         peft==0.11.1 \
-        flash-attn==2.5.9.post1 \
         bitsandbytes==0.43.1 \
         numpy==1.26.4 \
         pandas==2.2.3 \
@@ -245,7 +244,7 @@ install_dependencies() {
         swanlab==0.6.0 \
         wandb \
         tensorboard \
-        autoawq \
+        autoawq==0.2.6 \
         auto-gptq \
         huggingface-hub
     
@@ -270,7 +269,7 @@ EOF
 }
 
 download_model() {
-    print_header "Downloading LLaMA-3.1-70B-Instruct model"
+    print_header "Downloading LLaMA-3.3-70B-Instruct model"
     
     if [ "${SKIP_MODEL}" = true ]; then
         log_info "Skipping model download (--skip-model)"
@@ -279,7 +278,7 @@ download_model() {
     
     source "${VENV_PATH}/bin/activate"
     
-    MODEL_PATH="${MODELS_DIR}/llama-3.1-70b-instruct"
+    MODEL_PATH="${MODELS_DIR}/llama-3.3-70b-instruct"
     
     if [ -d "${MODEL_PATH}" ] && [ -f "${MODEL_PATH}/model.safetensors" ]; then
         log_success "Model already exists at ${MODEL_PATH}"
@@ -297,7 +296,7 @@ download_model() {
     
     huggingface-cli login --token "${HF_TOKEN}"
     
-    huggingface-cli download meta-llama/Llama-3.1-70B-Instruct \
+    huggingface-cli download meta-llama/Llama-3.3-70B-Instruct \
         --local-dir "${MODEL_PATH}" \
         --token "${HF_TOKEN}"
     
@@ -429,7 +428,7 @@ run_training() {
     # Build training command
     TRAIN_CMD="accelerate launch --config_file train/config/zero3_a100.yaml \
         custom_oracle_llama/sft_oracle_llama70b_lora.py \
-        --model_name_or_path ${MODELS_DIR}/llama-3.1-70b-instruct \
+        --model_name_or_path ${MODELS_DIR}/llama-3.3-70b-instruct \
         --data_path ${DATA_DIR}/oracle_sft_conversations/oracle_sft_conversations_train.json \
         --eval_data_path ${DATA_DIR}/oracle_sft_conversations/oracle_sft_conversations_val.json \
         --output_dir ${OUTPUTS_DIR}/oracle_llama70b_lora \

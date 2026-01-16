@@ -424,7 +424,7 @@ python -m vllm.entrypoints.openai.api_server \
 
 ## Next Steps
 
-1. **Comparison**: Compare SQLCoder output with LLaMA-3.1-70B
+1. **Comparison**: Compare SQLCoder output with LLaMA-3.3-70B
 2. **Validation**: Test both models on your test set (483 examples)
 3. **Decision**: Keep both or stick with LLaMA-only?
 4. **Deployment**: If keeping both, implement routing logic

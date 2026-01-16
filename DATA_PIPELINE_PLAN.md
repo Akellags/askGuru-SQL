@@ -521,7 +521,7 @@ data/oracle_sft_conversations/
 
 ## Dataset Size Requirements (from REQUIREMENTS.md + DATASET_PREPARATION_GUIDE.md)
 
-### For LLaMA-3.1-70B-Instruct
+### For LLaMA-3.3-70B-Instruct
 
 Based on REQUIREMENTS.md section 3 and DATASET_PREPARATION_GUIDE.md guidelines:
 

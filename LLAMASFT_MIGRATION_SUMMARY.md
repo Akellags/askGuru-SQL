@@ -126,7 +126,7 @@ source venv/bin/activate
 
 accelerate launch --config_file train/config/zero3.yaml \
   custom_oracle_llama/sft_oracle_llama70b_lora.py \
-  --model_name_or_path /llamaSFT/models/llama-3.1-70b-instruct \
+  --model_name_or_path /llamaSFT/models/llama-3.3-70b-instruct \
   --data_path /llamaSFT/data/oracle_sft_conversations/oracle_sft_conversations_train.json \
   --output_dir /llamaSFT/outputs/oracle_llama70b_lora \
   ...
@@ -164,7 +164,7 @@ python -m vllm.entrypoints.openai.api_server \
 
 | Component | Size | Location |
 |-----------|------|----------|
-| LLaMA-3.1-70B base | ~140GB | `/llamaSFT/models/` |
+| LLaMA-3.3-70B base | ~140GB | `/llamaSFT/models/` |
 | SQLCoder-70B base | ~140GB | `/llamaSFT/models/` |
 | Training checkpoints | ~20-50GB | `/llamaSFT/outputs/` |
 | Merged models | ~280GB | `/llamaSFT/models/` |

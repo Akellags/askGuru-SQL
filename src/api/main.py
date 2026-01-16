@@ -121,7 +121,7 @@ async def run_fallback_strategy(request: SQLRequest, schema_text: str, rag_conte
     llama_prompt = build_llama_prompt(request, MSCHEMA_CACHE, schema_text, rag_context)
     generated_text = await call_model(settings.PRIMARY_MODEL_URL, llama_prompt)
     final_sql = clean_sql(generated_text)
-    model_used = "LLaMA-3.1-70B (Fallback)"
+    model_used = "LLaMA-3.3-70B (Fallback)"
     
     # 2. Static Safety Check
     safety_error = is_unsafe(final_sql)
@@ -180,7 +180,7 @@ async def run_voting_strategy(request: SQLRequest, schema_text: str, rag_context
         if isinstance(res, Exception):
             continue
         sql = clean_sql(res)
-        model_name = "LLaMA-3.1-70B" if idx == 0 else "SQLCoder-70B"
+        model_name = "LLaMA-3.3-70B" if idx == 0 else "SQLCoder-70B"
         
         # Validate
         is_valid, db_error, _ = validate_sql_with_oracle(sql)

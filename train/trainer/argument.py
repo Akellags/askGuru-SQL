@@ -5,7 +5,7 @@ from transformers import (
 )
 @dataclass
 class ModelArguments:
-    model_name_or_path: Optional[str] = field(default="meta-llama/Llama-3.1-70B-Instruct")
+    model_name_or_path: Optional[str] = field(default="meta-llama/Llama-3.3-70B-Instruct")
     use_flash_attention: bool = field(default=False, metadata={"help": "Whether to use Flash Attention."})
     model_type: str = 'auto'
 

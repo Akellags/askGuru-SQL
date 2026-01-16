@@ -270,7 +270,7 @@ The dataset is now ready for LoRA SFT training with `sft_oracle_llama70b_lora.py
 ```bash
 accelerate launch --config_file train/config/zero3.yaml \
   custom_oracle_llama/sft_oracle_llama70b_lora.py \
-  --model_name_or_path /models/llama-3.1-70b-instruct \
+  --model_name_or_path /models/llama-3.3-70b-instruct \
   --data_path data/oracle_sft_conversations/oracle_sft_conversations_train.json \
   --eval_data_path data/oracle_sft_conversations/oracle_sft_conversations_val.json \
   --output_dir outputs/oracle_llama70b_lora \
@@ -306,4 +306,4 @@ The Oracle EBS NL2SQL SFT dataset has been successfully built with:
 - ✅ Proper train/val/test split
 - ✅ Comprehensive quality metrics
 
-**Ready for training on LLaMA-3.1-70B-Instruct** 🚀
+**Ready for training on LLaMA-3.3-70B-Instruct** 🚀

@@ -7,7 +7,7 @@
 # Automated inference deployment script for Oracle EBS NL2SQL on 1×A100-80GB
 # Ubuntu 24.04 LTS
 # 
-# Serves fine-tuned LLaMA-3.1-70B model using vLLM with OpenAI-compatible API
+# Serves fine-tuned LLaMA-3.3-70B model using vLLM with OpenAI-compatible API
 #
 # Usage:
 #   ./deploy_inference.sh [--skip-deps] [--skip-merge] [--port PORT] [--test]
@@ -244,17 +244,17 @@ install_dependencies() {
     
     source "${VENV_PATH}/bin/activate"
     
-    log_info "Installing PyTorch with CUDA 12.1 support..."
-    pip install torch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1 \
-        --index-url https://download.pytorch.org/whl/cu121
+    log_info "Installing PyTorch with CUDA 12.4 support (compatible with CUDA 12.8)..."
+    pip install torch torchvision torchaudio \
+        --index-url https://download.pytorch.org/whl/cu124
     
     log_info "Installing vLLM and core dependencies..."
     pip install \
-        vllm==0.4.3 \
-        transformers==4.42.3 \
-        accelerate==0.31.0 \
+        vllm==0.13.0 \
+        transformers==4.47.0 \
+        accelerate==1.12.0 \
         peft==0.11.1 \
-        bitsandbytes==0.43.1 \
+        bitsandbytes==0.49.0 \
         numpy==1.26.4 \
         pandas==2.2.3 \
         protobuf==5.27.2 \
@@ -262,7 +262,7 @@ install_dependencies() {
     
     log_info "Installing quantization & API tools..."
     pip install \
-        autoawq \
+        autoawq==0.2.6 \
         auto-gptq \
         openai \
         requests
@@ -282,7 +282,7 @@ verify_models() {
     source "${VENV_PATH}/bin/activate"
     
     # Check for base model
-    BASE_MODEL="${MODELS_DIR}/llama-3.1-70b-instruct"
+    BASE_MODEL="${MODELS_DIR}/llama-3.3-70b-instruct"
     if [ ! -d "${BASE_MODEL}" ]; then
         log_warning "Base model not found at ${BASE_MODEL}"
         log_info "You will need to download it manually or from fine-tuning server"
@@ -330,7 +330,7 @@ merge_and_quantize() {
     log_info "Running merge script..."
     
     python custom_oracle_llama/package_oracle_model.py \
-        --base_model "${MODELS_DIR}/llama-3.1-70b-instruct" \
+        --base_model "${MODELS_DIR}/llama-3.3-70b-instruct" \
         --lora_adapter "${MODELS_DIR}/oracle_llama70b_lora" \
         --merged_out "${MODELS_DIR}/merged_oracle_llama70b" \
         --quant_out "${MERGED_MODEL}" \

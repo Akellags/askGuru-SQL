@@ -125,7 +125,7 @@ See `ubuntu24.04LTS_R570_CUDA12.8.md` for:
 You're ready to proceed with fine-tuning:
 
 ```bash
-# Train LLaMA-3.1-70B
+# Train LLaMA-3.3-70B
 ./deploy_finetune.sh
 
 # Train SQLCoder-70B

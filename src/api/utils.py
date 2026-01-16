@@ -46,7 +46,7 @@ def get_join_hints(mschema: List[Dict[str, Any]], requested_tables: List[str]) -
     return "\nJOIN HINTS:\n" + "\n".join(list(set(hints)))
 
 def build_llama_prompt(request: Any, mschema: List[Dict[str, Any]], schema_text: str, rag_context: Optional[Dict[str, Any]] = None) -> str:
-    """Build the prompt for LLaMA-3.1 model."""
+    """Build the prompt for LLaMA-3.3 model."""
     enriched_question = build_enriched_question(
         request.question, 
         request.filters, 

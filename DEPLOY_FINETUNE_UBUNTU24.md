@@ -1,6 +1,6 @@
 # Oracle EBS NL2SQL Fine-tuning on 8×A100-80GB (Ubuntu 24)
 
-**Complete manual deployment guide for LLaMA-3.3-70B (or 3.1) LoRA fine-tuning**
+**Complete manual deployment guide for LLaMA-3.3-70B LoRA fine-tuning**
 
 ---
 
@@ -132,7 +132,7 @@ sudo dpkg -i cuda-keyring_1.1-1_all.deb
 
 # Update and install CUDA toolkit
 sudo apt-get update
-sudo apt-get install -y cuda-toolkit
+sudo apt-get install -y cuda-toolkit libaio-dev
 
 # Install cuDNN (required for training)
 sudo apt-get install -y libcudnn8 libcudnn8-dev
@@ -143,6 +143,7 @@ echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH' >> /home/ub
 source /home/ubuntu/.bashrc
 
 # Verify installation
+# Note: If you see "Failed to initialize NVML: Driver/library version mismatch", reboot the system: sudo reboot
 nvidia-smi
 nvcc --version
 ```
@@ -175,7 +176,7 @@ source /llamaSFT/askGuru-SQL/.venv/bin/activate
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 
 # Verify PyTorch + CUDA
-python3 << 'EOF'
+python << 'EOF'
 import torch
 print(f"PyTorch: {torch.__version__}")
 print(f"CUDA: {torch.version.cuda}")
@@ -189,11 +190,12 @@ EOF
 It is highly recommended to use the provided `req.txt` for fine-tuning as it contains the correct versions and optimized Flash-Attention wheels.
 
 ```bash
-# Install from the comprehensive fine-tuning requirements file
-pip install -r req.txt
+# Recommended: Install using the PyTorch extra index to resolve +cu124 versions
+pip install -r req.txt --extra-index-url https://download.pytorch.org/whl/cu124
 
-# If you need to install manually or update specific packages:
-# pip install transformers datasets accelerate peft bitsandbytes deepspeed==0.14.4
+# Alternate Approach (Install PyTorch separately first):
+# pip install torch==2.4.1+cu124 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+# pip install -r req.txt
 ```
 
 ### 3. Flash-Attention (Included in req.txt)
@@ -231,7 +233,7 @@ pip install autoawq
 ### 5. Verify All Dependencies
 
 ```bash
-python3 << 'EOF'
+python << 'EOF'
 import torch
 import transformers
 import datasets
@@ -275,6 +277,7 @@ cd /llamaSFT/models
 huggingface-cli download meta-llama/Llama-3.3-70B-Instruct \
   --local-dir ./llama-3.3-70b-instruct \
   --token <add your token here>
+
 ```
 
 ### 2. Verify Model Download
@@ -355,10 +358,6 @@ EOF
 ls -la /llamaSFT/
 # Should show: models/, data/, outputs/, logs/, venv/, etc.
 ```
-
----
-
-TODO: NEED to worm from here in the morning
 
 ## Training Configuration
 

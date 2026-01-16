@@ -2,7 +2,7 @@
 sft_oracle_sqlcoder70b_lora.py
 
 Oracle EBS NL2SQL SFT entrypoint for SQLCoder-70B using askGuru-SQL components.
-Secondary model for SQL-specialized fine-tuning (backup to LLaMA-3.1-70B).
+Secondary model for SQL-specialized fine-tuning (backup to LLaMA-3.3-70B).
 
 SQLCoder-70B is CodeLlama-70B fine-tuned on SQL data.
 Architecture: LlamaForCausalLM (same as LLaMA, compatible with askGuru framework)
