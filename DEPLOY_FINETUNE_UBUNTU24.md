@@ -503,15 +503,15 @@ EOF
 
 ```bash
 # Ensure venv is activated
-cd /llamaSFT
-source venv/bin/activate
+cd /llamaSFT/askGuru-SQL
+source venvSFT/bin/activate
 
 # Run training with DeepSpeed ZeRO-3
-accelerate launch --config_file train/config/zero3_a100.yaml \
-  askGuru-SQL/custom_oracle_llama/sft_oracle_llama70b_lora.py \
+accelerate launch --config_file /llamaSFT/train/config/zero3_a100.yaml \
+  custom_oracle_llama/sft_oracle_llama70b_lora.py \
   --model_name_or_path /llamaSFT/models/llama-3.3-70b-instruct \
-  --data_path /llamaSFT/data/oracle_sft_conversations/oracle_sft_conversations_train.json \
-  --eval_data_path /llamaSFT/data/oracle_sft_conversations/oracle_sft_conversations_val.json \
+  --data_path data/oracle_sft_conversations/oracle_sft_conversations_train.json \
+  --eval_data_path data/oracle_sft_conversations/oracle_sft_conversations_val.json \
   --output_dir /llamaSFT/outputs/oracle_llama70b_lora \
   --num_train_epochs 3 \
   --per_device_train_batch_size 4 \
